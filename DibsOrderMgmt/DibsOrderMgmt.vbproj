@@ -384,7 +384,9 @@
     <None Include="DiBS_DB_ProdDataSet4.xss">
       <DependentUpon>DiBS_DB_ProdDataSet4.xsd</DependentUpon>
     </None>
-    <None Include="HiveTemplates\HIVE_Customer_Invoice_Template.xlsx" />
+    <None Include="HiveTemplates\HIVE_Customer_Invoice_Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="HiveTemplates\HIVE_PublisherPO_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
