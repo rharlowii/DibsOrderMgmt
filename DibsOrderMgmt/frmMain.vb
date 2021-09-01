@@ -12,6 +12,12 @@ Public Class frmMain
         ' OmqryOrdersMainTableAdapter1.Fill(DiBS_DB_ProdDataSet1.omqryOrdersMain)
         SetConnection()
         LoadOrdersGrid()
+
+
+        'Lets set the Hive Template files path
+
+        HiveTemplatePath = Application.StartupPath() & "\HiveTemplates\"
+
     End Sub
     Private Sub LoadOrdersGrid()
 
@@ -619,6 +625,13 @@ Public Class frmMain
         sInvoiceFileName = "INV_" & sBillToState & "_" & sBillTo_Name_NoSpace & "_PO_" & sCustomerPO
 
         With frmCustomerInvoice
+
+            .BarButtonItem1.Caption = "Save INV to Order Docs"
+            .BarButtonItem2.Caption = "Send INV to Customer"
+
+
+            .BarButtonItem2.ImageOptions.LargeImage = My.Resources.sendpdf_32x32
+            .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.CustInvoice
             .Text = sInvoiceFileName
             .oOrderInfoDataTable = GetOrderInfo(oOrderID)
             .oOrderSetsDataTable = oOrderSets

@@ -40,11 +40,13 @@ Partial Class frmPublisherPO
         Me.SpreadsheetCommandBarButtonItem11 = New DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem()
         Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem4_SendPDF = New DevExpress.XtraBars.BarButtonItem()
         Me.FileRibbonPage1 = New DevExpress.XtraSpreadsheet.UI.FileRibbonPage()
         Me.CommonRibbonPageGroup1 = New DevExpress.XtraSpreadsheet.UI.CommonRibbonPageGroup()
         Me.InfoRibbonPageGroup1 = New DevExpress.XtraSpreadsheet.UI.InfoRibbonPageGroup()
         Me.SpreadsheetControl1 = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
         Me.SpreadsheetFormulaBar1 = New DevExpress.XtraSpreadsheet.SpreadsheetFormulaBar()
+        Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.SpreadsheetBarController1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -94,9 +96,9 @@ Partial Class frmPublisherPO
         'RibbonControl1
         '
         Me.RibbonControl1.ExpandCollapseItem.Id = 0
-        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.RibbonControl1.SearchEditItem, Me.SpreadsheetCommandBarButtonItem1, Me.SpreadsheetCommandBarButtonItem2, Me.SpreadsheetCommandBarButtonItem3, Me.SpreadsheetCommandBarButtonItem4, Me.SpreadsheetCommandBarButtonItem5, Me.SpreadsheetCommandBarButtonItem6, Me.SpreadsheetCommandBarButtonItem7, Me.SpreadsheetCommandBarButtonItem8, Me.SpreadsheetCommandBarButtonItem9, Me.SpreadsheetCommandBarButtonItem10, Me.SpreadsheetCommandBarButtonItem11, Me.BarButtonItem1, Me.BarButtonItem2})
+        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.RibbonControl1.SearchEditItem, Me.SpreadsheetCommandBarButtonItem1, Me.SpreadsheetCommandBarButtonItem2, Me.SpreadsheetCommandBarButtonItem3, Me.SpreadsheetCommandBarButtonItem4, Me.SpreadsheetCommandBarButtonItem5, Me.SpreadsheetCommandBarButtonItem6, Me.SpreadsheetCommandBarButtonItem7, Me.SpreadsheetCommandBarButtonItem8, Me.SpreadsheetCommandBarButtonItem9, Me.SpreadsheetCommandBarButtonItem10, Me.SpreadsheetCommandBarButtonItem11, Me.BarButtonItem1, Me.BarButtonItem2, Me.BarButtonItem4_SendPDF})
         Me.RibbonControl1.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl1.MaxItemId = 16
+        Me.RibbonControl1.MaxItemId = 21
         Me.RibbonControl1.Name = "RibbonControl1"
         Me.RibbonControl1.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.FileRibbonPage1})
         Me.RibbonControl1.Size = New System.Drawing.Size(849, 150)
@@ -165,6 +167,13 @@ Partial Class frmPublisherPO
         Me.BarButtonItem2.ImageOptions.LargeImage = CType(resources.GetObject("BarButtonItem2.ImageOptions.LargeImage"), System.Drawing.Image)
         Me.BarButtonItem2.Name = "BarButtonItem2"
         '
+        'BarButtonItem4_SendPDF
+        '
+        Me.BarButtonItem4_SendPDF.Caption = "BarButtonItem4"
+        Me.BarButtonItem4_SendPDF.Id = 18
+        Me.BarButtonItem4_SendPDF.ImageOptions.Image = Global.DibsOrderMgmt.My.Resources.Resources.sendpdf_32x32
+        Me.BarButtonItem4_SendPDF.Name = "BarButtonItem4_SendPDF"
+        '
         'FileRibbonPage1
         '
         Me.FileRibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.CommonRibbonPageGroup1, Me.InfoRibbonPageGroup1})
@@ -198,7 +207,7 @@ Partial Class frmPublisherPO
         Me.SpreadsheetControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SpreadsheetControl1.Location = New System.Drawing.Point(0, 190)
+        Me.SpreadsheetControl1.Location = New System.Drawing.Point(-12, 180)
         Me.SpreadsheetControl1.MenuManager = Me.RibbonControl1
         Me.SpreadsheetControl1.Name = "SpreadsheetControl1"
         Me.SpreadsheetControl1.Size = New System.Drawing.Size(849, 375)
@@ -213,6 +222,14 @@ Partial Class frmPublisherPO
         Me.SpreadsheetFormulaBar1.Name = "SpreadsheetFormulaBar1"
         Me.SpreadsheetFormulaBar1.Size = New System.Drawing.Size(849, 24)
         Me.SpreadsheetFormulaBar1.TabIndex = 19
+        '
+        'BarButtonItem3
+        '
+        Me.BarButtonItem3.Caption = "Send To Publisher"
+        Me.BarButtonItem3.Id = 13
+        Me.BarButtonItem3.ImageOptions.Image = CType(resources.GetObject("BarButtonItem3.ImageOptions.Image"), System.Drawing.Image)
+        Me.BarButtonItem3.ImageOptions.LargeImage = CType(resources.GetObject("BarButtonItem3.ImageOptions.LargeImage"), System.Drawing.Image)
+        Me.BarButtonItem3.Name = "BarButtonItem3"
         '
         'frmPublisherPO
         '
@@ -253,4 +270,6 @@ Partial Class frmPublisherPO
     Friend WithEvents PopupMenu1 As DevExpress.XtraBars.PopupMenu
     Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem2 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem4_SendPDF As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem3 As DevExpress.XtraBars.BarButtonItem
 End Class
