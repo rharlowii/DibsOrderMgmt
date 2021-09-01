@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DiBS_DB_ProdDataSet" targetNamespace="http://tempuri.org/DiBS_DB_ProdDataSet.xsd" xmlns:mstns="http://tempuri.org/DiBS_DB_ProdDataSet.xsd" xmlns="http://tempuri.org/DiBS_DB_ProdDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DiBS_DB_ProdConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DiBS_DB_ProdConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.DibsOrderMgmt.Settings.GlobalReference.Default.DiBS_DB_ProdConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="omqryOrdersMainTableAdapter" GeneratorDataComponentClassName="omqryOrdersMainTableAdapter" Name="omqryOrdersMain" UserDataComponentName="omqryOrdersMainTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DiBS_DB_ProdConnectionString (Settings)" DbObjectName="DiBS_DB_Prod.dbo.omqryOrdersMain" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT OrderID, DistrictID, SchoolID, BHPONumber, BillTo_Name, BillTo_Street, BillTo_City, BillTo_Zip, BillTo_State, ShipTo_Name, ShipTo_Street, ShipTo_City, ShipTo_Zip, ShipTo_State, PurchasingContactName, PurchasingContactPhone, PurchasingContactEmail, PurchasingPONumber, OrderNotes, OrderDate, DueDate, SpecialInstruction, EnteredBy, CreateTime, UpdateTime, PO_Amount, PO_Shipping, PO_TotalAmount, OrderStatusID, OrderStatus, OrderStatusColor FROM dbo.omqryOrdersMain</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="OrderID" DataSetColumn="OrderID" />
+              <Mapping SourceColumn="DistrictID" DataSetColumn="DistrictID" />
+              <Mapping SourceColumn="SchoolID" DataSetColumn="SchoolID" />
+              <Mapping SourceColumn="BHPONumber" DataSetColumn="BHPONumber" />
+              <Mapping SourceColumn="BillTo_Name" DataSetColumn="BillTo_Name" />
+              <Mapping SourceColumn="BillTo_Street" DataSetColumn="BillTo_Street" />
+              <Mapping SourceColumn="BillTo_City" DataSetColumn="BillTo_City" />
+              <Mapping SourceColumn="BillTo_Zip" DataSetColumn="BillTo_Zip" />
+              <Mapping SourceColumn="BillTo_State" DataSetColumn="BillTo_State" />
+              <Mapping SourceColumn="ShipTo_Name" DataSetColumn="ShipTo_Name" />
+              <Mapping SourceColumn="ShipTo_Street" DataSetColumn="ShipTo_Street" />
+              <Mapping SourceColumn="ShipTo_City" DataSetColumn="ShipTo_City" />
+              <Mapping SourceColumn="ShipTo_Zip" DataSetColumn="ShipTo_Zip" />
+              <Mapping SourceColumn="ShipTo_State" DataSetColumn="ShipTo_State" />
+              <Mapping SourceColumn="PurchasingContactName" DataSetColumn="PurchasingContactName" />
+              <Mapping SourceColumn="PurchasingContactPhone" DataSetColumn="PurchasingContactPhone" />
+              <Mapping SourceColumn="PurchasingContactEmail" DataSetColumn="PurchasingContactEmail" />
+              <Mapping SourceColumn="PurchasingPONumber" DataSetColumn="PurchasingPONumber" />
+              <Mapping SourceColumn="OrderNotes" DataSetColumn="OrderNotes" />
+              <Mapping SourceColumn="OrderDate" DataSetColumn="OrderDate" />
+              <Mapping SourceColumn="DueDate" DataSetColumn="DueDate" />
+              <Mapping SourceColumn="SpecialInstruction" DataSetColumn="SpecialInstruction" />
+              <Mapping SourceColumn="EnteredBy" DataSetColumn="EnteredBy" />
+              <Mapping SourceColumn="CreateTime" DataSetColumn="CreateTime" />
+              <Mapping SourceColumn="UpdateTime" DataSetColumn="UpdateTime" />
+              <Mapping SourceColumn="PO_Amount" DataSetColumn="PO_Amount" />
+              <Mapping SourceColumn="PO_Shipping" DataSetColumn="PO_Shipping" />
+              <Mapping SourceColumn="PO_TotalAmount" DataSetColumn="PO_TotalAmount" />
+              <Mapping SourceColumn="OrderStatusID" DataSetColumn="OrderStatusID" />
+              <Mapping SourceColumn="OrderStatus" DataSetColumn="OrderStatus" />
+              <Mapping SourceColumn="OrderStatusColor" DataSetColumn="OrderStatusColor" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DiBS_DB_ProdDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DiBS_DB_ProdDataSet" msprop:Generator_UserDSName="DiBS_DB_ProdDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="omqryOrdersMain" msprop:Generator_TableClassName="omqryOrdersMainDataTable" msprop:Generator_TableVarName="tableomqryOrdersMain" msprop:Generator_TablePropName="omqryOrdersMain" msprop:Generator_RowDeletingName="omqryOrdersMainRowDeleting" msprop:Generator_RowChangingName="omqryOrdersMainRowChanging" msprop:Generator_RowEvHandlerName="omqryOrdersMainRowChangeEventHandler" msprop:Generator_RowDeletedName="omqryOrdersMainRowDeleted" msprop:Generator_UserTableName="omqryOrdersMain" msprop:Generator_RowChangedName="omqryOrdersMainRowChanged" msprop:Generator_RowEvArgName="omqryOrdersMainRowChangeEvent" msprop:Generator_RowClassName="omqryOrdersMainRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OrderID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnOrderID" msprop:Generator_ColumnPropNameInRow="OrderID" msprop:Generator_ColumnPropNameInTable="OrderIDColumn" msprop:Generator_UserColumnName="OrderID" type="xs:string" />
+              <xs:element name="DistrictID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnDistrictID" msprop:Generator_ColumnPropNameInRow="DistrictID" msprop:Generator_ColumnPropNameInTable="DistrictIDColumn" msprop:Generator_UserColumnName="DistrictID" type="xs:string" minOccurs="0" />
+              <xs:element name="SchoolID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnSchoolID" msprop:Generator_ColumnPropNameInRow="SchoolID" msprop:Generator_ColumnPropNameInTable="SchoolIDColumn" msprop:Generator_UserColumnName="SchoolID" type="xs:string" minOccurs="0" />
+              <xs:element name="BHPONumber" msprop:Generator_ColumnVarNameInTable="columnBHPONumber" msprop:Generator_ColumnPropNameInRow="BHPONumber" msprop:Generator_ColumnPropNameInTable="BHPONumberColumn" msprop:Generator_UserColumnName="BHPONumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BillTo_Name" msprop:Generator_ColumnVarNameInTable="columnBillTo_Name" msprop:Generator_ColumnPropNameInRow="BillTo_Name" msprop:Generator_ColumnPropNameInTable="BillTo_NameColumn" msprop:Generator_UserColumnName="BillTo_Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BillTo_Street" msprop:Generator_ColumnVarNameInTable="columnBillTo_Street" msprop:Generator_ColumnPropNameInRow="BillTo_Street" msprop:Generator_ColumnPropNameInTable="BillTo_StreetColumn" msprop:Generator_UserColumnName="BillTo_Street" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BillTo_City" msprop:Generator_ColumnVarNameInTable="columnBillTo_City" msprop:Generator_ColumnPropNameInRow="BillTo_City" msprop:Generator_ColumnPropNameInTable="BillTo_CityColumn" msprop:Generator_UserColumnName="BillTo_City" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BillTo_Zip" msprop:Generator_ColumnVarNameInTable="columnBillTo_Zip" msprop:Generator_ColumnPropNameInRow="BillTo_Zip" msprop:Generator_ColumnPropNameInTable="BillTo_ZipColumn" msprop:Generator_UserColumnName="BillTo_Zip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BillTo_State" msprop:Generator_ColumnVarNameInTable="columnBillTo_State" msprop:Generator_ColumnPropNameInRow="BillTo_State" msprop:Generator_ColumnPropNameInTable="BillTo_StateColumn" msprop:Generator_UserColumnName="BillTo_State" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipTo_Name" msprop:Generator_ColumnVarNameInTable="columnShipTo_Name" msprop:Generator_ColumnPropNameInRow="ShipTo_Name" msprop:Generator_ColumnPropNameInTable="ShipTo_NameColumn" msprop:Generator_UserColumnName="ShipTo_Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipTo_Street" msprop:Generator_ColumnVarNameInTable="columnShipTo_Street" msprop:Generator_ColumnPropNameInRow="ShipTo_Street" msprop:Generator_ColumnPropNameInTable="ShipTo_StreetColumn" msprop:Generator_UserColumnName="ShipTo_Street" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipTo_City" msprop:Generator_ColumnVarNameInTable="columnShipTo_City" msprop:Generator_ColumnPropNameInRow="ShipTo_City" msprop:Generator_ColumnPropNameInTable="ShipTo_CityColumn" msprop:Generator_UserColumnName="ShipTo_City" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipTo_Zip" msprop:Generator_ColumnVarNameInTable="columnShipTo_Zip" msprop:Generator_ColumnPropNameInRow="ShipTo_Zip" msprop:Generator_ColumnPropNameInTable="ShipTo_ZipColumn" msprop:Generator_UserColumnName="ShipTo_Zip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipTo_State" msprop:Generator_ColumnVarNameInTable="columnShipTo_State" msprop:Generator_ColumnPropNameInRow="ShipTo_State" msprop:Generator_ColumnPropNameInTable="ShipTo_StateColumn" msprop:Generator_UserColumnName="ShipTo_State" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PurchasingContactName" msprop:Generator_ColumnVarNameInTable="columnPurchasingContactName" msprop:Generator_ColumnPropNameInRow="PurchasingContactName" msprop:Generator_ColumnPropNameInTable="PurchasingContactNameColumn" msprop:Generator_UserColumnName="PurchasingContactName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PurchasingContactPhone" msprop:Generator_ColumnVarNameInTable="columnPurchasingContactPhone" msprop:Generator_ColumnPropNameInRow="PurchasingContactPhone" msprop:Generator_ColumnPropNameInTable="PurchasingContactPhoneColumn" msprop:Generator_UserColumnName="PurchasingContactPhone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PurchasingContactEmail" msprop:Generator_ColumnVarNameInTable="columnPurchasingContactEmail" msprop:Generator_ColumnPropNameInRow="PurchasingContactEmail" msprop:Generator_ColumnPropNameInTable="PurchasingContactEmailColumn" msprop:Generator_UserColumnName="PurchasingContactEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PurchasingPONumber" msprop:Generator_ColumnVarNameInTable="columnPurchasingPONumber" msprop:Generator_ColumnPropNameInRow="PurchasingPONumber" msprop:Generator_ColumnPropNameInTable="PurchasingPONumberColumn" msprop:Generator_UserColumnName="PurchasingPONumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OrderNotes" msprop:Generator_ColumnVarNameInTable="columnOrderNotes" msprop:Generator_ColumnPropNameInRow="OrderNotes" msprop:Generator_ColumnPropNameInTable="OrderNotesColumn" msprop:Generator_UserColumnName="OrderNotes" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OrderDate" msprop:Generator_ColumnVarNameInTable="columnOrderDate" msprop:Generator_ColumnPropNameInRow="OrderDate" msprop:Generator_ColumnPropNameInTable="OrderDateColumn" msprop:Generator_UserColumnName="OrderDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DueDate" msprop:Generator_ColumnVarNameInTable="columnDueDate" msprop:Generator_ColumnPropNameInRow="DueDate" msprop:Generator_ColumnPropNameInTable="DueDateColumn" msprop:Generator_UserColumnName="DueDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SpecialInstruction" msprop:Generator_ColumnVarNameInTable="columnSpecialInstruction" msprop:Generator_ColumnPropNameInRow="SpecialInstruction" msprop:Generator_ColumnPropNameInTable="SpecialInstructionColumn" msprop:Generator_UserColumnName="SpecialInstruction" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnteredBy" msprop:Generator_ColumnVarNameInTable="columnEnteredBy" msprop:Generator_ColumnPropNameInRow="EnteredBy" msprop:Generator_ColumnPropNameInTable="EnteredByColumn" msprop:Generator_UserColumnName="EnteredBy" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CreateTime" msprop:Generator_ColumnVarNameInTable="columnCreateTime" msprop:Generator_ColumnPropNameInRow="CreateTime" msprop:Generator_ColumnPropNameInTable="CreateTimeColumn" msprop:Generator_UserColumnName="CreateTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdateTime" msprop:Generator_ColumnVarNameInTable="columnUpdateTime" msprop:Generator_ColumnPropNameInRow="UpdateTime" msprop:Generator_ColumnPropNameInTable="UpdateTimeColumn" msprop:Generator_UserColumnName="UpdateTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PO_Amount" msprop:Generator_ColumnVarNameInTable="columnPO_Amount" msprop:Generator_ColumnPropNameInRow="PO_Amount" msprop:Generator_ColumnPropNameInTable="PO_AmountColumn" msprop:Generator_UserColumnName="PO_Amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PO_Shipping" msprop:Generator_ColumnVarNameInTable="columnPO_Shipping" msprop:Generator_ColumnPropNameInRow="PO_Shipping" msprop:Generator_ColumnPropNameInTable="PO_ShippingColumn" msprop:Generator_UserColumnName="PO_Shipping" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PO_TotalAmount" msprop:Generator_ColumnVarNameInTable="columnPO_TotalAmount" msprop:Generator_ColumnPropNameInRow="PO_TotalAmount" msprop:Generator_ColumnPropNameInTable="PO_TotalAmountColumn" msprop:Generator_UserColumnName="PO_TotalAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OrderStatusID" msprop:Generator_ColumnVarNameInTable="columnOrderStatusID" msprop:Generator_ColumnPropNameInRow="OrderStatusID" msprop:Generator_ColumnPropNameInTable="OrderStatusIDColumn" msprop:Generator_UserColumnName="OrderStatusID" type="xs:int" minOccurs="0" />
+              <xs:element name="OrderStatus" msprop:Generator_ColumnVarNameInTable="columnOrderStatus" msprop:Generator_ColumnPropNameInRow="OrderStatus" msprop:Generator_ColumnPropNameInTable="OrderStatusColumn" msprop:Generator_UserColumnName="OrderStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OrderStatusColor" msprop:Generator_ColumnVarNameInTable="columnOrderStatusColor" msprop:Generator_ColumnPropNameInRow="OrderStatusColor" msprop:Generator_ColumnPropNameInTable="OrderStatusColorColumn" msprop:Generator_UserColumnName="OrderStatusColor" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:omqryOrdersMain" />
+      <xs:field xpath="mstns:OrderID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

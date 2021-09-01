@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DiBS_DB_ProdDataSet4" targetNamespace="http://tempuri.org/DiBS_DB_ProdDataSet4.xsd" xmlns:mstns="http://tempuri.org/DiBS_DB_ProdDataSet4.xsd" xmlns="http://tempuri.org/DiBS_DB_ProdDataSet4.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DiBS_DB_ProdConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DiBS_DB_ProdConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.DibsOrderMgmt.Settings.GlobalReference.Default.DiBS_DB_ProdConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="omqryOrderItemsTableAdapter" GeneratorDataComponentClassName="omqryOrderItemsTableAdapter" Name="omqryOrderItems" UserDataComponentName="omqryOrderItemsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DiBS_DB_ProdConnectionString (Settings)" DbObjectName="DiBS_DB_Prod.dbo.omqryOrderItems" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT OrderItemID, OrderID, OrderSetID, BoxNumber, SetName, PartnerID, PublisherShortName, MetaDataID, ItemNumber, ItemDesc, QTY, ListPrice, ExtendedPrice FROM dbo.omqryOrderItems</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="OrderItemID" DataSetColumn="OrderItemID" />
+              <Mapping SourceColumn="OrderID" DataSetColumn="OrderID" />
+              <Mapping SourceColumn="OrderSetID" DataSetColumn="OrderSetID" />
+              <Mapping SourceColumn="BoxNumber" DataSetColumn="BoxNumber" />
+              <Mapping SourceColumn="SetName" DataSetColumn="SetName" />
+              <Mapping SourceColumn="PartnerID" DataSetColumn="PartnerID" />
+              <Mapping SourceColumn="PublisherShortName" DataSetColumn="PublisherShortName" />
+              <Mapping SourceColumn="MetaDataID" DataSetColumn="MetaDataID" />
+              <Mapping SourceColumn="ItemNumber" DataSetColumn="ItemNumber" />
+              <Mapping SourceColumn="ItemDesc" DataSetColumn="ItemDesc" />
+              <Mapping SourceColumn="QTY" DataSetColumn="QTY" />
+              <Mapping SourceColumn="ListPrice" DataSetColumn="ListPrice" />
+              <Mapping SourceColumn="ExtendedPrice" DataSetColumn="ExtendedPrice" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DiBS_DB_ProdDataSet4" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DiBS_DB_ProdDataSet4" msprop:Generator_UserDSName="DiBS_DB_ProdDataSet4">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="omqryOrderItems" msprop:Generator_TableClassName="omqryOrderItemsDataTable" msprop:Generator_TableVarName="tableomqryOrderItems" msprop:Generator_TablePropName="omqryOrderItems" msprop:Generator_RowDeletingName="omqryOrderItemsRowDeleting" msprop:Generator_RowChangingName="omqryOrderItemsRowChanging" msprop:Generator_RowEvHandlerName="omqryOrderItemsRowChangeEventHandler" msprop:Generator_RowDeletedName="omqryOrderItemsRowDeleted" msprop:Generator_UserTableName="omqryOrderItems" msprop:Generator_RowChangedName="omqryOrderItemsRowChanged" msprop:Generator_RowEvArgName="omqryOrderItemsRowChangeEvent" msprop:Generator_RowClassName="omqryOrderItemsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OrderItemID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnOrderItemID" msprop:Generator_ColumnPropNameInRow="OrderItemID" msprop:Generator_ColumnPropNameInTable="OrderItemIDColumn" msprop:Generator_UserColumnName="OrderItemID" type="xs:string" />
+              <xs:element name="OrderID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnOrderID" msprop:Generator_ColumnPropNameInRow="OrderID" msprop:Generator_ColumnPropNameInTable="OrderIDColumn" msprop:Generator_UserColumnName="OrderID" type="xs:string" />
+              <xs:element name="OrderSetID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnOrderSetID" msprop:Generator_ColumnPropNameInRow="OrderSetID" msprop:Generator_ColumnPropNameInTable="OrderSetIDColumn" msprop:Generator_UserColumnName="OrderSetID" type="xs:string" minOccurs="0" />
+              <xs:element name="BoxNumber" msprop:Generator_ColumnVarNameInTable="columnBoxNumber" msprop:Generator_ColumnPropNameInRow="BoxNumber" msprop:Generator_ColumnPropNameInTable="BoxNumberColumn" msprop:Generator_UserColumnName="BoxNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="SetName" msprop:Generator_ColumnVarNameInTable="columnSetName" msprop:Generator_ColumnPropNameInRow="SetName" msprop:Generator_ColumnPropNameInTable="SetNameColumn" msprop:Generator_UserColumnName="SetName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PartnerID" msprop:Generator_ColumnVarNameInTable="columnPartnerID" msprop:Generator_ColumnPropNameInRow="PartnerID" msprop:Generator_ColumnPropNameInTable="PartnerIDColumn" msprop:Generator_UserColumnName="PartnerID" type="xs:int" minOccurs="0" />
+              <xs:element name="PublisherShortName" msprop:Generator_ColumnVarNameInTable="columnPublisherShortName" msprop:Generator_ColumnPropNameInRow="PublisherShortName" msprop:Generator_ColumnPropNameInTable="PublisherShortNameColumn" msprop:Generator_UserColumnName="PublisherShortName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MetaDataID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnMetaDataID" msprop:Generator_ColumnPropNameInRow="MetaDataID" msprop:Generator_ColumnPropNameInTable="MetaDataIDColumn" msprop:Generator_UserColumnName="MetaDataID" type="xs:string" minOccurs="0" />
+              <xs:element name="ItemNumber" msprop:Generator_ColumnVarNameInTable="columnItemNumber" msprop:Generator_ColumnPropNameInRow="ItemNumber" msprop:Generator_ColumnPropNameInTable="ItemNumberColumn" msprop:Generator_UserColumnName="ItemNumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemDesc" msprop:Generator_ColumnVarNameInTable="columnItemDesc" msprop:Generator_ColumnPropNameInRow="ItemDesc" msprop:Generator_ColumnPropNameInTable="ItemDescColumn" msprop:Generator_UserColumnName="ItemDesc" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QTY" msprop:Generator_ColumnVarNameInTable="columnQTY" msprop:Generator_ColumnPropNameInRow="QTY" msprop:Generator_ColumnPropNameInTable="QTYColumn" msprop:Generator_UserColumnName="QTY" type="xs:int" minOccurs="0" />
+              <xs:element name="ListPrice" msprop:Generator_ColumnVarNameInTable="columnListPrice" msprop:Generator_ColumnPropNameInRow="ListPrice" msprop:Generator_ColumnPropNameInTable="ListPriceColumn" msprop:Generator_UserColumnName="ListPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ExtendedPrice" msprop:Generator_ColumnVarNameInTable="columnExtendedPrice" msprop:Generator_ColumnPropNameInRow="ExtendedPrice" msprop:Generator_ColumnPropNameInTable="ExtendedPriceColumn" msprop:Generator_UserColumnName="ExtendedPrice" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:omqryOrderItems" />
+      <xs:field xpath="mstns:OrderItemID" />
+      <xs:field xpath="mstns:OrderID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
