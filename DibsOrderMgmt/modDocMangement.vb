@@ -2,18 +2,30 @@
 Imports System.IO
 
 Module modDocMangement
+    'Public Enum OrderDocTypes
+    '    NoDocumentType = 0
+    '    CustPO = 10
+    '    CustQuote = 20
+    '    CustInvoice = 30
+    '    CustLabels = 40
+    '    PubPO = 50
+    '    PubInvoice = 60
+    '    Other = 1000
 
-    Public Structure OrderDocTypes
-        Const NoDocumentType = 0
-        Const CustPO = 10
-        Const CustQuote = 20
-        Const CustInvoice = 30
-        Const CustLabels = 40
-        Const PubPO = 50
-        Const PubInvoice = 60
-        Const Other = 1000
+    'End Enum
 
-    End Structure
+
+    'Public Structure OrderDocTypes
+    '    Const NoDocumentType = 0
+    '    Const CustPO = 10
+    '    Const CustQuote = 20
+    '    Const CustInvoice = 30
+    '    Const CustLabels = 40
+    '    Const PubPO = 50
+    '    Const PubInvoice = 60
+    '    Const Other = 1000
+
+    'End Structure
     Public Structure OrderDocument
         Public OrderID As Guid
         Public DocumentID As Guid

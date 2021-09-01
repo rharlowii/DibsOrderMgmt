@@ -131,6 +131,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsDibsOrderMgmt.vb" />
     <Compile Include="clsImportMetaData.vb" />
     <Compile Include="DiBS_Admin.vb" />
     <Compile Include="DiBS_DB_ProdDataSet.Designer.vb">
