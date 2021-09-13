@@ -21,7 +21,7 @@ Public Class frmMain
     End Sub
     Private Sub LoadOrdersGrid()
 
-        Dim sSQL As String = "SELECT * FROM omqryOrdersMain"
+        Dim sSQL As String = "SELECT * FROM omqryOrdersMain Order By BHPONumber DESC"
 
         Dim ds As New DataSet
         Dim da As SqlDataAdapter
@@ -55,6 +55,7 @@ Public Class frmMain
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
             .oOrderID = oNewOrderID
+            .StartPosition = FormStartPosition.CenterParent
             .ShowDialog()
         End With
 
@@ -177,8 +178,9 @@ Public Class frmMain
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
             .oOrderID = oEditOrderID
+            .StartPosition = FormStartPosition.CenterParent
 
-
+            ' .MdiParent = Me
             .ShowDialog()
 
         End With
@@ -209,6 +211,7 @@ Public Class frmMain
         End With
         With ofrmSubItem
             .oCurrentOrderItem = oOrderItem
+            .StartPosition = FormStartPosition.CenterParent
             .Show()
         End With
 
@@ -251,6 +254,7 @@ Public Class frmMain
         With oFrmPdf
             .PDFBytes = oBytes
             .LoadPDF()
+            .StartPosition = FormStartPosition.CenterParent
             .Show()
 
         End With
@@ -284,7 +288,7 @@ Public Class frmMain
                 '.dgv_Grid.DataSource = ds.Tables(0)
                 .oOrderID = oEditOrderID
                 .bExistingOrder = True
-
+                .StartPosition = FormStartPosition.CenterParent
                 Me.Cursor = Cursors.Default
                 .ShowDialog()
 
@@ -325,7 +329,7 @@ Public Class frmMain
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
             .oOrderID = oEditOrderID
-
+            .StartPosition = FormStartPosition.CenterParent
 
             .ShowDialog()
 
@@ -362,7 +366,7 @@ Public Class frmMain
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
             .oOrderID = oOrderID
-
+            .StartPosition = FormStartPosition.CenterParent
 
             .ShowDialog()
 
@@ -421,9 +425,11 @@ Public Class frmMain
                         .oOrderInfoDataTable = GetOrderInfo(oOrderID)
                         .iPartnerID = iPartnerID
                         .oOrderID = oOrderID
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubPO
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
                         .AddOrderItems()
+                        .StartPosition = FormStartPosition.CenterParent
                         .Show()
                         ' .LoadExcel()
 
@@ -437,7 +443,7 @@ Public Class frmMain
                 With oSelectPartners
                     .oOrderID = oOrderID
                     .oOrderPartners = oOrderPartners
-
+                    .StartPosition = FormStartPosition.CenterParent
                     .ShowDialog()
 
                     If .bCanceled = True Then Exit Sub
@@ -457,6 +463,7 @@ Public Class frmMain
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
                         .AddOrderItems()
+                        .StartPosition = FormStartPosition.CenterParent
                         .Show()
                         ' .LoadExcel()
 
@@ -527,6 +534,7 @@ Public Class frmMain
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
                         .AddOrderItems()
+                        .StartPosition = FormStartPosition.CenterParent
                         .Show()
                         ' .LoadExcel()
 
@@ -540,7 +548,7 @@ Public Class frmMain
                 With oSelectPartners
                     .oOrderID = oOrderID
                     .oOrderPartners = oOrderPartners
-
+                    .StartPosition = FormStartPosition.CenterParent
                     .ShowDialog()
 
                     If .bCanceled = True Then Exit Sub
@@ -559,6 +567,7 @@ Public Class frmMain
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
                         .AddOrderItems()
+                        .StartPosition = FormStartPosition.CenterParent
                         .Show()
                         ' .LoadExcel()
 
@@ -642,11 +651,91 @@ Public Class frmMain
             .SetCustomerInvoice_FixedCells()
             '.AddOrderItems()
             .AddOrderSets()
+            .StartPosition = FormStartPosition.CenterParent
             .Show()
             ' .LoadExcel()
 
         End With
 
+
+    End Sub
+
+    Private Sub BarButtonItem1_CustomerPackingSlip_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_CustomerPackingSlip.ItemClick
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim sCustomerPO As String
+        Dim sBHPO As String
+        Dim sBillTo_Name As String
+        Dim sBillTo_Name_NoSpace As String
+
+        Dim sBillToState As String
+        Dim sInvoiceFileName As String
+
+        'We modified this to handle the customer PO as well
+        Dim frmCustomerInvoice As New frmPublisherPO
+
+        Dim oOrderSets As DataTable
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        oOrderSets = GetOrderSetsInOrder(oOrderID.ToString)
+
+
+        'Need to swap this out later...maybe store in DB
+        sFile = HiveTemplatePath & "HIVE_PackingSlip_Template.xlsx"
+
+
+        With oRow
+            sCustomerPO = .Item("PurchasingPONumber").ToString
+            sBHPO = .Item("BHPONumber").ToString
+            sBillTo_Name = .Item("BillTo_Name").ToString
+            sBillToState = .Item("BillTo_State").ToString
+        End With
+        'Lets get rid on the spaces from the name
+
+        sBillTo_Name_NoSpace = sBillTo_Name.Replace(" ", "")
+
+        'INV_KS_HAYSUSD_PO_0084220022
+        sInvoiceFileName = "PackingSlip_" & sBillToState & "_" & sBillTo_Name_NoSpace & "_" & sBHPO
+
+        With frmCustomerInvoice
+
+            .BarButtonItem1.Caption = "Save Packing Slip to Order Docs"
+            .BarButtonItem2.Caption = "Send Packing Slip"
+
+
+            ' .BarButtonItem2.ImageOptions.LargeImage = My.Resources.sendpdf_32x32
+            .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.CustPackingSlip
+            .Text = sInvoiceFileName
+            .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+            .oOrderSetsDataTable = oOrderSets
+            .oOrderID = oOrderID
+            .SpreadsheetControl1.LoadDocument(sFile)
+            '
+
+            .SetCustomerPackingSlip_FixedCells()
+            '         .AddOrderSets()
+            '.AddOrderItems()
+            .AddPackingSlipItems()
+            .StartPosition = FormStartPosition.CenterParent
+            .Show()
+            ' .LoadExcel()
+
+        End With
 
     End Sub
 End Class

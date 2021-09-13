@@ -54,6 +54,33 @@ Public Class frmPublisherPO
         Const OrderItemCol_ItemTotalCost As String = "H"
 
     End Structure
+    Public Structure CustomerPackingSlipFixedCells
+        Const BHPackingSlipDateDate As String = "D9"
+        ' Const POBHNumber As String = "E8"
+        Const POCustomerNumber As String = "B9"
+
+        Const BillTo_Line1 As String = "A12"
+        Const BillTo_Line2 As String = "A13"
+        Const BillTo_Line3 As String = "A14"
+        Const BillTo_Line4 As String = "A15"
+        Const BillTo_Line5 As String = "A16"
+
+        Const ShipTo_Line1 As String = "C12"
+        Const ShipTo_Line2 As String = "C13"
+        Const ShipTo_Line3 As String = "C14"
+        Const ShipTo_Line4 As String = "C15"
+        Const ShipTo_Line5 As String = "C16"
+
+        Const PackingSlipItemsStartRow As Integer = 19
+
+        Const PackingSlip_Partner As String = "A"
+        Const PackingSlip_ItemNumber As String = "B"
+        Const PackingSlip_ItemDesc As String = "C"
+        Const PackingSlip_ItemQTY As String = "E"
+
+
+    End Structure
+
     Public Structure CustomerInvoiceFixedCells
         Const BHInvoiceDate As String = "D9"
         Const POBHNumber As String = "E8"
@@ -203,6 +230,104 @@ Public Class frmPublisherPO
 endUpdate:
         oWorkSheet.Cells.EndUpdate()
     End Function
+    Public Function AddPackingSlipItems()
+
+        Dim oOrderItemRow As DataRow
+        Dim iStartRow As Integer
+        Dim iRowCount As Integer
+        Dim sItemPartner As String
+        Dim sItemCell As String
+        Dim sItemDescCell As String
+        Dim sItemQTYCell As String
+        Dim sItemListPriceCell As String
+        'Dim sItemDiscountCell As String
+        'Dim sItemUnitCostCell As String
+        'Dim sItemTotalCostCell As String
+        'Dim sSubTotalCell As String
+        'Dim sSubTotalStartCell As String
+        'Dim sSubTotalEndCell As String
+        Dim iOrderItemsCount As Integer
+        Dim oPartnerDiscount As Decimal
+        Dim sColorRange As String
+
+        Dim oBackColorForOdd As Color
+
+
+        Dim oWorkSheet As Spreadsheet.Worksheet
+        'Make you pass TRue, so we get all...not just a specific partner
+        LoadOrderItemsInfo(True)
+
+        oWorkSheet = SpreadsheetControl1.ActiveWorksheet
+
+        iStartRow = CustomerPackingSlipFixedCells.PackingSlipItemsStartRow
+        iRowCount = 0
+
+
+        iOrderItemsCount = oOrderItemsDataTable.Rows.Count
+        If iOrderItemsCount = 0 Then
+            'If no order items then we can bail
+            Exit Function
+        End If
+
+
+
+        '   oPartnerDiscount = oPartnerDataTable.Rows(0).Item("PrintDiscount")
+
+        oWorkSheet.Cells.BeginUpdate()
+        For Each oOrderItemRow In oOrderItemsDataTable.Rows
+
+
+            'Set the cell locations for the order items
+            sItemPartner = CustomerPackingSlipFixedCells.PackingSlip_Partner & (iStartRow + iRowCount)
+            sItemCell = CustomerPackingSlipFixedCells.PackingSlip_ItemNumber & (iStartRow + iRowCount)
+            sItemDescCell = CustomerPackingSlipFixedCells.PackingSlip_ItemDesc & (iStartRow + iRowCount)
+            sItemQTYCell = CustomerPackingSlipFixedCells.PackingSlip_ItemQTY & (iStartRow + iRowCount)
+
+
+            'Now set the Values is those cells
+            oWorkSheet.Range(sItemPartner).Value = oOrderItemRow.Item("PublisherShortName").ToString
+            oWorkSheet.Range(sItemCell).Value = oOrderItemRow.Item("ItemNumber").ToString
+            oWorkSheet.Range(sItemDescCell).Value = oOrderItemRow.Item("ItemDesc").ToString
+            oWorkSheet.Range(sItemQTYCell).Value = oOrderItemRow.Item("QTY").ToString
+
+
+
+
+            ''Need to Fix Sub Total formula
+            'sSubTotalCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount + 3)
+            'sSubTotalStartCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow)
+            'sSubTotalEndCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
+
+
+            'Need to Format the row
+
+
+
+            iRowCount = iRowCount + 1
+
+            'Go ahead and insert a new row for the next items or provide spacing
+            '(This one is a little differnent because of Partner Column)
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.PackingSlip_Partner & (iStartRow + iRowCount)).Insert(InsertCellsMode.EntireRow)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formats)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.NumberFormats)
+            ' oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formulas)
+            'So odd Rows, we want No Back color....on even leave the background color
+
+            sColorRange = CustomerPackingSlipFixedCells.PackingSlip_Partner & (iStartRow + iRowCount) & ":" & CustomerPackingSlipFixedCells.PackingSlip_ItemQTY & (iStartRow + iRowCount)
+            If iRowCount Mod 2 = 0 Then
+                'Even...Clear
+                oWorkSheet.Range(sColorRange).FillColor = Color.Transparent
+            Else
+                'Odd.Set Color
+
+                oWorkSheet.Range(sColorRange).FillColor = Color.LightGray
+            End If
+        Next
+        ' oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
+endUpdate:
+        oWorkSheet.Cells.EndUpdate()
+    End Function
     Public Function AddOrderSets()
 
         Dim oOrderSetItemRow As DataRow
@@ -323,6 +448,10 @@ endUpdate:
     End Function
     Public Function SetPublisherPO_FixedCells()
         Dim oPartnerRow As DataRow
+        Dim sMSG As String
+        Dim iRtrn As DialogResult
+        Dim sCityStateZip As String
+        Dim sATTN As String
 
 
         'Gets partner Infor From DB
@@ -340,7 +469,7 @@ endUpdate:
         'Need to add PO numbers from 
         With oOrderInfoDataTable.Rows(0)
             oWorkSheet.Range(POPubFixedCells.POBHNumber).Value = .Item("BHPONumber").ToString
-            oWorkSheet.Range(POPubFixedCells.POCustomerNumber).Value = .Item("PurchasingPONumber").ToString
+            oWorkSheet.Range(POPubFixedCells.POCustomerNumber).Value = "PO: " & .Item("PurchasingPONumber").ToString
         End With
 
         ' oWorkSheet.Range(POPubFixedCells.POBHNumber).Value = oPartnerRow.Item("BHPONumber").ToString
@@ -352,11 +481,34 @@ endUpdate:
         oWorkSheet.Range(POPubFixedCells.Publisher_Line4).Value = oPartnerRow.Item("Partner_Line4").ToString
         oWorkSheet.Range(POPubFixedCells.Publisher_Line5).Value = oPartnerRow.Item("Partner_Line5").ToString
 
-        oWorkSheet.Range(POPubFixedCells.ShipTo_Line1).Value = oPartnerRow.Item("ShipTo_Line1").ToString
-        oWorkSheet.Range(POPubFixedCells.ShipTo_Line2).Value = oPartnerRow.Item("ShipTo_Line2").ToString
-        oWorkSheet.Range(POPubFixedCells.ShipTo_Line3).Value = oPartnerRow.Item("ShipTo_Line3").ToString
-        oWorkSheet.Range(POPubFixedCells.ShipTo_Line4).Value = oPartnerRow.Item("ShipTo_Line4").ToString
-        ' oWorkSheet.Range(POPubFixedCells.ShipTo_Line).Value = oPartnerRow.Item("ShipTo_Line5").ToString
+        sMSG = "Ship Directly to Customer using 'PO Ship To'?"
+
+        iRtrn = MessageBox.Show(sMSG, "Ship  to Where?", MessageBoxButtons.YesNo)
+
+        If iRtrn = DialogResult.Yes Then
+
+
+            With oOrderInfoDataTable.Rows(0)
+
+                sCityStateZip = .Item("ShipTo_City").ToString & ", " & .Item("ShipTo_State").ToString & " " & .Item("ShipTo_Zip").ToString
+                sATTN = "ATTN: " & .Item("ShipTo_ATTN").ToString
+                oWorkSheet.Range(POPubFixedCells.ShipTo_Line1).Value = .Item("ShipTo_Name").ToString
+                oWorkSheet.Range(POPubFixedCells.ShipTo_Line2).Value = sATTN
+                oWorkSheet.Range(POPubFixedCells.ShipTo_Line3).Value = .Item("ShipTo_Street").ToString
+                oWorkSheet.Range(POPubFixedCells.ShipTo_Line4).Value = sCityStateZip
+            End With
+
+            ' oWorkSheet.Range(POPubFixedCells.ShipTo_Line).Value = oPartnerRow.Item("ShipTo_Line5").ToString
+        Else
+            'This will get the standard CES/Fulfillment Address
+            oWorkSheet.Range(POPubFixedCells.ShipTo_Line1).Value = oPartnerRow.Item("ShipTo_Line1").ToString
+            oWorkSheet.Range(POPubFixedCells.ShipTo_Line2).Value = oPartnerRow.Item("ShipTo_Line2").ToString
+            oWorkSheet.Range(POPubFixedCells.ShipTo_Line3).Value = oPartnerRow.Item("ShipTo_Line3").ToString
+            oWorkSheet.Range(POPubFixedCells.ShipTo_Line4).Value = oPartnerRow.Item("ShipTo_Line4").ToString
+            ' oWorkSheet.Range(POPubFixedCells.ShipTo_Line).Value = oPartnerRow.Item("ShipTo_Line5").ToString
+
+        End If
+
 
 
         oWorkSheet.Cells.EndUpdate()
@@ -398,6 +550,49 @@ endUpdate:
             sShipToCityStateZip = .Item("ShipTo_City").ToString & ", " & .Item("ShipTo_State").ToString & " " & .Item("ShipTo_Zip").ToString
 
             oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line3).Value = sShipToCityStateZip
+            ' oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line4).Value = .Item("ShipTo_Line4").ToString
+            'oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line5).Value = .Item("ShipTo_Line5").ToString
+        End With
+
+        oWorkSheet.Cells.EndUpdate()
+
+
+
+    End Function
+    Public Function SetCustomerPackingSlip_FixedCells()
+        Dim oOrderRow As DataRow
+
+
+        Dim oWorkSheet As Spreadsheet.Worksheet
+
+
+        oWorkSheet = SpreadsheetControl1.ActiveWorksheet
+        oWorkSheet.Cells.BeginUpdate()
+        Dim sBillToCityStateZip As String
+        Dim sShipToCityStateZip As String
+
+        ' oWorkSheet.Range(CustomerPackingSlipFixedCells.).Value = Today.ToShortDateString
+        'Need to add PO numbers from 
+
+        'Need to add PO numbers from 
+        With oOrderInfoDataTable.Rows(0)
+            ' oWorkSheet.Range(CustomerPackingSlipFixedCells.).Value = .Item("BHPONumber").ToString
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.POCustomerNumber).Value = .Item("PurchasingPONumber").ToString
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line1).Value = .Item("BillTo_Name").ToString
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line2).Value = .Item("BillTo_Street").ToString
+
+            sBillToCityStateZip = .Item("BillTo_City").ToString & ", " & .Item("BillTo_State").ToString & " " & .Item("BillTo_Zip").ToString
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line3).Value = sBillToCityStateZip
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line4).Value = .Item("PurchasingContactPhone").ToString
+            ' oWorkSheet.Range(CustomerInvoiceFixedCells.BillTo_Line5).Value = .Item("Partner_Line5").ToString
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line1).Value = .Item("ShipTo_Name").ToString
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line2).Value = .Item("ShipTo_Street").ToString
+            sShipToCityStateZip = .Item("ShipTo_City").ToString & ", " & .Item("ShipTo_State").ToString & " " & .Item("ShipTo_Zip").ToString
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line3).Value = sShipToCityStateZip
             ' oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line4).Value = .Item("ShipTo_Line4").ToString
             'oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line5).Value = .Item("ShipTo_Line5").ToString
         End With
@@ -456,19 +651,27 @@ endUpdate:
 
 
     End Sub
-    Private Sub LoadOrderItemsInfo()
+    Private Sub LoadOrderItemsInfo(Optional bAllPartners As Boolean = False)
 
         Dim sSQL As String
         Dim sState As String
 
         ' sState = cmbStates.SelectedValue.ToString
 
+        If bAllPartners = False Then
+            'Sort by asc, so they are inserted Desc
+            sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' AND PartnerID={PartnerID}  ORDER BY ItemDesc ASC"
 
-        'Sort by asc, so they are inserted Desc
-        sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' AND PartnerID={PartnerID}  ORDER BY ItemDesc ASC"
+            sSQL = sSQL.Replace("{OrderID}", oOrderID.ToString)
+            sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
+        Else
+            'Sort by asc, so they are inserted Desc
+            sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' ORDER BY ItemDesc ASC"
 
-        sSQL = sSQL.Replace("{OrderID}", oOrderID.ToString)
-        sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
+            sSQL = sSQL.Replace("{OrderID}", oOrderID.ToString)
+
+        End If
+
 
         Dim ds As New DataSet
         Dim da As SqlDataAdapter
@@ -617,6 +820,10 @@ endUpdate:
         sCustomerBillToState = oOrderInfoDataTable.Rows(0).Item("BillTo_State").ToString
         sCustomerPurchasingPONumber = oOrderInfoDataTable.Rows(0).Item("PurchasingPONumber").ToString
         sTempFile = System.IO.Path.GetTempFileName()
+
+
+        'Make sure you also do the save as button
+
         Select Case oOrderDocType
 
             Case moDocTypes.PubPO
@@ -671,6 +878,31 @@ endUpdate:
     Private Sub frmPublisherPO_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         Me.Text = Me.Text & oOrderInfoDataTable.Rows(0).Item("BHPONumber").ToString
+
+    End Sub
+
+    Private Sub SpreadsheetCommandBarButtonItem4_ItemClick(sender As Object, e As XtraBars.ItemClickEventArgs) Handles SpreadsheetCommandBarButtonItem4.ItemClick
+        Dim sOrderDocName As String
+        Dim sPartner As String
+        Dim sBHPO As String
+
+        sBHPO = oOrderInfoDataTable.Rows(0).Item("BHPONumber").ToString
+
+        Select Case oOrderDocType
+
+            Case clsDibsOrderMgmt.OrderDocTypes.PubPO
+                sPartner = oPartnerDataTable.Rows(0).Item("PublisherShortName")
+                'Need to add the extension or you can not open it on the other end
+                sOrderDocName = sBHPO & "_" & sPartner & "_PO_Final.xlsx"
+                SpreadsheetControl1.Options.Save.CurrentFileName = sOrderDocName
+
+
+            Case Else
+
+        End Select
+
+
+
 
     End Sub
 End Class

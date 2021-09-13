@@ -261,6 +261,7 @@ Public Class frmNewOrder
             txtShipTo_City.Text = .Item("ShipTo_City").ToString
             txtShipTo_Zip.Text = .Item("ShipTo_Zip").ToString
             txtShipTo_State.Text = .Item("ShipTo_State").ToString
+            txtShipTo_Attn.Text = .Item("ShipTo_ATTN").ToString
 
             txtDistrictID.Text = .Item("DistrictID").ToString
             txtSchoolID.Text = .Item("SchoolID").ToString
@@ -422,6 +423,7 @@ Public Class frmNewOrder
             .City = txtShipTo_City.Text
             .Zip = txtShipTo_Zip.Text
             .State = txtShipTo_State.Text
+            .ATTN = txtShipTo_Attn.Text
 
         End With
 

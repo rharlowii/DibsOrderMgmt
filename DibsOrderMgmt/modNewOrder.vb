@@ -11,6 +11,7 @@ Public Structure AddressStructure
 
     Public Phone As String
     Public ID As Guid
+    Public ATTN As String
 
 
 End Structure
@@ -142,7 +143,7 @@ Module modNewOrder
 
         'sp_Insert_CollectionBooks_Into_SchoolBooks 'c47cf20d-b1bc-4e9c-8c4e-28a8c9ae192d', 'e6a391c2-7b67-458a-982a-12884be44946','35761',1
 
-        Dim sEXEC As String = "omOrders_IU @OrderID,@DistrictID,@SchoolID,@BHPONumber,@BillTo_Name ,@BillTo_Street,@BillTo_City ,@BillTo_Zip ,@BillTo_State ,@ShipTo_Name ,@ShipTo_Street ,@ShipTo_City ,@ShipTo_Zip ,@ShipTo_State ,@PurchasingContactName,@PurchasingContactPhone,@PurchasingContactEmail,@PurchasingPONumber,@OrderNotes,@OrderDate,@DueDate,@SpecialInstruction,@EnteredBy, @CreateTime, @UpdateTime,@PO_Amount,@PO_DiscountAmount,@PO_Shipping,@PO_TotalAmount,@OrderStatusID"
+        Dim sEXEC As String = "omOrders_IU @OrderID,@DistrictID,@SchoolID,@BHPONumber,@BillTo_Name ,@BillTo_Street,@BillTo_City ,@BillTo_Zip ,@BillTo_State ,@ShipTo_Name ,@ShipTo_Street ,@ShipTo_City ,@ShipTo_Zip ,@ShipTo_State ,@ShipTo_ATTN,@PurchasingContactName,@PurchasingContactPhone,@PurchasingContactEmail,@PurchasingPONumber,@OrderNotes,@OrderDate,@DueDate,@SpecialInstruction,@EnteredBy, @CreateTime, @UpdateTime,@PO_Amount,@PO_DiscountAmount,@PO_Shipping,@PO_TotalAmount,@OrderStatusID"
         Dim sReturn As String
 
         oConnection = New SqlConnection(sConnectionString)
@@ -169,6 +170,7 @@ Module modNewOrder
             .Parameters.Add("@ShipTo_Zip", SqlDbType.NVarChar).Value = oOrder.ShipToAddress.Zip
             .Parameters.Add("@ShipTo_State", SqlDbType.NVarChar).Value = oOrder.ShipToAddress.State
 
+            .Parameters.Add("@ShipTo_ATTN", SqlDbType.NVarChar).Value = oOrder.ShipToAddress.ATTN
             .Parameters.Add("@PurchasingContactName", SqlDbType.NVarChar).Value = oOrder.PurchasingContactName
             .Parameters.Add("@PurchasingContactPhone", SqlDbType.NVarChar).Value = oOrder.PurchasingContactPhone
             .Parameters.Add("@PurchasingContactEmail", SqlDbType.NVarChar).Value = oOrder.PurchasingContactEmail

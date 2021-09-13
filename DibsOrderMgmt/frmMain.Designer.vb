@@ -41,6 +41,7 @@ Partial Class frmMain
         Me.OrderSetsTotal = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatus = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colDueDate = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.ShipTo_ATTN = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colBillTo_Street = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colBillTo_City = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colBillTo_Zip = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -81,6 +82,9 @@ Partial Class frmMain
         Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
         Me.BarButtonItem1_PublisherPOs = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem2_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerInvoiceOrderSets = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerInvoiceOrderItems = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerPackingSlip = New DevExpress.XtraBars.BarButtonItem()
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
@@ -88,8 +92,6 @@ Partial Class frmMain
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
         Me.BarButtonItem1_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
         Me.OmqryOrdersMainTableAdapter1 = New DibsOrderMgmt.DiBS_DB_ProdDataSetTableAdapters.omqryOrdersMainTableAdapter()
-        Me.BarButtonItem1_CustomerInvoiceOrderSets = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_CustomerInvoiceOrderItems = New DevExpress.XtraBars.BarButtonItem()
         BarStaticItem1_divider = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -164,7 +166,7 @@ Partial Class frmMain
         '
         Me.GridView1.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GridView1.Appearance.Row.Options.UseFont = True
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderID, Me.colDistrictID, Me.colSchoolID, Me.colBHPONumber, Me.colOrderDate, Me.colBillTo_State, Me.colBillTo_Name, Me.colShipTo_Name, Me.colPO_TotalAmount, Me.OrderSetsTotal, Me.colOrderStatus, Me.colDueDate, Me.colBillTo_Street, Me.colBillTo_City, Me.colBillTo_Zip, Me.colShipTo_Street, Me.colShipTo_City, Me.colShipTo_Zip, Me.colShipTo_State, Me.colPurchasingContactName, Me.colPurchasingContactPhone, Me.colPurchasingContactEmail, Me.colPurchasingPONumber, Me.colEnteredBy, Me.colOrderNotes, Me.colSpecialInstruction, Me.colCreateTime, Me.colUpdateTime, Me.PO_DiscountAmount, Me.colPO_Amount, Me.colPO_Shipping, Me.colOrderStatusID, Me.colOrderStatusColor})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderID, Me.colDistrictID, Me.colSchoolID, Me.colBHPONumber, Me.colOrderDate, Me.colBillTo_State, Me.colBillTo_Name, Me.colShipTo_Name, Me.colPO_TotalAmount, Me.OrderSetsTotal, Me.colOrderStatus, Me.colDueDate, Me.ShipTo_ATTN, Me.colBillTo_Street, Me.colBillTo_City, Me.colBillTo_Zip, Me.colShipTo_Street, Me.colShipTo_City, Me.colShipTo_Zip, Me.colShipTo_State, Me.colPurchasingContactName, Me.colPurchasingContactPhone, Me.colPurchasingContactEmail, Me.colPurchasingPONumber, Me.colEnteredBy, Me.colOrderNotes, Me.colSpecialInstruction, Me.colCreateTime, Me.colUpdateTime, Me.PO_DiscountAmount, Me.colPO_Amount, Me.colPO_Shipping, Me.colOrderStatusID, Me.colOrderStatusColor})
         Me.GridView1.GridControl = Me.gridOrders
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
@@ -270,6 +272,12 @@ Partial Class frmMain
         Me.colDueDate.Visible = True
         Me.colDueDate.VisibleIndex = 9
         Me.colDueDate.Width = 101
+        '
+        'ShipTo_ATTN
+        '
+        Me.ShipTo_ATTN.Caption = "ShipTo_ATTN"
+        Me.ShipTo_ATTN.FieldName = "ShipTo_ATTN"
+        Me.ShipTo_ATTN.Name = "ShipTo_ATTN"
         '
         'colBillTo_Street
         '
@@ -538,7 +546,7 @@ Partial Class frmMain
         '
         Me.BarSubItem1.Caption = "Reports/Quotes/Invoices"
         Me.BarSubItem1.Id = 7
-        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems)})
+        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
         Me.BarSubItem1.Name = "BarSubItem1"
         '
         'BarButtonItem1_PublisherPOs
@@ -553,6 +561,24 @@ Partial Class frmMain
         Me.BarButtonItem2_CreateQuote.Id = 9
         Me.BarButtonItem2_CreateQuote.Name = "BarButtonItem2_CreateQuote"
         '
+        'BarButtonItem1_CustomerInvoiceOrderSets
+        '
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Caption = "Create Customer Invoice - Order Sets"
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Id = 10
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Name = "BarButtonItem1_CustomerInvoiceOrderSets"
+        '
+        'BarButtonItem1_CustomerInvoiceOrderItems
+        '
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Caption = "Create Customer Invoice - Order Items"
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Id = 11
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Name = "BarButtonItem1_CustomerInvoiceOrderItems"
+        '
+        'BarButtonItem1_CustomerPackingSlip
+        '
+        Me.BarButtonItem1_CustomerPackingSlip.Caption = "Create Customer Packing Slip"
+        Me.BarButtonItem1_CustomerPackingSlip.Id = 12
+        Me.BarButtonItem1_CustomerPackingSlip.Name = "BarButtonItem1_CustomerPackingSlip"
+        '
         'BarManager1
         '
         Me.BarManager1.DockControls.Add(Me.barDockControlTop)
@@ -560,8 +586,8 @@ Partial Class frmMain
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems})
-        Me.BarManager1.MaxItemId = 12
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip})
+        Me.BarManager1.MaxItemId = 13
         '
         'barDockControlTop
         '
@@ -605,23 +631,10 @@ Partial Class frmMain
         '
         Me.OmqryOrdersMainTableAdapter1.ClearBeforeFill = True
         '
-        'BarButtonItem1_CustomerInvoiceOrderSets
-        '
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Caption = "Create Customer Invoice - Order Sets"
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Id = 10
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Name = "BarButtonItem1_CustomerInvoiceOrderSets"
-        '
-        'BarButtonItem1_CustomerInvoiceOrderItems
-        '
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Caption = "Create Customer Invoice - Order Items"
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Id = 11
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Name = "BarButtonItem1_CustomerInvoiceOrderItems"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1255, 812)
         Me.Controls.Add(Me.panelTop)
@@ -630,6 +643,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
+        Me.IsMdiContainer = True
         Me.Name = "frmMain"
         Me.Text = "frmMain"
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -715,4 +729,6 @@ Partial Class frmMain
     Friend WithEvents PO_DiscountAmount As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents BarButtonItem1_CustomerInvoiceOrderSets As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem1_CustomerInvoiceOrderItems As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem1_CustomerPackingSlip As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents ShipTo_ATTN As DevExpress.XtraGrid.Columns.GridColumn
 End Class
