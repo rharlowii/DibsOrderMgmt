@@ -44,6 +44,7 @@ Partial Class frmOrderSets
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
+        Me.BarButtonItem1_OrderItems = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.gridOrderSets, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DiBS_DB_ProdDataSet21, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -180,7 +181,7 @@ Partial Class frmOrderSets
         '
         'PopupMenu1
         '
-        Me.PopupMenu1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EditOrderSet)})
+        Me.PopupMenu1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EditOrderSet), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderItems)})
         Me.PopupMenu1.Manager = Me.BarManager1
         Me.PopupMenu1.Name = "PopupMenu1"
         '
@@ -199,8 +200,8 @@ Partial Class frmOrderSets
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1_EditOrderSet})
-        Me.BarManager1.MaxItemId = 1
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1_EditOrderSet, Me.BarButtonItem1_OrderItems})
+        Me.BarManager1.MaxItemId = 2
         '
         'barDockControlTop
         '
@@ -233,6 +234,14 @@ Partial Class frmOrderSets
         Me.barDockControlRight.Location = New System.Drawing.Point(1131, 0)
         Me.barDockControlRight.Manager = Me.BarManager1
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 410)
+        '
+        'BarButtonItem1_OrderItems
+        '
+        Me.BarButtonItem1_OrderItems.Caption = "Order Items"
+        Me.BarButtonItem1_OrderItems.Id = 1
+        Me.BarButtonItem1_OrderItems.ItemAppearance.Normal.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BarButtonItem1_OrderItems.ItemAppearance.Normal.Options.UseFont = True
+        Me.BarButtonItem1_OrderItems.Name = "BarButtonItem1_OrderItems"
         '
         'frmOrderSets
         '
@@ -281,4 +290,5 @@ Partial Class frmOrderSets
     Friend WithEvents barDockControlBottom As DevExpress.XtraBars.BarDockControl
     Friend WithEvents barDockControlLeft As DevExpress.XtraBars.BarDockControl
     Friend WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
+    Friend WithEvents BarButtonItem1_OrderItems As DevExpress.XtraBars.BarButtonItem
 End Class

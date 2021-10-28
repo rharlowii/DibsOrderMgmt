@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Data.SqlClient
 Imports DevExpress.XtraEditors
+Imports DevExpress.XtraEditors.Controls
 Imports DevExpress.XtraEditors.Popup
 
 Public Class frmNewOrder
@@ -367,12 +368,29 @@ Public Class frmNewOrder
 
     Private Sub cmbDistrict2_SelectedIndexChanged(sender As Object, e As EventArgs)
 
+
+
+        ''Lets Try and get the District Address
+        'Dim moAddress As AddressStructure
+        'Dim sDistrictID As String
+        'sDistrictID = txtDistrictID.Text
+
+        'If sDistrictID = "" Then Exit Sub
+        'moAddress = GetSchoolDistrictAddress(sDistrictID)
+
+        'With moAddress
+        '    txtBillTo_Name.Text = .AddressName
+        '    txtBillTo_Street.Text = .StreetAddress
+        '    txtBillTo_City.Text = .City
+        '    txtBillTo_State.Text = .State
+        '    txtBillTo_Zip.Text = .Zip
+
+        'End With
     End Sub
 
     Private Sub cmbDistricts2_EditValueChanged(sender As Object, e As EventArgs) Handles cmbDistricts2.EditValueChanged
         LoadSchools2()
         txtDistrictID.Text = cmbDistricts2.EditValue.ToString
-
     End Sub
 
     Private Sub cmbDistricts2_Popup(sender As Object, e As EventArgs) Handles cmbDistricts2.Popup
@@ -687,5 +705,32 @@ Public Class frmNewOrder
 
     Private Sub txtPO_DiscountAmount_TextChanged(sender As Object, e As EventArgs) Handles txtPO_DiscountAmount.TextChanged
         UpdatePOTotal()
+    End Sub
+
+    Private Sub cmbDistricts2_ListChanged(sender As Object, e As ListChangedEventArgs) Handles cmbDistricts2.ListChanged
+
+    End Sub
+
+    Private Sub cmbDistricts2_EditValueChanging(sender As Object, e As ChangingEventArgs) Handles cmbDistricts2.EditValueChanging
+
+    End Sub
+
+    Private Sub cmdSetDistrictBillTo_Click(sender As Object, e As EventArgs) Handles cmdSetDistrictBillTo.Click
+        Dim sDistrictID As String
+
+        Dim oAddress As AddressStructure
+        sDistrictID = txtDistrictID.Text
+        oAddress = GetDistrictMailAddress(sDistrictID)
+
+        With oAddress
+            txtBillTo_Name.Text = .AddressName
+            txtBillTo_Street.Text = .StreetAddress
+            txtBillTo_City.Text = .City
+            txtBillTo_State.Text = .State
+            txtBillTo_Zip.Text = .Zip
+
+
+
+        End With
     End Sub
 End Class

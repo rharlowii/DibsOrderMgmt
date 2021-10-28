@@ -9,6 +9,10 @@ Module modEmail
         Public Subject As String
         Public Body As String
         Public Attachments As List(Of MailItemAttachement)
+        Public EmailType As BHEmailTypes
+        Public OrderID As Guid
+
+
 
 
     End Structure
@@ -18,6 +22,18 @@ Module modEmail
         Public FileName As String
 
     End Structure
+    Public Enum BHEmailTypes
+        NoEmailType = 0
+        CustPOEmail = 10
+        CustQuoteEmail = 20
+        CustInvoiceEmail = 30
+        ' CustLabelsLabels = 40
+        ' CustPackingSlip = 45
+        PubPOEmail = 50
+        PubInvoiceEmail = 60
+        CheckinDocumentEmail = 900
+
+    End Enum
     Public Sub CreateBHMailItem(oBHMailItem As BHMailItem)
 
         Dim application As Outlook.Application = New Outlook.Application()
@@ -25,6 +41,8 @@ Module modEmail
         Dim oAttachment As MailItemAttachement
         Dim iAttachmentCnt As Integer
         '  olAccounts = application.Session.Accounts
+        Dim sMSG As String
+        Dim iDialogResult As DialogResult
 
         Dim oInspector As Object
         application.CreateItem(Outlook.OlItemType.olMailItem)
@@ -54,6 +72,23 @@ Module modEmail
 
 
         mailItem.Display(True)
+
+        Select Case oBHMailItem.EmailType
+
+            Case BHEmailTypes.PubPOEmail
+                'If it is a Pub PO...ask do you want to change the status
+                sMSG = "Since you are sending the Publisher PO...Do you want to set the ORDER STATUS to:'POs Submitted'"
+                iDialogResult = MessageBox.Show(sMSG, "Set Order Status To: 'POs Submitted'", MessageBoxButtons.YesNo)
+
+                If iDialogResult = DialogResult.Yes Then
+                    'then Update Status
+                    UpdateOrderStatus(oBHMailItem.OrderID.ToString, 10)
+
+                End If
+            Case Else
+
+
+        End Select
     End Sub
 
     Private Function ReadSignature() As String

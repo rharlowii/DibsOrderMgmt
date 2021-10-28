@@ -76,14 +76,15 @@ Module modNewOrder
 
             End If
             With oAddress
-                .AddressName = ds.Tables(0).Rows(0).Item("DistrictName")
-                .StreetAddress = ds.Tables(0).Rows(0).Item("StreetAddress")
-                .City = ds.Tables(0).Rows(0).Item("City")
-                .State = ds.Tables(0).Rows(0).Item("State")
-                .Zip = ds.Tables(0).Rows(0).Item("Zip")
-                .Zip4 = ds.Tables(0).Rows(0).Item("Zip 4-digit")
-                .Phone = ds.Tables(0).Rows(0).Item("Phone")
+                .AddressName = ds.Tables(0).Rows(0).Item("DistrictName").ToString
+                .StreetAddress = ds.Tables(0).Rows(0).Item("StreetAddress").ToString
+                .City = ds.Tables(0).Rows(0).Item("City").ToString
+                .State = ds.Tables(0).Rows(0).Item("State").ToString
+                .Zip = ds.Tables(0).Rows(0).Item("Zip").ToString
+                .Zip4 = ds.Tables(0).Rows(0).Item("Zip 4-digit").ToString
+                .Phone = ds.Tables(0).Rows(0).Item("Phone").ToString
                 .ID = ds.Tables(0).Rows(0).Item("ID")
+
 
 
             End With
@@ -245,5 +246,39 @@ Module modNewOrder
 
     End Function
 
+    Public Function GetSchoolDistrictAddress(sDistrictID As String) As AddressStructure
+        Dim sSQL As String
 
+        sSQL = "Select * from omqrySchoolDistrictMailing where ID='{ID}'"
+        Dim oAddress As New AddressStructure
+
+
+        sSQL = sSQL.Replace("{ID}", sDistrictID)
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+
+
+        da.Fill(ds)
+        oConnection.Close()
+
+        If ds.Tables(0).Rows.Count > 0 Then
+
+
+            With ds.Tables(0).Rows(0)
+                oAddress.AddressName = .Item("DistrictName").ToString
+                oAddress.StreetAddress = .Item("StreetAddress").ToString
+                oAddress.City = .Item("City").ToString
+                oAddress.State = .Item("State").ToString
+                oAddress.Zip = .Item("Zip").ToString
+                oAddress.Zip4 = .Item("Zip 4-digit").ToString
+                oAddress.Phone = .Item("Phone").ToString
+            End With
+        End If
+        Return oAddress
+
+    End Function
 End Module

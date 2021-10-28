@@ -301,4 +301,34 @@ exitsub1:
             PopupMenu1.ShowPopup(Control.MousePosition)
         End If
     End Sub
+
+    Private Sub BarButtonItem1_OrderItems_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_OrderItems.ItemClick
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+
+
+        Dim oForm As New frmOrderItems
+
+        With oForm
+            '.dgv_Grid.DataSource = ds.Tables(0)
+            .oOrderID = oOrderID
+            .StartPosition = FormStartPosition.CenterParent
+
+            .ShowDialog()
+
+        End With
+    End Sub
 End Class

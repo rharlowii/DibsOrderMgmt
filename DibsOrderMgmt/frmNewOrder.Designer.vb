@@ -87,6 +87,7 @@ Partial Class frmNewOrder
         Me.cmbOrderStatus = New DevExpress.XtraEditors.LookUpEdit()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txtCreateTime = New System.Windows.Forms.TextBox()
+        Me.cmdSetDistrictBillTo = New DevExpress.XtraEditors.SimpleButton()
         Me.Panel1.SuspendLayout()
         CType(Me.cmbSchools2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cmbDistricts2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,6 +104,7 @@ Partial Class frmNewOrder
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.cmdSetDistrictBillTo)
         Me.Panel1.Controls.Add(Me.cmbSchools2)
         Me.Panel1.Controls.Add(Me.cmbDistricts2)
         Me.Panel1.Controls.Add(Me.cmbStates2)
@@ -117,13 +119,13 @@ Partial Class frmNewOrder
         Me.Panel1.Controls.Add(Me.lblStates)
         Me.Panel1.Location = New System.Drawing.Point(3, 5)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1259, 85)
+        Me.Panel1.Size = New System.Drawing.Size(1259, 97)
         Me.Panel1.TabIndex = 0
         '
         'cmbSchools2
         '
         Me.cmbSchools2.EditValue = ""
-        Me.cmbSchools2.Location = New System.Drawing.Point(55, 62)
+        Me.cmbSchools2.Location = New System.Drawing.Point(55, 70)
         Me.cmbSchools2.Name = "cmbSchools2"
         Me.cmbSchools2.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
         Me.cmbSchools2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
@@ -144,7 +146,7 @@ Partial Class frmNewOrder
         'cmbDistricts2
         '
         Me.cmbDistricts2.EditValue = ""
-        Me.cmbDistricts2.Location = New System.Drawing.Point(55, 35)
+        Me.cmbDistricts2.Location = New System.Drawing.Point(55, 43)
         Me.cmbDistricts2.Name = "cmbDistricts2"
         Me.cmbDistricts2.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
         Me.cmbDistricts2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
@@ -190,11 +192,11 @@ Partial Class frmNewOrder
         Me.cmdSetDistrictBillToShipTo.Name = "cmdSetDistrictBillToShipTo"
         Me.cmdSetDistrictBillToShipTo.Size = New System.Drawing.Size(194, 28)
         Me.cmdSetDistrictBillToShipTo.TabIndex = 3
-        Me.cmdSetDistrictBillToShipTo.Text = "Set &District Ship To"
+        Me.cmdSetDistrictBillToShipTo.Text = "Set District Ship To"
         '
         'txtSchoolID
         '
-        Me.txtSchoolID.Location = New System.Drawing.Point(339, 62)
+        Me.txtSchoolID.Location = New System.Drawing.Point(339, 70)
         Me.txtSchoolID.Name = "txtSchoolID"
         Me.txtSchoolID.Size = New System.Drawing.Size(223, 20)
         Me.txtSchoolID.TabIndex = 31
@@ -202,7 +204,7 @@ Partial Class frmNewOrder
         '
         'txtDistrictID
         '
-        Me.txtDistrictID.Location = New System.Drawing.Point(339, 33)
+        Me.txtDistrictID.Location = New System.Drawing.Point(339, 41)
         Me.txtDistrictID.Name = "txtDistrictID"
         Me.txtDistrictID.Size = New System.Drawing.Size(223, 20)
         Me.txtDistrictID.TabIndex = 30
@@ -235,7 +237,7 @@ Partial Class frmNewOrder
         'lblSchools
         '
         Me.lblSchools.AutoSize = True
-        Me.lblSchools.Location = New System.Drawing.Point(6, 61)
+        Me.lblSchools.Location = New System.Drawing.Point(6, 69)
         Me.lblSchools.Name = "lblSchools"
         Me.lblSchools.Size = New System.Drawing.Size(48, 13)
         Me.lblSchools.TabIndex = 15
@@ -244,7 +246,7 @@ Partial Class frmNewOrder
         'lblDistricts
         '
         Me.lblDistricts.AutoSize = True
-        Me.lblDistricts.Location = New System.Drawing.Point(6, 34)
+        Me.lblDistricts.Location = New System.Drawing.Point(6, 42)
         Me.lblDistricts.Name = "lblDistricts"
         Me.lblDistricts.Size = New System.Drawing.Size(47, 13)
         Me.lblDistricts.TabIndex = 14
@@ -274,7 +276,7 @@ Partial Class frmNewOrder
         Me.GroupBox3.Controls.Add(Me.txtBillTo_Street)
         Me.GroupBox3.Controls.Add(Me.txtBillTo_City)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(3, 96)
+        Me.GroupBox3.Location = New System.Drawing.Point(3, 107)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(361, 207)
         Me.GroupBox3.TabIndex = 60
@@ -398,7 +400,7 @@ Partial Class frmNewOrder
         Me.GroupBox2.Controls.Add(Me.txtShipTo_Address)
         Me.GroupBox2.Controls.Add(Me.txtShipTo_City)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(387, 97)
+        Me.GroupBox2.Location = New System.Drawing.Point(387, 108)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(361, 206)
         Me.GroupBox2.TabIndex = 55
@@ -511,7 +513,7 @@ Partial Class frmNewOrder
         '
         Me.cmdSave.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSave.Appearance.Options.UseFont = True
-        Me.cmdSave.Location = New System.Drawing.Point(448, 516)
+        Me.cmdSave.Location = New System.Drawing.Point(448, 527)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(130, 28)
         Me.cmdSave.TabIndex = 32
@@ -521,7 +523,7 @@ Partial Class frmNewOrder
         '
         Me.cmdCancel.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdCancel.Appearance.Options.UseFont = True
-        Me.cmdCancel.Location = New System.Drawing.Point(588, 516)
+        Me.cmdCancel.Location = New System.Drawing.Point(588, 527)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(130, 28)
         Me.cmdCancel.TabIndex = 33
@@ -540,7 +542,7 @@ Partial Class frmNewOrder
         Me.GroupBox1.Controls.Add(Me.txtPurchasing_Phone)
         Me.GroupBox1.Controls.Add(Me.txtPurchasing_email)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(766, 97)
+        Me.GroupBox1.Location = New System.Drawing.Point(766, 108)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(361, 247)
         Me.GroupBox1.TabIndex = 71
@@ -634,7 +636,7 @@ Partial Class frmNewOrder
         '
         'txtOrderNotes
         '
-        Me.txtOrderNotes.Location = New System.Drawing.Point(398, 383)
+        Me.txtOrderNotes.Location = New System.Drawing.Point(398, 394)
         Me.txtOrderNotes.Multiline = True
         Me.txtOrderNotes.Name = "txtOrderNotes"
         Me.txtOrderNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
@@ -652,7 +654,7 @@ Partial Class frmNewOrder
         Me.GroupBox4.Controls.Add(Me.txtPO_Shipping)
         Me.GroupBox4.Controls.Add(Me.txtPO_TotalAmount)
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.Location = New System.Drawing.Point(3, 309)
+        Me.GroupBox4.Location = New System.Drawing.Point(3, 320)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(361, 189)
         Me.GroupBox4.TabIndex = 73
@@ -738,7 +740,7 @@ Partial Class frmNewOrder
         '
         'cmbOrderStatus
         '
-        Me.cmbOrderStatus.Location = New System.Drawing.Point(398, 351)
+        Me.cmbOrderStatus.Location = New System.Drawing.Point(398, 362)
         Me.cmbOrderStatus.Name = "cmbOrderStatus"
         Me.cmbOrderStatus.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
         Me.cmbOrderStatus.Properties.Appearance.BackColor = System.Drawing.Color.White
@@ -766,7 +768,7 @@ Partial Class frmNewOrder
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(397, 324)
+        Me.Label18.Location = New System.Drawing.Point(397, 335)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(117, 20)
         Me.Label18.TabIndex = 75
@@ -775,10 +777,21 @@ Partial Class frmNewOrder
         'txtCreateTime
         '
         Me.txtCreateTime.Enabled = False
-        Me.txtCreateTime.Location = New System.Drawing.Point(705, 354)
+        Me.txtCreateTime.Location = New System.Drawing.Point(705, 365)
         Me.txtCreateTime.Name = "txtCreateTime"
         Me.txtCreateTime.Size = New System.Drawing.Size(277, 20)
         Me.txtCreateTime.TabIndex = 76
+        '
+        'cmdSetDistrictBillTo
+        '
+        Me.cmdSetDistrictBillTo.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSetDistrictBillTo.Appearance.Options.UseFont = True
+        Me.cmdSetDistrictBillTo.Location = New System.Drawing.Point(339, 3)
+        Me.cmdSetDistrictBillTo.Name = "cmdSetDistrictBillTo"
+        Me.cmdSetDistrictBillTo.Size = New System.Drawing.Size(194, 28)
+        Me.cmdSetDistrictBillTo.TabIndex = 52
+        Me.cmdSetDistrictBillTo.Text = "Set &District Bill To"
+        Me.cmdSetDistrictBillTo.ToolTip = "a"
         '
         'frmNewOrder
         '
@@ -786,7 +799,7 @@ Partial Class frmNewOrder
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1264, 556)
+        Me.ClientSize = New System.Drawing.Size(1264, 572)
         Me.Controls.Add(Me.txtCreateTime)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.cmbOrderStatus)
@@ -884,4 +897,5 @@ Partial Class frmNewOrder
     Friend WithEvents txtCreateTime As TextBox
     Friend WithEvents Label19 As Label
     Friend WithEvents txtPO_DiscountAmount As TextBox
+    Friend WithEvents cmdSetDistrictBillTo As DevExpress.XtraEditors.SimpleButton
 End Class

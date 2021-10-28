@@ -1,7 +1,12 @@
 ﻿Imports System.Data.SqlClient
+Imports System.IO
+Imports System.IO.Compression
+Imports System.Net
+Imports DevExpress.Utils
 Imports DevExpress.XtraBars
 Imports DevExpress.XtraEditors
 Imports DevExpress.XtraGrid.Views.Grid
+Imports DevExpress.XtraGrid.Views.Grid.ViewInfo
 
 Public Class frmMain
     Sub New()
@@ -12,6 +17,7 @@ Public Class frmMain
         ' OmqryOrdersMainTableAdapter1.Fill(DiBS_DB_ProdDataSet1.omqryOrdersMain)
         SetConnection()
         LoadOrdersGrid()
+        LoadMetaSearchGrid()
 
 
         'Lets set the Hive Template files path
@@ -34,6 +40,27 @@ Public Class frmMain
         oConnection.Close()
 
         gridOrders.DataSource = ds.Tables(0)
+
+
+
+
+
+    End Sub
+    Private Sub LoadMetaSearchGrid()
+
+        Dim sSQL As String = "SELECT * FROM omqryMetaSearch Order By PartnerID, Language"
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        Dim iCount As Integer
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+        da.Fill(ds)
+        oConnection.Close()
+
+        GridMetaSearch.DataSource = ds.Tables(0)
 
 
 
@@ -67,6 +94,8 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'DiBS_DB_ProdDataSet5.omMetaData' table. You can move, or remove it, as needed.
+        ' Me.OmMetaDataTableAdapter.Fill(Me.DiBS_DB_ProdDataSet5.omMetaData)
         ' XtraTabControl1.TabPages(1).Show()
 
     End Sub
@@ -193,27 +222,60 @@ Public Class frmMain
 
     Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
 
-        ' CreateMailItem()
-        'Dim sFile As String
-        Dim ofrmSubItem As New frmOrderItemSub
-        Dim oOrderItem As New OrderItem
-
-        'sFile = "Y:\MEP - Shared\BrainHive\BH_OrderMgmt\HIVE_Templates\HIVE_PublisherPO_Template.xlsx"
-        With oOrderItem
-            .OrderItemID = "3366e1ef-f506-47ed-8aa7-0a7bb75f7a8a"
-            .ItemNumberISBN = "9781641565288"
-            .ItemDesc = "Wants and Needs"
-            .QTY = 6
-            .ListPrice = 9.0
-            .ExtendedPrice = 54.0
+        Dim sContainerPath As String
+        Dim sISBN As String
+        Dim sFileName As String
+        Dim sOutPath As String
+        Dim sZipFileName As String
+        Dim seBookPath As String
 
 
-        End With
-        With ofrmSubItem
-            .oCurrentOrderItem = oOrderItem
-            .StartPosition = FormStartPosition.CenterParent
+        sISBN = "9781427199461"
+        sFileName = sISBN & ".zip"
+        sOutPath = "Z:\test\temp"
+        sContainerPath = "books/BrainHive_Partners/Crabtree/Batch4/" & sISBN & "/"
+
+        DownloadFileFromBlob(sContainerPath, sFileName, sOutPath)
+        sZipFileName = sOutPath & "\" & sFileName
+        seBookPath = sOutPath & "\" & sISBN
+        'Need to Zip the file
+        'If File.Exists(sZipFileName) Then
+        '    File.Delete(sZipFileName)
+        'End If
+        If Directory.Exists(seBookPath) Then
+            Directory.Delete(seBookPath, True)
+        End If
+        ZipFile.ExtractToDirectory(sZipFileName, seBookPath)
+
+        Dim ofrmBrowser As New frmBrowser
+
+        With ofrmBrowser
+            .HTMLFolder = seBookPath
+
             .Show()
         End With
+
+        '' CreateMailItem()
+        ''Dim sFile As String
+        'Dim ofrmSubItem As New frmOrderItemSub
+        'Dim oOrderItem As New OrderItem
+
+        ''sFile = "Y:\MEP - Shared\BrainHive\BH_OrderMgmt\HIVE_Templates\HIVE_PublisherPO_Template.xlsx"
+        'With oOrderItem
+        '    .OrderItemID = "3366e1ef-f506-47ed-8aa7-0a7bb75f7a8a"
+        '    .ItemNumberISBN = "9781641565288"
+        '    .ItemDesc = "Wants and Needs"
+        '    .QTY = 6
+        '    .ListPrice = 9.0
+        '    .ExtendedPrice = 54.0
+
+
+        'End With
+        'With ofrmSubItem
+        '    .oCurrentOrderItem = oOrderItem
+        '    .StartPosition = FormStartPosition.CenterParent
+        '    .Show()
+        'End With
 
 
         ' Process.Start(sFile)
@@ -435,6 +497,10 @@ Public Class frmMain
 
                     End With
                 Next
+
+
+
+
             Case Else
 
 
@@ -460,15 +526,20 @@ Public Class frmMain
                         .oOrderInfoDataTable = GetOrderInfo(oOrderID)
                         .iPartnerID = iPartnerID
                         .oOrderID = oOrderID
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubPO
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
                         .AddOrderItems()
                         .StartPosition = FormStartPosition.CenterParent
                         .Show()
-                        ' .LoadExcel()
+
+
+
 
                     End With
                 Next
+
+
         End Select
 
 
@@ -737,5 +808,179 @@ Public Class frmMain
 
         End With
 
+    End Sub
+
+    Private Sub BarSubItem1_EditOrder_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarSubItem1_EditOrder.ItemClick
+
+    End Sub
+
+    Private Sub cmdRefreshGrid_Click(sender As Object, e As EventArgs) Handles cmdRefreshGrid.Click
+        LoadOrdersGrid()
+    End Sub
+
+    Private Sub GridView2_RowCellClick(sender As Object, e As RowCellClickEventArgs) Handles GridView2.RowCellClick
+
+
+        If e.Column.FieldName = "eBook_ISBN_13" Then
+
+            ShowBookCover(e.Location)
+
+
+
+        End If
+    End Sub
+
+    Private Sub ShowBookCover(oPoint As Point)
+        Dim oEditOrderID As Guid
+        Dim selectedRowHandle As Int32
+        Dim selectedRowHandles As Int32()
+
+        Dim oRow As DataRow
+        Dim sOfficalImage As String
+        Dim info As ToolTipControlInfo = Nothing
+        Dim sTooltip1 As New SuperToolTip()
+
+
+
+        selectedRowHandles = GridView2.GetSelectedRows()
+        selectedRowHandle = selectedRowHandles(0)
+        'oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        oRow = GridView2.GetDataRow(selectedRowHandle)
+        sOfficalImage = oRow.Item("OfficialImage").ToString()
+
+
+        Dim args As New DevExpress.Utils.ToolTipControllerShowEventArgs
+
+        Dim tip As New DevExpress.Utils.SuperToolTip
+        Dim im As Image
+        im = GetImageBase64NoPicBox(sOfficalImage)
+        '  tip.MaxWidth = 100
+
+        args.SuperTip = tip
+        args.ToolTipType = DevExpress.Utils.ToolTipType.SuperTip
+
+        args.ImageOptions.Image = ScaleThumbnailImage(im, 300, 300)
+        args.ImageOptions.Alignment = ToolTipImageAlignment.Right
+
+
+        oPoint.X = oPoint.X + 300
+        ToolTipController1.ShowHint(args, oPoint)
+
+    End Sub
+
+    'Private Sub toolTipController1_GetActiveObjectInfo(ByVal sender As Object, ByVal e As ToolTipControllerGetActiveObjectInfoEventArgs)
+    '    If e.Info Is Nothing AndAlso e.SelectedControl = GridMetaSearch Then
+    '        Dim view As GridView = TryCast(GridMetaSearch.FocusedView, GridView)
+    '        Dim info As GridHitInfo = view.CalcHitInfo(e.ControlMousePosition)
+
+    '        If info.InRowCell Then
+    '            Dim text As String = view.GetRowCellDisplayText(info.RowHandle, info.Column)
+    '            Dim cellKey As String = info.RowHandle.ToString() & " - " + info.Column.ToString()
+    '            Dim toolTipInfo As ToolTipControlInfo = New ToolTipControlInfo(cellKey, text)
+    '            Dim superTip As SuperToolTip = New SuperToolTip()
+    '            superTip.Items.Add(New ToolTipItem() With {
+    '                .Image = ""
+    '        })
+    '            toolTipInfo.SuperTip = superTip
+    '            e.Info = toolTipInfo
+    '        End If
+    '    End If
+    'End Sub
+
+    'Private Sub toolTipController1_CalcSize(ByVal sender As Object, ByVal e As ToolTipControllerCalcSizeEventArgs) Handles ToolTipController1.CalcSize
+
+    '    e.Size = New Size(200, 200)
+    '    'Dim toolTip As SuperToolTip = e.ShowInfo.SuperTip
+    '    'If toolTip.Items.Count = 1 Then
+    '    '    Dim item As ToolTipItem = TryCast(toolTip.Items(0), ToolTipItem)
+    '    '    If item IsNot Nothing Then
+    '    '        If item.Image IsNot Nothing Then
+    '    '            ' e.Size = item.Image.Size
+    '    '            e.Size = New Size(300, 300)
+    '    '        End If
+    '    '    End If
+    '    'End If
+    'End Sub
+
+    Private Sub ShowEBook()
+        Dim sContainerPath As String
+        Dim sISBN As String
+        Dim sFileName As String
+        Dim sOutPath As String
+        Dim sZipFileName As String
+        Dim seBookPath As String
+
+
+        'sISBN = "9781427199461"
+        ' sFileName = sISBN & ".zip"
+        ' sOutPath = "Z:\test\temp"
+        ' sContainerPath = "books/BrainHive_Partners/Crabtree/Batch4/" & sISBN & "/"
+
+
+        Dim oEditOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView2.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+
+
+        Me.Cursor = Cursors.WaitCursor
+
+            If selectedRowHandles.Count <> 1 Then
+                MsgBox("Must select 1 Row")
+                Exit Sub
+            End If
+            selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView2.GetDataRow(selectedRowHandle)
+
+
+        sISBN = oRow.Item("eBook_ISBN_13").ToString()
+        sContainerPath = oRow.Item("EBookPath").ToString()
+        'Need to remove 1st /
+        sContainerPath = sContainerPath.Remove(0, 1)
+        sContainerPath = sContainerPath & sISBN
+        sFileName = sISBN & ".zip"
+        ' sOutPath = "Z:\test\temp"
+
+        sOutPath = Path.GetTempPath()
+
+        DownloadFileFromBlob(sContainerPath, sFileName, sOutPath)
+        sZipFileName = sOutPath & "\" & sFileName
+        seBookPath = sOutPath & sISBN
+        'Need to Zip the file
+        'If File.Exists(sZipFileName) Then
+        '    File.Delete(sZipFileName)
+        'End If
+        If Directory.Exists(seBookPath) Then
+            Directory.Delete(seBookPath, True)
+        End If
+        ZipFile.ExtractToDirectory(sZipFileName, seBookPath)
+
+        Dim ofrmBrowser As New frmBrowser
+        Me.Cursor = Cursors.Default
+        With ofrmBrowser
+            .HTMLFolder = seBookPath
+
+            .Show()
+        End With
+    End Sub
+
+    Private Sub GridView2_MouseUp(sender As Object, e As MouseEventArgs) Handles GridView2.MouseUp
+        If e.Button = MouseButtons.Right Then
+            PopupMenu1.ShowPopup(Control.MousePosition)
+        End If
+    End Sub
+
+    Private Sub BarButtonItem1_ViewBook_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ViewBook.ItemClick
+        ShowEBook()
+    End Sub
+
+    Private Sub GridMetaSearch_Click(sender As Object, e As EventArgs) Handles GridMetaSearch.Click
+
+    End Sub
+
+    Private Sub BarButtonItem1_ViewCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ViewCover.ItemClick
+        ShowBookCover(Me.Location)
     End Sub
 End Class

@@ -203,4 +203,31 @@ Module modOrderItems
         Return sReturn
     End Function
 
+
+    Public Function UpdateOrderStatus(sOrderID As String, iOrderStatus As Integer) As String
+
+        'You are actually updating 
+        Dim sEXEC As String = "UPDATE dbo.omOrders SET OrderStatusID = @OrderStatusID WHERE OrderID = @OrderID"
+
+        Dim sReturn As String
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        With myCommand
+            .Parameters.Add("@OrderID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(sOrderID)
+            .Parameters.Add("@OrderStatusID", SqlDbType.Int).Value = iOrderStatus
+
+
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+        oConnection.Close()
+
+        Return sReturn
+    End Function
+
 End Module

@@ -16,6 +16,7 @@ Public Class frmPublisherPO
     Public oOrderSetsDataTable As DataTable
     Public oOrderInfoDataTable As DataTable
     Public oOrderDocType As clsDibsOrderMgmt.OrderDocTypes
+    Public NeedToUpdateMainGrid As Boolean = False
 
 
 
@@ -205,7 +206,8 @@ Public Class frmPublisherPO
 
 
             'Need to add the formulas
-            oWorkSheet.Range(sItemUnitCostCell).Formula = "=" & sItemListPriceCell & "*" & sItemDiscountCell
+            'In this case....the discount is listed for example as 65%...so we must subtract that from 1 to get at the correct 35% for unit cost
+            oWorkSheet.Range(sItemUnitCostCell).Formula = "=" & sItemListPriceCell & "* (1-" & sItemDiscountCell & ")"
             oWorkSheet.Range(sItemTotalCostCell).Formula = "=" & sItemUnitCostCell & "*" & sItemQTYCell
 
             'Need to Fix Sub Total formula
@@ -814,14 +816,19 @@ endUpdate:
         Dim sOrderDocName As String
         Dim sSubject As String
         Dim sBody As String
+        Dim sOrderID As String
+        Dim mbNeedToUpdateMainGrid As Boolean
+        Dim sTOEmail As String
+        Dim sCCEmail As String
+        Dim iEmailType As BHEmailTypes
 
         sBHPO = oOrderInfoDataTable.Rows(0).Item("BHPONumber").ToString
         sCustomerBillToName = oOrderInfoDataTable.Rows(0).Item("BillTo_Name").ToString
         sCustomerBillToState = oOrderInfoDataTable.Rows(0).Item("BillTo_State").ToString
         sCustomerPurchasingPONumber = oOrderInfoDataTable.Rows(0).Item("PurchasingPONumber").ToString
         sTempFile = System.IO.Path.GetTempFileName()
-
-
+        sOrderID = oOrderInfoDataTable.Rows(0).Item("OrderID").ToString
+        iEmailType = BHEmailTypes.NoEmailType
         'Make sure you also do the save as button
 
         Select Case oOrderDocType
@@ -830,6 +837,8 @@ endUpdate:
 
                 sPartner = oPartnerDataTable.Rows(0).Item("PublisherShortName")
                 iPartnerID = oPartnerDataTable.Rows(0).Item("PartnerID")
+                sTOEmail = oPartnerDataTable.Rows(0).Item("ToOrderContactEmail").ToString
+                sCCEmail = oPartnerDataTable.Rows(0).Item("CCOrderContactEmail").ToString
 
                 sTempFile = sTempFile.Replace(".tmp", ".xlsx")
 
@@ -839,6 +848,8 @@ endUpdate:
                 sBody = "Please process the attached PO: " & sBHPO & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
 
                 SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
+                'SpreadsheetControl1.Options.Save.CurrentFileName = sOrderDocName
+                iEmailType = BHEmailTypes.PubPOEmail
 
             Case moDocTypes.CustInvoice
 
@@ -849,6 +860,7 @@ endUpdate:
                 sSubject = "Invoice from Brain Hive for PO: " & sCustomerBillToName & "_" & sCustomerPurchasingPONumber
                 sBody = "Please see the attached Invoice for: " & sCustomerPurchasingPONumber & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
                 SpreadsheetControl1.ExportToPdf(sTempFile)
+                iEmailType = BHEmailTypes.CustInvoiceEmail
             Case Else
 
         End Select
@@ -861,18 +873,23 @@ endUpdate:
         oAttachments.Add(oAttachment)
 
         With moBHMailItem
-            .ToEmail = "rharlow@myedupartners.com"
+            '.ToEmail = "rharlow@myedupartners.com"
+            .ToEmail = sTOEmail
+            .CCEmail = sCCEmail
+
             .Subject = sSubject
             .Body = sBody
+            .EmailType = iEmailType
 
             ' SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
             .Attachments = oAttachments
             'SpreadsheetControl1.SaveDocument(DevExpress.Spreadsheet.DocumentFormat.Xlsx).ToString
 
-
+            .OrderID = Guid.Parse(sOrderID)
         End With
-
+        'Passing the bNeedToUpdateMainGrid by Ref
         CreateBHMailItem(moBHMailItem)
+
     End Sub
 
     Private Sub frmPublisherPO_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -903,6 +920,14 @@ endUpdate:
 
 
 
+
+    End Sub
+
+    Private Sub SpreadsheetCommandBarButtonItem3_ItemClick_1(sender As Object, e As XtraBars.ItemClickEventArgs) Handles SpreadsheetCommandBarButtonItem3.ItemClick
+
+    End Sub
+
+    Private Sub BarButtonItem2_ItemClick_1(sender As Object, e As XtraBars.ItemClickEventArgs) Handles BarButtonItem2.ItemClick
 
     End Sub
 End Class

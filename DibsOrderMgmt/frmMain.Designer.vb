@@ -64,7 +64,73 @@ Partial Class frmMain
         Me.colOrderStatusID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatusColor = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdRefreshGrid = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdNewOrder = New DevExpress.XtraEditors.SimpleButton()
+        Me.XtraTabPage3_MetaSearch = New DevExpress.XtraTab.XtraTabPage()
+        Me.GridMetaSearch = New DevExpress.XtraGrid.GridControl()
+        Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.colMetaDataID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPartnerID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPartner = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPublisherName = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPaperback_ISBN_13 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colTitle = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSubTitle = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPaperback_List_Price = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colClassification = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colGuided_Reading_Level = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colLexile_Number = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colLexile_Text = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colATOS = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSeries_Name = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colHardcover_Print_ISBN_13 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colHardcover_Print_List_Price = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.coleBook_ISBN_13 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.coleBook_List_Price = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colImprint = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colLanguage = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colPage_Count = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAge_Level_Start = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAge_Level_End = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colInterest_Level_Start = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colInterest_Level_End = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colReading_Level_Start = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colReading_Level_End = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colDewey = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colBISAC_1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colBISAC_2 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colBISAC_3 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colGrade_Level = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAuthor_First_Name1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAuthor_Middle_Name1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAuthor_Last_Name1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colCopyright = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSeries_Description = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colGenre_Interest = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSubject = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colKeywords = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colTitleDescription = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OfficialImage = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.EBookPath = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
+        Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
+        Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
+        Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
+        Me.BarButtonItem_OrderDetail = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_Documents = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_OrderSets = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_OrderItems = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarStaticItem2 = New DevExpress.XtraBars.BarStaticItem()
+        Me.BarButtonItem1_PublisherPOs = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
+        Me.BarButtonItem2_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerInvoiceOrderSets = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerInvoiceOrderItems = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CustomerPackingSlip = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_ViewBook = New DevExpress.XtraBars.BarButtonItem()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.XtraTabPage1_MetaData = New DevExpress.XtraTab.XtraTabPage()
         Me.cmdMetaImport = New DevExpress.XtraEditors.SimpleButton()
         Me.panelTop = New System.Windows.Forms.Panel()
@@ -74,24 +140,15 @@ Partial Class frmMain
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.BarSubItem1_EditOrder = New DevExpress.XtraBars.BarSubItem()
         Me.PopupMenu_Orders = New DevExpress.XtraBars.PopupMenu(Me.components)
-        Me.BarButtonItem_OrderDetail = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_Documents = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_OrderSets = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_OrderItems = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarStaticItem2 = New DevExpress.XtraBars.BarStaticItem()
-        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
-        Me.BarButtonItem1_PublisherPOs = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem2_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_CustomerInvoiceOrderSets = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_CustomerInvoiceOrderItems = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem1_CustomerPackingSlip = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
-        Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
-        Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
-        Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
-        Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.BarButtonItem1_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
         Me.OmqryOrdersMainTableAdapter1 = New DibsOrderMgmt.DiBS_DB_ProdDataSetTableAdapters.omqryOrdersMainTableAdapter()
+        Me.DiBS_DB_ProdDataSet5 = New DibsOrderMgmt.DiBS_DB_ProdDataSet5()
+        Me.OmMetaDataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.OmMetaDataTableAdapter = New DibsOrderMgmt.DiBS_DB_ProdDataSet5TableAdapters.omMetaDataTableAdapter()
+        Me.ToolTipController1 = New DevExpress.Utils.ToolTipController(Me.components)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
+        Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.BarButtonItem1_ViewCover = New DevExpress.XtraBars.BarButtonItem()
         BarStaticItem1_divider = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -100,11 +157,18 @@ Partial Class frmMain
         CType(Me.DiBS_DB_ProdDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        Me.XtraTabPage3_MetaSearch.SuspendLayout()
+        CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabPage1_MetaData.SuspendLayout()
         Me.panelTop.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PopupMenu_Orders, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DiBS_DB_ProdDataSet5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.OmMetaDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BarStaticItem1_divider
@@ -130,7 +194,7 @@ Partial Class frmMain
         Me.XtraTabControl1.SelectedTabPage = Me.XtraTabPage2_Orders
         Me.XtraTabControl1.Size = New System.Drawing.Size(1255, 686)
         Me.XtraTabControl1.TabIndex = 1
-        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage2_Orders, Me.XtraTabPage1_MetaData})
+        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage2_Orders, Me.XtraTabPage3_MetaSearch, Me.XtraTabPage1_MetaData})
         '
         'XtraTabPage2_Orders
         '
@@ -402,11 +466,23 @@ Partial Class frmMain
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel1.Controls.Add(Me.cmdRefreshGrid)
         Me.Panel1.Controls.Add(Me.cmdNewOrder)
         Me.Panel1.Location = New System.Drawing.Point(6, 10)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1244, 60)
         Me.Panel1.TabIndex = 4
+        '
+        'cmdRefreshGrid
+        '
+        Me.cmdRefreshGrid.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdRefreshGrid.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdRefreshGrid.Appearance.Options.UseFont = True
+        Me.cmdRefreshGrid.Location = New System.Drawing.Point(973, 15)
+        Me.cmdRefreshGrid.Name = "cmdRefreshGrid"
+        Me.cmdRefreshGrid.Size = New System.Drawing.Size(130, 28)
+        Me.cmdRefreshGrid.TabIndex = 2
+        Me.cmdRefreshGrid.Text = "Refresh Grid"
         '
         'cmdNewOrder
         '
@@ -418,6 +494,455 @@ Partial Class frmMain
         Me.cmdNewOrder.Size = New System.Drawing.Size(130, 28)
         Me.cmdNewOrder.TabIndex = 1
         Me.cmdNewOrder.Text = "Create Order"
+        '
+        'XtraTabPage3_MetaSearch
+        '
+        Me.XtraTabPage3_MetaSearch.Controls.Add(Me.GridMetaSearch)
+        Me.XtraTabPage3_MetaSearch.Controls.Add(Me.Panel2)
+        Me.XtraTabPage3_MetaSearch.Name = "XtraTabPage3_MetaSearch"
+        Me.XtraTabPage3_MetaSearch.Size = New System.Drawing.Size(1253, 641)
+        Me.XtraTabPage3_MetaSearch.Text = "Meta Search"
+        '
+        'GridMetaSearch
+        '
+        Me.GridMetaSearch.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GridMetaSearch.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GridMetaSearch.Location = New System.Drawing.Point(4, 77)
+        Me.GridMetaSearch.MainView = Me.GridView2
+        Me.GridMetaSearch.MenuManager = Me.BarManager1
+        Me.GridMetaSearch.Name = "GridMetaSearch"
+        Me.GridMetaSearch.Size = New System.Drawing.Size(1244, 553)
+        Me.GridMetaSearch.TabIndex = 7
+        Me.GridMetaSearch.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView2})
+        '
+        'GridView2
+        '
+        Me.GridView2.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GridView2.Appearance.Row.Options.UseFont = True
+        Me.GridView2.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colMetaDataID, Me.colPartnerID, Me.colPartner, Me.colPublisherName, Me.colPaperback_ISBN_13, Me.colTitle, Me.colSubTitle, Me.colPaperback_List_Price, Me.colClassification, Me.colGuided_Reading_Level, Me.colLexile_Number, Me.colLexile_Text, Me.colATOS, Me.colSeries_Name, Me.colHardcover_Print_ISBN_13, Me.colHardcover_Print_List_Price, Me.coleBook_ISBN_13, Me.coleBook_List_Price, Me.colImprint, Me.colLanguage, Me.colPage_Count, Me.colAge_Level_Start, Me.colAge_Level_End, Me.colInterest_Level_Start, Me.colInterest_Level_End, Me.colReading_Level_Start, Me.colReading_Level_End, Me.colDewey, Me.colBISAC_1, Me.colBISAC_2, Me.colBISAC_3, Me.colGrade_Level, Me.colAuthor_First_Name1, Me.colAuthor_Middle_Name1, Me.colAuthor_Last_Name1, Me.colCopyright, Me.colSeries_Description, Me.colGenre_Interest, Me.colSubject, Me.colKeywords, Me.colTitleDescription, Me.OfficialImage, Me.EBookPath})
+        Me.GridView2.GridControl = Me.GridMetaSearch
+        Me.GridView2.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always
+        Me.GridView2.Name = "GridView2"
+        Me.GridView2.OptionsBehavior.Editable = False
+        Me.GridView2.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
+        Me.GridView2.OptionsSelection.MultiSelect = True
+        Me.GridView2.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
+        Me.GridView2.OptionsView.ColumnAutoWidth = False
+        Me.GridView2.OptionsView.ShowAutoFilterRow = True
+        Me.GridView2.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
+        '
+        'colMetaDataID
+        '
+        Me.colMetaDataID.FieldName = "MetaDataID"
+        Me.colMetaDataID.Name = "colMetaDataID"
+        '
+        'colPartnerID
+        '
+        Me.colPartnerID.FieldName = "PartnerID"
+        Me.colPartnerID.Name = "colPartnerID"
+        '
+        'colPartner
+        '
+        Me.colPartner.FieldName = "Partner"
+        Me.colPartner.Name = "colPartner"
+        Me.colPartner.Visible = True
+        Me.colPartner.VisibleIndex = 0
+        Me.colPartner.Width = 130
+        '
+        'colPublisherName
+        '
+        Me.colPublisherName.FieldName = "PublisherName"
+        Me.colPublisherName.Name = "colPublisherName"
+        Me.colPublisherName.Width = 108
+        '
+        'colPaperback_ISBN_13
+        '
+        Me.colPaperback_ISBN_13.FieldName = "Paperback_ISBN_13"
+        Me.colPaperback_ISBN_13.Name = "colPaperback_ISBN_13"
+        Me.colPaperback_ISBN_13.Visible = True
+        Me.colPaperback_ISBN_13.VisibleIndex = 2
+        Me.colPaperback_ISBN_13.Width = 150
+        '
+        'colTitle
+        '
+        Me.colTitle.FieldName = "Title"
+        Me.colTitle.Name = "colTitle"
+        Me.colTitle.Visible = True
+        Me.colTitle.VisibleIndex = 1
+        Me.colTitle.Width = 200
+        '
+        'colSubTitle
+        '
+        Me.colSubTitle.FieldName = "SubTitle"
+        Me.colSubTitle.Name = "colSubTitle"
+        '
+        'colPaperback_List_Price
+        '
+        Me.colPaperback_List_Price.FieldName = "Paperback_List_Price"
+        Me.colPaperback_List_Price.Name = "colPaperback_List_Price"
+        Me.colPaperback_List_Price.Visible = True
+        Me.colPaperback_List_Price.VisibleIndex = 3
+        Me.colPaperback_List_Price.Width = 65
+        '
+        'colClassification
+        '
+        Me.colClassification.FieldName = "Classification"
+        Me.colClassification.Name = "colClassification"
+        Me.colClassification.Visible = True
+        Me.colClassification.VisibleIndex = 4
+        Me.colClassification.Width = 82
+        '
+        'colGuided_Reading_Level
+        '
+        Me.colGuided_Reading_Level.FieldName = "Guided_Reading_Level"
+        Me.colGuided_Reading_Level.Name = "colGuided_Reading_Level"
+        Me.colGuided_Reading_Level.Visible = True
+        Me.colGuided_Reading_Level.VisibleIndex = 5
+        Me.colGuided_Reading_Level.Width = 60
+        '
+        'colLexile_Number
+        '
+        Me.colLexile_Number.FieldName = "Lexile_Number"
+        Me.colLexile_Number.Name = "colLexile_Number"
+        Me.colLexile_Number.Visible = True
+        Me.colLexile_Number.VisibleIndex = 6
+        Me.colLexile_Number.Width = 57
+        '
+        'colLexile_Text
+        '
+        Me.colLexile_Text.FieldName = "Lexile_Text"
+        Me.colLexile_Text.Name = "colLexile_Text"
+        Me.colLexile_Text.Visible = True
+        Me.colLexile_Text.VisibleIndex = 7
+        Me.colLexile_Text.Width = 21
+        '
+        'colATOS
+        '
+        Me.colATOS.FieldName = "ATOS"
+        Me.colATOS.Name = "colATOS"
+        Me.colATOS.Width = 38
+        '
+        'colSeries_Name
+        '
+        Me.colSeries_Name.FieldName = "Series_Name"
+        Me.colSeries_Name.Name = "colSeries_Name"
+        Me.colSeries_Name.Visible = True
+        Me.colSeries_Name.VisibleIndex = 8
+        Me.colSeries_Name.Width = 100
+        '
+        'colHardcover_Print_ISBN_13
+        '
+        Me.colHardcover_Print_ISBN_13.FieldName = "Hardcover_Print_ISBN_13"
+        Me.colHardcover_Print_ISBN_13.Name = "colHardcover_Print_ISBN_13"
+        '
+        'colHardcover_Print_List_Price
+        '
+        Me.colHardcover_Print_List_Price.FieldName = "Hardcover_Print_List_Price"
+        Me.colHardcover_Print_List_Price.Name = "colHardcover_Print_List_Price"
+        '
+        'coleBook_ISBN_13
+        '
+        Me.coleBook_ISBN_13.FieldName = "eBook_ISBN_13"
+        Me.coleBook_ISBN_13.Name = "coleBook_ISBN_13"
+        Me.coleBook_ISBN_13.Visible = True
+        Me.coleBook_ISBN_13.VisibleIndex = 9
+        Me.coleBook_ISBN_13.Width = 122
+        '
+        'coleBook_List_Price
+        '
+        Me.coleBook_List_Price.FieldName = "eBook_List_Price"
+        Me.coleBook_List_Price.Name = "coleBook_List_Price"
+        '
+        'colImprint
+        '
+        Me.colImprint.FieldName = "Imprint"
+        Me.colImprint.Name = "colImprint"
+        Me.colImprint.Visible = True
+        Me.colImprint.VisibleIndex = 10
+        '
+        'colLanguage
+        '
+        Me.colLanguage.FieldName = "Language"
+        Me.colLanguage.Name = "colLanguage"
+        Me.colLanguage.Visible = True
+        Me.colLanguage.VisibleIndex = 15
+        '
+        'colPage_Count
+        '
+        Me.colPage_Count.FieldName = "Page_Count"
+        Me.colPage_Count.Name = "colPage_Count"
+        '
+        'colAge_Level_Start
+        '
+        Me.colAge_Level_Start.FieldName = "Age_Level_Start"
+        Me.colAge_Level_Start.Name = "colAge_Level_Start"
+        Me.colAge_Level_Start.Visible = True
+        Me.colAge_Level_Start.VisibleIndex = 16
+        '
+        'colAge_Level_End
+        '
+        Me.colAge_Level_End.FieldName = "Age_Level_End"
+        Me.colAge_Level_End.Name = "colAge_Level_End"
+        Me.colAge_Level_End.Visible = True
+        Me.colAge_Level_End.VisibleIndex = 17
+        '
+        'colInterest_Level_Start
+        '
+        Me.colInterest_Level_Start.FieldName = "Interest_Level_Start"
+        Me.colInterest_Level_Start.Name = "colInterest_Level_Start"
+        Me.colInterest_Level_Start.Visible = True
+        Me.colInterest_Level_Start.VisibleIndex = 18
+        '
+        'colInterest_Level_End
+        '
+        Me.colInterest_Level_End.FieldName = "Interest_Level_End"
+        Me.colInterest_Level_End.Name = "colInterest_Level_End"
+        Me.colInterest_Level_End.Visible = True
+        Me.colInterest_Level_End.VisibleIndex = 19
+        '
+        'colReading_Level_Start
+        '
+        Me.colReading_Level_Start.FieldName = "Reading_Level_Start"
+        Me.colReading_Level_Start.Name = "colReading_Level_Start"
+        Me.colReading_Level_Start.Visible = True
+        Me.colReading_Level_Start.VisibleIndex = 20
+        '
+        'colReading_Level_End
+        '
+        Me.colReading_Level_End.FieldName = "Reading_Level_End"
+        Me.colReading_Level_End.Name = "colReading_Level_End"
+        Me.colReading_Level_End.Visible = True
+        Me.colReading_Level_End.VisibleIndex = 21
+        '
+        'colDewey
+        '
+        Me.colDewey.FieldName = "Dewey"
+        Me.colDewey.Name = "colDewey"
+        '
+        'colBISAC_1
+        '
+        Me.colBISAC_1.FieldName = "BISAC_1"
+        Me.colBISAC_1.Name = "colBISAC_1"
+        '
+        'colBISAC_2
+        '
+        Me.colBISAC_2.FieldName = "BISAC_2"
+        Me.colBISAC_2.Name = "colBISAC_2"
+        '
+        'colBISAC_3
+        '
+        Me.colBISAC_3.FieldName = "BISAC_3"
+        Me.colBISAC_3.Name = "colBISAC_3"
+        '
+        'colGrade_Level
+        '
+        Me.colGrade_Level.FieldName = "Grade_Level"
+        Me.colGrade_Level.Name = "colGrade_Level"
+        Me.colGrade_Level.Visible = True
+        Me.colGrade_Level.VisibleIndex = 22
+        Me.colGrade_Level.Width = 21
+        '
+        'colAuthor_First_Name1
+        '
+        Me.colAuthor_First_Name1.FieldName = "Author_First_Name1"
+        Me.colAuthor_First_Name1.Name = "colAuthor_First_Name1"
+        '
+        'colAuthor_Middle_Name1
+        '
+        Me.colAuthor_Middle_Name1.FieldName = "Author_Middle_Name1"
+        Me.colAuthor_Middle_Name1.Name = "colAuthor_Middle_Name1"
+        '
+        'colAuthor_Last_Name1
+        '
+        Me.colAuthor_Last_Name1.FieldName = "Author_Last_Name1"
+        Me.colAuthor_Last_Name1.Name = "colAuthor_Last_Name1"
+        '
+        'colCopyright
+        '
+        Me.colCopyright.FieldName = "Copyright"
+        Me.colCopyright.Name = "colCopyright"
+        '
+        'colSeries_Description
+        '
+        Me.colSeries_Description.FieldName = "Series_Description"
+        Me.colSeries_Description.Name = "colSeries_Description"
+        '
+        'colGenre_Interest
+        '
+        Me.colGenre_Interest.FieldName = "Genre_Interest"
+        Me.colGenre_Interest.Name = "colGenre_Interest"
+        Me.colGenre_Interest.Visible = True
+        Me.colGenre_Interest.VisibleIndex = 11
+        Me.colGenre_Interest.Width = 150
+        '
+        'colSubject
+        '
+        Me.colSubject.FieldName = "Subject"
+        Me.colSubject.Name = "colSubject"
+        Me.colSubject.Visible = True
+        Me.colSubject.VisibleIndex = 12
+        Me.colSubject.Width = 150
+        '
+        'colKeywords
+        '
+        Me.colKeywords.FieldName = "Keywords"
+        Me.colKeywords.Name = "colKeywords"
+        Me.colKeywords.Visible = True
+        Me.colKeywords.VisibleIndex = 13
+        Me.colKeywords.Width = 150
+        '
+        'colTitleDescription
+        '
+        Me.colTitleDescription.FieldName = "TitleDescription"
+        Me.colTitleDescription.MinWidth = 50
+        Me.colTitleDescription.Name = "colTitleDescription"
+        Me.colTitleDescription.Visible = True
+        Me.colTitleDescription.VisibleIndex = 14
+        Me.colTitleDescription.Width = 250
+        '
+        'OfficialImage
+        '
+        Me.OfficialImage.Caption = "GridColumn1"
+        Me.OfficialImage.FieldName = "OfficialImage"
+        Me.OfficialImage.Name = "OfficialImage"
+        '
+        'EBookPath
+        '
+        Me.EBookPath.Caption = "GridColumn1"
+        Me.EBookPath.FieldName = "EBookPath"
+        Me.EBookPath.Name = "EBookPath"
+        '
+        'BarManager1
+        '
+        Me.BarManager1.DockControls.Add(Me.barDockControlTop)
+        Me.BarManager1.DockControls.Add(Me.barDockControlBottom)
+        Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
+        Me.BarManager1.DockControls.Add(Me.barDockControlRight)
+        Me.BarManager1.Form = Me
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover})
+        Me.BarManager1.MaxItemId = 15
+        '
+        'barDockControlTop
+        '
+        Me.barDockControlTop.CausesValidation = False
+        Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
+        Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
+        Me.barDockControlTop.Manager = Me.BarManager1
+        Me.barDockControlTop.Size = New System.Drawing.Size(1255, 0)
+        '
+        'barDockControlBottom
+        '
+        Me.barDockControlBottom.CausesValidation = False
+        Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 812)
+        Me.barDockControlBottom.Manager = Me.BarManager1
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1255, 0)
+        '
+        'barDockControlLeft
+        '
+        Me.barDockControlLeft.CausesValidation = False
+        Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
+        Me.barDockControlLeft.Location = New System.Drawing.Point(0, 0)
+        Me.barDockControlLeft.Manager = Me.BarManager1
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 812)
+        '
+        'barDockControlRight
+        '
+        Me.barDockControlRight.CausesValidation = False
+        Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
+        Me.barDockControlRight.Location = New System.Drawing.Point(1255, 0)
+        Me.barDockControlRight.Manager = Me.BarManager1
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 812)
+        '
+        'BarButtonItem_OrderDetail
+        '
+        Me.BarButtonItem_OrderDetail.Caption = "Order Detail/Edit"
+        Me.BarButtonItem_OrderDetail.Id = 0
+        Me.BarButtonItem_OrderDetail.Name = "BarButtonItem_OrderDetail"
+        '
+        'BarButtonItem1_Documents
+        '
+        Me.BarButtonItem1_Documents.Caption = "Documents"
+        Me.BarButtonItem1_Documents.Id = 1
+        Me.BarButtonItem1_Documents.Name = "BarButtonItem1_Documents"
+        '
+        'BarButtonItem1_OrderSets
+        '
+        Me.BarButtonItem1_OrderSets.Caption = "Order Sets"
+        Me.BarButtonItem1_OrderSets.Id = 2
+        Me.BarButtonItem1_OrderSets.Name = "BarButtonItem1_OrderSets"
+        '
+        'BarButtonItem1_OrderItems
+        '
+        Me.BarButtonItem1_OrderItems.Caption = "Order Items"
+        Me.BarButtonItem1_OrderItems.Id = 3
+        Me.BarButtonItem1_OrderItems.Name = "BarButtonItem1_OrderItems"
+        '
+        'BarStaticItem2
+        '
+        Me.BarStaticItem2.Id = 5
+        Me.BarStaticItem2.Name = "BarStaticItem2"
+        '
+        'BarButtonItem1_PublisherPOs
+        '
+        Me.BarButtonItem1_PublisherPOs.Caption = "Create Publisher POs"
+        Me.BarButtonItem1_PublisherPOs.Id = 6
+        Me.BarButtonItem1_PublisherPOs.Name = "BarButtonItem1_PublisherPOs"
+        '
+        'BarSubItem1
+        '
+        Me.BarSubItem1.Caption = "Reports/Quotes/Invoices"
+        Me.BarSubItem1.Id = 7
+        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
+        Me.BarSubItem1.Name = "BarSubItem1"
+        '
+        'BarButtonItem2_CreateQuote
+        '
+        Me.BarButtonItem2_CreateQuote.Caption = "Create Quote"
+        Me.BarButtonItem2_CreateQuote.Id = 9
+        Me.BarButtonItem2_CreateQuote.Name = "BarButtonItem2_CreateQuote"
+        '
+        'BarButtonItem1_CustomerInvoiceOrderSets
+        '
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Caption = "Create Customer Invoice - Order Sets"
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Id = 10
+        Me.BarButtonItem1_CustomerInvoiceOrderSets.Name = "BarButtonItem1_CustomerInvoiceOrderSets"
+        '
+        'BarButtonItem1_CustomerInvoiceOrderItems
+        '
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Caption = "Create Customer Invoice - Order Items"
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Id = 11
+        Me.BarButtonItem1_CustomerInvoiceOrderItems.Name = "BarButtonItem1_CustomerInvoiceOrderItems"
+        '
+        'BarButtonItem1_CustomerPackingSlip
+        '
+        Me.BarButtonItem1_CustomerPackingSlip.Caption = "Create Customer Packing Slip"
+        Me.BarButtonItem1_CustomerPackingSlip.Id = 12
+        Me.BarButtonItem1_CustomerPackingSlip.Name = "BarButtonItem1_CustomerPackingSlip"
+        '
+        'BarButtonItem1_CreateQuote
+        '
+        Me.BarButtonItem1_CreateQuote.Caption = "Create Customer Quote"
+        Me.BarButtonItem1_CreateQuote.Id = 8
+        Me.BarButtonItem1_CreateQuote.Name = "BarButtonItem1_CreateQuote"
+        '
+        'BarButtonItem1_ViewBook
+        '
+        Me.BarButtonItem1_ViewBook.Caption = "View eBook"
+        Me.BarButtonItem1_ViewBook.Id = 13
+        Me.BarButtonItem1_ViewBook.Name = "BarButtonItem1_ViewBook"
+        '
+        'Panel2
+        '
+        Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel2.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel2.Location = New System.Drawing.Point(4, 11)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1244, 60)
+        Me.Panel2.TabIndex = 6
         '
         'XtraTabPage1_MetaData
         '
@@ -431,7 +956,7 @@ Partial Class frmMain
         Me.cmdMetaImport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdMetaImport.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdMetaImport.Appearance.Options.UseFont = True
-        Me.cmdMetaImport.Location = New System.Drawing.Point(14, 30)
+        Me.cmdMetaImport.Location = New System.Drawing.Point(1022, 26)
         Me.cmdMetaImport.Name = "cmdMetaImport"
         Me.cmdMetaImport.Size = New System.Drawing.Size(227, 28)
         Me.cmdMetaImport.TabIndex = 3
@@ -513,123 +1038,46 @@ Partial Class frmMain
         Me.PopupMenu_Orders.MenuAppearance.SideStrip.Options.UseFont = True
         Me.PopupMenu_Orders.Name = "PopupMenu_Orders"
         '
-        'BarButtonItem_OrderDetail
-        '
-        Me.BarButtonItem_OrderDetail.Caption = "Order Detail/Edit"
-        Me.BarButtonItem_OrderDetail.Id = 0
-        Me.BarButtonItem_OrderDetail.Name = "BarButtonItem_OrderDetail"
-        '
-        'BarButtonItem1_Documents
-        '
-        Me.BarButtonItem1_Documents.Caption = "Documents"
-        Me.BarButtonItem1_Documents.Id = 1
-        Me.BarButtonItem1_Documents.Name = "BarButtonItem1_Documents"
-        '
-        'BarButtonItem1_OrderSets
-        '
-        Me.BarButtonItem1_OrderSets.Caption = "Order Sets"
-        Me.BarButtonItem1_OrderSets.Id = 2
-        Me.BarButtonItem1_OrderSets.Name = "BarButtonItem1_OrderSets"
-        '
-        'BarButtonItem1_OrderItems
-        '
-        Me.BarButtonItem1_OrderItems.Caption = "Order Items"
-        Me.BarButtonItem1_OrderItems.Id = 3
-        Me.BarButtonItem1_OrderItems.Name = "BarButtonItem1_OrderItems"
-        '
-        'BarStaticItem2
-        '
-        Me.BarStaticItem2.Id = 5
-        Me.BarStaticItem2.Name = "BarStaticItem2"
-        '
-        'BarSubItem1
-        '
-        Me.BarSubItem1.Caption = "Reports/Quotes/Invoices"
-        Me.BarSubItem1.Id = 7
-        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
-        Me.BarSubItem1.Name = "BarSubItem1"
-        '
-        'BarButtonItem1_PublisherPOs
-        '
-        Me.BarButtonItem1_PublisherPOs.Caption = "Create Publisher POs"
-        Me.BarButtonItem1_PublisherPOs.Id = 6
-        Me.BarButtonItem1_PublisherPOs.Name = "BarButtonItem1_PublisherPOs"
-        '
-        'BarButtonItem2_CreateQuote
-        '
-        Me.BarButtonItem2_CreateQuote.Caption = "Create Quote"
-        Me.BarButtonItem2_CreateQuote.Id = 9
-        Me.BarButtonItem2_CreateQuote.Name = "BarButtonItem2_CreateQuote"
-        '
-        'BarButtonItem1_CustomerInvoiceOrderSets
-        '
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Caption = "Create Customer Invoice - Order Sets"
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Id = 10
-        Me.BarButtonItem1_CustomerInvoiceOrderSets.Name = "BarButtonItem1_CustomerInvoiceOrderSets"
-        '
-        'BarButtonItem1_CustomerInvoiceOrderItems
-        '
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Caption = "Create Customer Invoice - Order Items"
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Id = 11
-        Me.BarButtonItem1_CustomerInvoiceOrderItems.Name = "BarButtonItem1_CustomerInvoiceOrderItems"
-        '
-        'BarButtonItem1_CustomerPackingSlip
-        '
-        Me.BarButtonItem1_CustomerPackingSlip.Caption = "Create Customer Packing Slip"
-        Me.BarButtonItem1_CustomerPackingSlip.Id = 12
-        Me.BarButtonItem1_CustomerPackingSlip.Name = "BarButtonItem1_CustomerPackingSlip"
-        '
-        'BarManager1
-        '
-        Me.BarManager1.DockControls.Add(Me.barDockControlTop)
-        Me.BarManager1.DockControls.Add(Me.barDockControlBottom)
-        Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
-        Me.BarManager1.DockControls.Add(Me.barDockControlRight)
-        Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip})
-        Me.BarManager1.MaxItemId = 13
-        '
-        'barDockControlTop
-        '
-        Me.barDockControlTop.CausesValidation = False
-        Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
-        Me.barDockControlTop.Manager = Me.BarManager1
-        Me.barDockControlTop.Size = New System.Drawing.Size(1255, 0)
-        '
-        'barDockControlBottom
-        '
-        Me.barDockControlBottom.CausesValidation = False
-        Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 812)
-        Me.barDockControlBottom.Manager = Me.BarManager1
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1255, 0)
-        '
-        'barDockControlLeft
-        '
-        Me.barDockControlLeft.CausesValidation = False
-        Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
-        Me.barDockControlLeft.Location = New System.Drawing.Point(0, 0)
-        Me.barDockControlLeft.Manager = Me.BarManager1
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 812)
-        '
-        'barDockControlRight
-        '
-        Me.barDockControlRight.CausesValidation = False
-        Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1255, 0)
-        Me.barDockControlRight.Manager = Me.BarManager1
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 812)
-        '
-        'BarButtonItem1_CreateQuote
-        '
-        Me.BarButtonItem1_CreateQuote.Caption = "Create Customer Quote"
-        Me.BarButtonItem1_CreateQuote.Id = 8
-        Me.BarButtonItem1_CreateQuote.Name = "BarButtonItem1_CreateQuote"
-        '
         'OmqryOrdersMainTableAdapter1
         '
         Me.OmqryOrdersMainTableAdapter1.ClearBeforeFill = True
+        '
+        'DiBS_DB_ProdDataSet5
+        '
+        Me.DiBS_DB_ProdDataSet5.DataSetName = "DiBS_DB_ProdDataSet5"
+        Me.DiBS_DB_ProdDataSet5.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'OmMetaDataBindingSource
+        '
+        Me.OmMetaDataBindingSource.DataMember = "omMetaData"
+        Me.OmMetaDataBindingSource.DataSource = Me.DiBS_DB_ProdDataSet5
+        '
+        'OmMetaDataTableAdapter
+        '
+        Me.OmMetaDataTableAdapter.ClearBeforeFill = True
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
+        Me.ImageList1.ImageSize = New System.Drawing.Size(16, 16)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        '
+        'FileSystemWatcher1
+        '
+        Me.FileSystemWatcher1.EnableRaisingEvents = True
+        Me.FileSystemWatcher1.SynchronizingObject = Me
+        '
+        'PopupMenu1
+        '
+        Me.PopupMenu1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewBook), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewCover)})
+        Me.PopupMenu1.Manager = Me.BarManager1
+        Me.PopupMenu1.Name = "PopupMenu1"
+        '
+        'BarButtonItem1_ViewCover
+        '
+        Me.BarButtonItem1_ViewCover.Caption = "View Book Cover"
+        Me.BarButtonItem1_ViewCover.Id = 14
+        Me.BarButtonItem1_ViewCover.Name = "BarButtonItem1_ViewCover"
         '
         'frmMain
         '
@@ -653,12 +1101,19 @@ Partial Class frmMain
         CType(Me.DiBS_DB_ProdDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
+        Me.XtraTabPage3_MetaSearch.ResumeLayout(False)
+        CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XtraTabPage1_MetaData.ResumeLayout(False)
         Me.panelTop.ResumeLayout(False)
         Me.panelTop.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PopupMenu_Orders, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DiBS_DB_ProdDataSet5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.OmMetaDataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -731,4 +1186,61 @@ Partial Class frmMain
     Friend WithEvents BarButtonItem1_CustomerInvoiceOrderItems As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem1_CustomerPackingSlip As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents ShipTo_ATTN As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents cmdRefreshGrid As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents XtraTabPage3_MetaSearch As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents GridMetaSearch As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GridView2 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents DiBS_DB_ProdDataSet5 As DiBS_DB_ProdDataSet5
+    Friend WithEvents OmMetaDataBindingSource As BindingSource
+    Friend WithEvents OmMetaDataTableAdapter As DiBS_DB_ProdDataSet5TableAdapters.omMetaDataTableAdapter
+    Friend WithEvents colMetaDataID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPartnerID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPartner As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPublisherName As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colTitle As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colSubTitle As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPaperback_ISBN_13 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPaperback_List_Price As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colClassification As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colGuided_Reading_Level As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colLexile_Number As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colLexile_Text As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colATOS As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colHardcover_Print_ISBN_13 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colHardcover_Print_List_Price As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents coleBook_ISBN_13 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents coleBook_List_Price As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colImprint As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colLanguage As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colPage_Count As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAge_Level_Start As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAge_Level_End As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colInterest_Level_Start As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colInterest_Level_End As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colReading_Level_Start As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colReading_Level_End As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colDewey As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colBISAC_1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colBISAC_2 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colBISAC_3 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colGrade_Level As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAuthor_First_Name1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAuthor_Middle_Name1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAuthor_Last_Name1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colCopyright As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colSeries_Name As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colSeries_Description As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colGenre_Interest As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colSubject As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colKeywords As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colTitleDescription As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OfficialImage As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents EBookPath As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents ToolTipController1 As DevExpress.Utils.ToolTipController
+    Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents FileSystemWatcher1 As IO.FileSystemWatcher
+    Friend WithEvents BarButtonItem1_ViewBook As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents PopupMenu1 As DevExpress.XtraBars.PopupMenu
+    Friend WithEvents BarButtonItem1_ViewCover As DevExpress.XtraBars.BarButtonItem
 End Class
