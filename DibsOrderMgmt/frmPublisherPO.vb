@@ -12,8 +12,9 @@ Public Class frmPublisherPO
     Public oOrderID As Guid
     Public iPartnerID As Integer
     Private oPartnerDataTable As DataTable
-    Private oOrderItemsDataTable As DataTable
+    Public oOrderItemsDataTable As DataTable
     Public oOrderSetsDataTable As DataTable
+
     Public oOrderInfoDataTable As DataTable
     Public oOrderDocType As clsDibsOrderMgmt.OrderDocTypes
     Public NeedToUpdateMainGrid As Boolean = False
@@ -144,8 +145,8 @@ Public Class frmPublisherPO
     Private Sub SpreadsheetControl1_CellValueChanged(sender As Object, e As SpreadsheetCellEventArgs)
         ' CustomSaveBarButtonItem1.Enabled = True
     End Sub
-    Public Function AddOrderItems()
-
+    Public Function AddOrderItems(Optional bAllPartners As Boolean = False)
+        'This is Publisher PO
         Dim oOrderItemRow As DataRow
         Dim iStartRow As Integer
         Dim iRowCount As Integer
@@ -164,7 +165,7 @@ Public Class frmPublisherPO
         Dim oPartnerDiscount As Decimal
 
         Dim oWorkSheet As Spreadsheet.Worksheet
-        LoadOrderItemsInfo()
+        LoadOrderItemsInfo(bAllPartners)
 
         oWorkSheet = SpreadsheetControl1.ActiveWorksheet
 
@@ -231,6 +232,127 @@ Public Class frmPublisherPO
         oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
 endUpdate:
         oWorkSheet.Cells.EndUpdate()
+    End Function
+    Public Function AddOrderItems_CustomerPO(Optional bAllPartners As Boolean = False)
+
+        Dim oOrderItemRow As DataRow
+        Dim oOrderSetItemRow As DataRow
+        Dim iStartRow As Integer
+        Dim iRowCount As Integer
+
+        Dim sItemCell As String
+        Dim sItemDescCell As String
+        Dim sItemQTYCell As String
+        Dim sItemListPriceCell As String
+        '  Dim sItemDiscountCell As String
+        ' Dim sItemUnitCostCell As String
+        Dim sItemTotalCostCell As String
+        Dim sSubTotalCell As String
+        Dim sSubTotalStartCell As String
+        Dim sSubTotalEndCell As String
+        Dim sDiscountTotalCell As String
+        Dim sShippingTotalCell As String
+        Dim sTaxTotalCell As String
+        Dim sGrandTotalCell As String
+
+        Dim sDiscount As String
+        Dim sShipping As String
+        Dim sTax As String
+
+
+        Dim iOrderItemsCount As Integer
+        '   Dim oPartnerDiscount As Decimal
+
+        Dim oWorkSheet As Spreadsheet.Worksheet
+
+        ' LoadOrderItemsInfo()
+        With oOrderInfoDataTable.Rows(0)
+            sDiscount = .Item("PO_DiscountAmount").ToString
+            sShipping = .Item("PO_Shipping").ToString
+            If sDiscount = "" Then sDiscount = 0
+            If sShipping = "" Then sShipping = 0
+
+        End With
+        oWorkSheet = SpreadsheetControl1.ActiveWorksheet
+
+        iStartRow = CustomerInvoiceFixedCells.InvoiceItemsStartRow
+        iRowCount = 0
+
+
+        iOrderItemsCount = oOrderItemsDataTable.Rows.Count
+        If iOrderItemsCount = 0 Then
+            'If no order items then we can bail
+            Exit Function
+        End If
+
+
+
+
+        oWorkSheet.Cells.BeginUpdate()
+        'oOrderSetsDataTable is set from somewhere else
+
+        For Each oOrderSetItemRow In oOrderItemsDataTable.Rows
+
+
+            'Set the cell locations for the order items
+            sItemCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemNumber & (iStartRow + iRowCount)
+            sItemDescCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemDesc & (iStartRow + iRowCount)
+            sItemQTYCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemQTY & (iStartRow + iRowCount)
+            sItemListPriceCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemListPrice & (iStartRow + iRowCount)
+            sItemTotalCostCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount)
+
+            'Now set the Values is those cells
+            oWorkSheet.Range(sItemCell).Value = oOrderSetItemRow.Item("ItemNumber").ToString
+            oWorkSheet.Range(sItemDescCell).Value = oOrderSetItemRow.Item("ItemDesc").ToString
+            oWorkSheet.Range(sItemQTYCell).Value = oOrderSetItemRow.Item("QTY").ToString
+            oWorkSheet.Range(sItemListPriceCell).Value = oOrderSetItemRow.Item("ListPrice").ToString
+
+
+            'Need to add the formulas
+
+            oWorkSheet.Range(sItemTotalCostCell).Formula = "=" & sItemListPriceCell & "*" & sItemQTYCell
+
+            'Need to Fix Sub Total formula
+            sSubTotalCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount + 3)
+            sDiscountTotalCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount + 4)
+            sShippingTotalCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount + 5)
+            sTaxTotalCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount + 6)
+            sGrandTotalCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount + 7)
+
+            sSubTotalStartCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow)
+            sSubTotalEndCell = CustomerInvoiceFixedCells.InvoiceItemCol_ItemExtendedCost & (iStartRow + iRowCount)
+
+
+            'Need to Format the row
+
+
+
+            iRowCount = iRowCount + 1
+
+            'Go ahead and insert a new row for the next items or provide spacing
+            oWorkSheet.Range(CustomerInvoiceFixedCells.InvoiceItemCol_ItemNumber & (iStartRow + iRowCount)).Insert(InsertCellsMode.EntireRow)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formats)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.NumberFormats)
+            ' oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formulas)
+        Next
+
+
+        oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
+
+        oWorkSheet.Range(sDiscountTotalCell).Value = sDiscount * -1
+
+        oWorkSheet.Range(sShippingTotalCell).Value = sShipping
+        oWorkSheet.Range(sTaxTotalCell).Value = 0.00
+
+        'Sum up sub
+        oWorkSheet.Range(sGrandTotalCell).Formula = "=Sum(" & sSubTotalCell & ":" & sTaxTotalCell & ")"
+
+
+endUpdate:
+        oWorkSheet.Cells.EndUpdate()
+
+
+
     End Function
     Public Function AddPackingSlipItems()
 
@@ -471,7 +593,7 @@ endUpdate:
         'Need to add PO numbers from 
         With oOrderInfoDataTable.Rows(0)
             oWorkSheet.Range(POPubFixedCells.POBHNumber).Value = .Item("BHPONumber").ToString
-            oWorkSheet.Range(POPubFixedCells.POCustomerNumber).Value = "PO: " & .Item("PurchasingPONumber").ToString
+            oWorkSheet.Range(POPubFixedCells.POCustomerNumber).Value = "Customer PO: " & .Item("PurchasingPONumber").ToString
         End With
 
         ' oWorkSheet.Range(POPubFixedCells.POBHNumber).Value = oPartnerRow.Item("BHPONumber").ToString
@@ -745,6 +867,16 @@ endUpdate:
                 sMSG = "You are about 'Save/Replace' the Customer Invoice: '" & sOrderDocName & "' in the Order Documents. Are you sure you want to continue?"
                 sMsgCaption = "Save/Replace INV in Order Documents"
                 sOrderDocNotes = "Customer Invoice Generated by 'The Hive' for Customer"
+
+            Case moDocTypes.CustPackingSlip
+                'Need to add the extension or you can not open it on the other end
+
+                sOrderDocName = sBHPO & "_" & "PackingSlip" & ".xlsx"
+                'We save both PDF and XLSX
+                sOrderDocName_PDF = sOrderDocName.Replace(".xlsx", ".pdf")
+                sMSG = "You are about 'Save/Replace' the Customer Packing Slip: '" & sBHPO & "' in the Order Documents. Are you sure you want to continue?"
+                sMsgCaption = "Save/Replace Packing Slip in Order Documents"
+                sOrderDocNotes = "Packing Slip Generated by 'The Hive' for Customer"
 
             Case Else
 

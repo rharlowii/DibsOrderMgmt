@@ -34,7 +34,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>24</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -418,6 +418,18 @@
     <Compile Include="frmBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmEBookSales.Designer.vb">
+      <DependentUpon>frmEBookSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEBookSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEBookSalesAdd.Designer.vb">
+      <DependentUpon>frmEBookSalesAdd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEBookSalesAdd.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmExcelViewer.Designer.vb">
       <DependentUpon>frmExcelViewer.vb</DependentUpon>
     </Compile>
@@ -523,6 +535,7 @@
     <Compile Include="modAdmin.vb" />
     <Compile Include="modAZURE.vb" />
     <Compile Include="modDocMangement.vb" />
+    <Compile Include="modEBookSaleItems.vb" />
     <Compile Include="modEmail.vb" />
     <Compile Include="modExcelDataSourceExtension.vb" />
     <Compile Include="modImportMetaData.vb" />
@@ -537,6 +550,12 @@
     <None Include="Resources\pgNext.jpg" />
     <EmbeddedResource Include="frmBrowser.resx">
       <DependentUpon>frmBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEBookSales.resx">
+      <DependentUpon>frmEBookSales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEBookSalesAdd.resx">
+      <DependentUpon>frmEBookSalesAdd.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExcelViewer.resx">
       <DependentUpon>frmExcelViewer.vb</DependentUpon>

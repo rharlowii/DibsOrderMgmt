@@ -310,7 +310,7 @@ Public Class frmOrderDocuments
                 .bReplaceDocument = False
 
                 Me.Cursor = Cursors.Default
-                .ShowDialog()
+                .Show()
 
             End With
             'Refresh the grid (Could speed up by not refreshing a cancel)

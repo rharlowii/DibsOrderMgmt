@@ -70,8 +70,8 @@ Module modEmail
         mailItem.HTMLBody = mailItem.HTMLBody + "<br>" & "<br>" & ReadSignature()
 
 
-
-        mailItem.Display(True)
+        'Changed to Modal False
+        mailItem.Display(False)
 
         Select Case oBHMailItem.EmailType
 

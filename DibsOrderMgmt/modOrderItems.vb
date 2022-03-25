@@ -149,7 +149,7 @@ Module modOrderItems
         Dim sSQL As String
 
         sSQL = "SELECT * FROM DiBS_DB_Prod.dbo.omOrderSets " &
-               "WHERE omOrderSets.OrderID = '{OrderID}' "
+               "WHERE omOrderSets.OrderID = '{OrderID}'  Order By SetName"
 
 
         sSQL = sSQL.Replace("{OrderID}", sOrderID)
@@ -167,7 +167,28 @@ Module modOrderItems
         Return ds.Tables(0)
 
     End Function
+    Public Function GetOrderItemsInOrder(sOrderID As String) As DataTable
+        Dim sSQL As String
 
+        sSQL = "SELECT * FROM DiBS_DB_Prod.dbo.omOrderItems " &
+               "WHERE omOrderItems.OrderID = '{OrderID}' "
+
+
+        sSQL = sSQL.Replace("{OrderID}", sOrderID)
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+
+
+        da.Fill(ds)
+        oConnection.Close()
+
+        Return ds.Tables(0)
+
+    End Function
     Public Function UpdateSubOrderItem(oOrderItem As OrderItem) As String
 
         'You are actually updating 

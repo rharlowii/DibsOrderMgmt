@@ -210,7 +210,8 @@ Public Class frmMain
             .StartPosition = FormStartPosition.CenterParent
 
             ' .MdiParent = Me
-            .ShowDialog()
+            .Show()
+
 
         End With
 
@@ -221,76 +222,22 @@ Public Class frmMain
     End Sub
 
     Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
+        Dim sOrderID As String
 
-        Dim sContainerPath As String
-        Dim sISBN As String
-        Dim sFileName As String
-        Dim sOutPath As String
-        Dim sZipFileName As String
-        Dim seBookPath As String
+        sOrderID = "88ca28fb-c71a-4971-af40-cb84d48bdc17"
 
 
-        sISBN = "9781427199461"
-        sFileName = sISBN & ".zip"
-        sOutPath = "Z:\test\temp"
-        sContainerPath = "books/BrainHive_Partners/Crabtree/Batch4/" & sISBN & "/"
-
-        DownloadFileFromBlob(sContainerPath, sFileName, sOutPath)
-        sZipFileName = sOutPath & "\" & sFileName
-        seBookPath = sOutPath & "\" & sISBN
-        'Need to Zip the file
-        'If File.Exists(sZipFileName) Then
-        '    File.Delete(sZipFileName)
-        'End If
-        If Directory.Exists(seBookPath) Then
-            Directory.Delete(seBookPath, True)
-        End If
-        ZipFile.ExtractToDirectory(sZipFileName, seBookPath)
-
-        Dim ofrmBrowser As New frmBrowser
-
+        Dim ofrmBrowser As New frmEBookSales
+        'frmEBookSalesAdd
         With ofrmBrowser
-            .HTMLFolder = seBookPath
+            .oOrderID = Guid.Parse(sOrderID)
+            .bAllEBookSales = True
+            ' .HTMLFolder = seBookPath
 
             .Show()
         End With
 
-        '' CreateMailItem()
-        ''Dim sFile As String
-        'Dim ofrmSubItem As New frmOrderItemSub
-        'Dim oOrderItem As New OrderItem
 
-        ''sFile = "Y:\MEP - Shared\BrainHive\BH_OrderMgmt\HIVE_Templates\HIVE_PublisherPO_Template.xlsx"
-        'With oOrderItem
-        '    .OrderItemID = "3366e1ef-f506-47ed-8aa7-0a7bb75f7a8a"
-        '    .ItemNumberISBN = "9781641565288"
-        '    .ItemDesc = "Wants and Needs"
-        '    .QTY = 6
-        '    .ListPrice = 9.0
-        '    .ExtendedPrice = 54.0
-
-
-        'End With
-        'With ofrmSubItem
-        '    .oCurrentOrderItem = oOrderItem
-        '    .StartPosition = FormStartPosition.CenterParent
-        '    .Show()
-        'End With
-
-
-        ' Process.Start(sFile)
-        'frmExcelViewer.Show()
-        ' frmRTFViewer.Show()
-
-        'frmMetaImport.Show()
-
-        'Dim oAddItems As New frmOrderItemsAdd
-
-        'With oAddItems
-        '    .oOrderID = Guid.Parse("5d30c41a-4755-4ee8-b9eb-a95296e95d7a")
-
-        '    .ShowDialog()
-        'End With
 
 
     End Sub
@@ -393,7 +340,7 @@ Public Class frmMain
             .oOrderID = oEditOrderID
             .StartPosition = FormStartPosition.CenterParent
 
-            .ShowDialog()
+            .Show(Me.Owner)
 
         End With
 
@@ -651,7 +598,7 @@ Public Class frmMain
 
 
     End Sub
-
+    'BarButtonItem1_CustomerInvoiceOrderItems
     Private Sub BarButtonItem1_CustomerInvoiceOrderSets_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_CustomerInvoiceOrderSets.ItemClick
         Dim oOrderID As Guid
         Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
@@ -982,5 +929,116 @@ Public Class frmMain
 
     Private Sub BarButtonItem1_ViewCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ViewCover.ItemClick
         ShowBookCover(Me.Location)
+    End Sub
+
+    Private Sub BarButtonItem1_CustomerInvoiceOrderItems_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_CustomerInvoiceOrderItems.ItemClick
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim sCustomerPO As String
+        Dim sBHPO As String
+        Dim sBillTo_Name As String
+        Dim sBillTo_Name_NoSpace As String
+
+        Dim sBillToState As String
+        Dim sInvoiceFileName As String
+
+        'We modified this to handle the customer PO as well
+        Dim frmCustomerInvoice As New frmPublisherPO
+
+        Dim oOrderItems As DataTable
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        oOrderItems = GetOrderItemsInOrder(oOrderID.ToString)
+
+
+        'Need to swap this out later...maybe store in DB
+        sFile = HiveTemplatePath & "HIVE_Customer_Invoice_Template.xlsx"
+
+
+        With oRow
+            sCustomerPO = .Item("PurchasingPONumber").ToString
+            sBHPO = .Item("BHPONumber").ToString
+            sBillTo_Name = .Item("BillTo_Name").ToString
+            sBillToState = .Item("BillTo_State").ToString
+        End With
+        'Lets get rid on the spaces from the name
+
+        sBillTo_Name_NoSpace = sBillTo_Name.Replace(" ", "")
+
+        'INV_KS_HAYSUSD_PO_0084220022
+        sInvoiceFileName = "INV_" & sBillToState & "_" & sBillTo_Name_NoSpace & "_PO_" & sCustomerPO
+
+        With frmCustomerInvoice
+
+            .BarButtonItem1.Caption = "Save INV to Order Docs"
+            .BarButtonItem2.Caption = "Send INV to Customer"
+
+
+            .BarButtonItem2.ImageOptions.LargeImage = My.Resources.sendpdf_32x32
+            .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.CustInvoice
+            .Text = sInvoiceFileName
+            .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+            .oOrderItemsDataTable = oOrderItems
+            .oOrderID = oOrderID
+            .SpreadsheetControl1.LoadDocument(sFile)
+            '
+            '.SetPublisherPO_FixedCells()
+            .SetCustomerInvoice_FixedCells()
+            .AddOrderItems_CustomerPO(True)
+            ' .AddOrderSets()
+            .StartPosition = FormStartPosition.CenterParent
+            .Show()
+            ' .LoadExcel()
+
+        End With
+
+    End Sub
+
+    Private Sub BarButtonItem1_EBookSales_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_EBookSales.ItemClick
+        Dim oEditOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        'oRow.Item("OrderID").ToString()
+        oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+
+
+        Dim oForm As New frmEBookSales
+
+        With oForm
+            '.dgv_Grid.DataSource = ds.Tables(0)
+            .oOrderID = oEditOrderID
+            .bAllEBookSales = True
+            .StartPosition = FormStartPosition.CenterParent
+
+            .Show()
+
+        End With
+
+        LoadOrdersGrid()
     End Sub
 End Class

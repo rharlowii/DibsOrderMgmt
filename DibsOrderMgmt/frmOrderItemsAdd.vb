@@ -652,4 +652,13 @@ BlankCountMaxHit:
 
 
     End Sub
+
+    Private Sub XtraTabPage2_Paint(sender As Object, e As PaintEventArgs) Handles XtraTabPage2.Paint
+
+    End Sub
+
+    Private Sub cmdClearOrderItemsFreeForm_Click(sender As Object, e As EventArgs) Handles cmdClearOrderItemsFreeForm.Click
+        spreadAddFreeForm.ActiveWorksheet.Cells.Clear
+        InitAddByISBNFreeForm()
+    End Sub
 End Class

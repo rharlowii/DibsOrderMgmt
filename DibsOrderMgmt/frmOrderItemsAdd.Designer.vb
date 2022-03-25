@@ -39,6 +39,7 @@ Partial Class frmOrderItemsAdd
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmdAddOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
         Me.spreadAddFreeForm = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
+        Me.cmdClearOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
         Me.Panel1.SuspendLayout()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -59,7 +60,7 @@ Partial Class frmOrderItemsAdd
         Me.Panel1.Controls.Add(Me.LabelControl1)
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1082, 76)
+        Me.Panel1.Size = New System.Drawing.Size(1131, 76)
         Me.Panel1.TabIndex = 4
         '
         'LabelControl1
@@ -84,7 +85,7 @@ Partial Class frmOrderItemsAdd
         Me.XtraTabControl1.Location = New System.Drawing.Point(5, 84)
         Me.XtraTabControl1.Name = "XtraTabControl1"
         Me.XtraTabControl1.SelectedTabPage = Me.mainTab
-        Me.XtraTabControl1.Size = New System.Drawing.Size(1079, 480)
+        Me.XtraTabControl1.Size = New System.Drawing.Size(1128, 535)
         Me.XtraTabControl1.TabIndex = 5
         Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.mainTab, Me.XtraTabPage2})
         '
@@ -96,7 +97,7 @@ Partial Class frmOrderItemsAdd
         Me.mainTab.Controls.Add(Me.Panel3)
         Me.mainTab.Controls.Add(Me.spreadAddByISBN)
         Me.mainTab.Name = "mainTab"
-        Me.mainTab.Size = New System.Drawing.Size(1077, 435)
+        Me.mainTab.Size = New System.Drawing.Size(1126, 490)
         Me.mainTab.Text = "Add by ISBN"
         '
         'Panel3
@@ -109,7 +110,7 @@ Partial Class frmOrderItemsAdd
         Me.Panel3.Controls.Add(Me.cmdAddOrderItemsByISBN)
         Me.Panel3.Location = New System.Drawing.Point(6, 3)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1068, 55)
+        Me.Panel3.Size = New System.Drawing.Size(1117, 55)
         Me.Panel3.TabIndex = 3
         '
         'cmbOrderSet
@@ -166,7 +167,7 @@ Partial Class frmOrderItemsAdd
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.spreadAddByISBN.Location = New System.Drawing.Point(3, 64)
         Me.spreadAddByISBN.Name = "spreadAddByISBN"
-        Me.spreadAddByISBN.Size = New System.Drawing.Size(1071, 368)
+        Me.spreadAddByISBN.Size = New System.Drawing.Size(1120, 423)
         Me.spreadAddByISBN.TabIndex = 1
         Me.spreadAddByISBN.Text = "spreadAddByISBN"
         '
@@ -177,7 +178,7 @@ Partial Class frmOrderItemsAdd
         Me.XtraTabPage2.Controls.Add(Me.Panel2)
         Me.XtraTabPage2.Controls.Add(Me.spreadAddFreeForm)
         Me.XtraTabPage2.Name = "XtraTabPage2"
-        Me.XtraTabPage2.Size = New System.Drawing.Size(1077, 435)
+        Me.XtraTabPage2.Size = New System.Drawing.Size(1126, 490)
         Me.XtraTabPage2.Text = "Add Free Form"
         '
         'Panel2
@@ -185,6 +186,7 @@ Partial Class frmOrderItemsAdd
         Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cmdClearOrderItemsFreeForm)
         Me.Panel2.Controls.Add(Me.cmbPartner)
         Me.Panel2.Controls.Add(Me.Label22)
         Me.Panel2.Controls.Add(Me.cmbOrderSet2)
@@ -264,7 +266,7 @@ Partial Class frmOrderItemsAdd
         '
         Me.cmdAddOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdAddOrderItemsFreeForm.Appearance.Options.UseFont = True
-        Me.cmdAddOrderItemsFreeForm.Location = New System.Drawing.Point(868, 13)
+        Me.cmdAddOrderItemsFreeForm.Location = New System.Drawing.Point(661, 15)
         Me.cmdAddOrderItemsFreeForm.Name = "cmdAddOrderItemsFreeForm"
         Me.cmdAddOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
         Me.cmdAddOrderItemsFreeForm.TabIndex = 5
@@ -281,12 +283,22 @@ Partial Class frmOrderItemsAdd
         Me.spreadAddFreeForm.TabIndex = 4
         Me.spreadAddFreeForm.Text = "SpreadsheetControl1"
         '
+        'cmdClearOrderItemsFreeForm
+        '
+        Me.cmdClearOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdClearOrderItemsFreeForm.Appearance.Options.UseFont = True
+        Me.cmdClearOrderItemsFreeForm.Location = New System.Drawing.Point(854, 15)
+        Me.cmdClearOrderItemsFreeForm.Name = "cmdClearOrderItemsFreeForm"
+        Me.cmdClearOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
+        Me.cmdClearOrderItemsFreeForm.TabIndex = 82
+        Me.cmdClearOrderItemsFreeForm.Text = "Clear Order Items"
+        '
         'frmOrderItemsAdd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(1082, 601)
+        Me.ClientSize = New System.Drawing.Size(1131, 656)
         Me.Controls.Add(Me.XtraTabControl1)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "frmOrderItemsAdd"
@@ -325,4 +337,5 @@ Partial Class frmOrderItemsAdd
     Friend WithEvents Label2 As Label
     Friend WithEvents cmdAddOrderItemsFreeForm As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents spreadAddFreeForm As DevExpress.XtraSpreadsheet.SpreadsheetControl
+    Friend WithEvents cmdClearOrderItemsFreeForm As DevExpress.XtraEditors.SimpleButton
 End Class
