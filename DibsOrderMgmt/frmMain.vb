@@ -530,7 +530,7 @@ Public Class frmMain
         iPartnerCnt = oOrderPartners.Rows.Count
 
         'Need to swap this out later...maybe store in DB
-        sFile = HiveTemplatePath & "HIVE_PublisherPO_Template.xlsx"
+        sFile = HiveTemplatePath & "HIVE_PublisherCheckin_Template.xlsx"
 
         Select Case iPartnerCnt
             Case 0
@@ -1040,5 +1040,174 @@ Public Class frmMain
         End With
 
         LoadOrdersGrid()
+    End Sub
+
+    Private Sub BarButtonItem1_PublisherCheckIn_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_PublisherCheckIn.ItemClick
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim sCustomerPO As String
+        Dim sBHPO As String
+        Dim sBillTo_Name As String
+        Dim sBillTo_Name_NoSpace As String
+
+        Dim sBillToState As String
+        Dim sInvoiceFileName As String
+
+        'We modified this to handle the customer PO as well
+        '  Dim frmCustomerInvoice As New frmPublisherPO
+        Dim oSelectedPartners As List(Of DataRowView)
+        Dim iPartnerCnt As Integer
+        Dim iPartnerID As Integer
+        Dim ofrmPOPublisher As frmPublisherPO
+        Dim sPartner As String
+
+        Dim oOrderPartners As DataTable
+        Dim oOrderSets As DataTable
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        oOrderSets = GetOrderSetsInOrder(oOrderID.ToString)
+        oOrderPartners = GetPartnersInOrder(oOrderID.ToString)
+        iPartnerCnt = oOrderPartners.Rows.Count
+
+        'Need to swap this out later...maybe store in DB
+        sFile = HiveTemplatePath & "HIVE_PublisherCheckin_Template.xlsx"
+
+
+        With oRow
+            sCustomerPO = .Item("PurchasingPONumber").ToString
+            sBHPO = .Item("BHPONumber").ToString
+            sBillTo_Name = .Item("BillTo_Name").ToString
+            sBillToState = .Item("BillTo_State").ToString
+        End With
+        'Lets get rid on the spaces from the name
+
+        sBillTo_Name_NoSpace = sBillTo_Name.Replace(" ", "")
+
+
+
+
+        Select Case iPartnerCnt
+            Case 0
+                MsgBox("There are no order items in this Order from a Partner.")
+                Exit Sub
+
+            Case 1
+
+                'Only 1 or, so go an launch each
+                For Each oRow In oOrderPartners.Rows
+                    iPartnerID = oRow.Item("PartnerID")
+                    sPartner = oRow.Item("PublisherShortName")
+                    ofrmPOPublisher = New frmPublisherPO
+
+                    'INV_KS_HAYSUSD_PO_0084220022
+                    sInvoiceFileName = "PublisherCheckIn_" & sBillToState & "_" & sBillTo_Name_NoSpace & "_" & sBHPO
+
+                    With ofrmPOPublisher
+
+                        .BarButtonItem1.Caption = "Save Publisher 'Check In' to Order Docs"
+                        .BarButtonItem2.Caption = "Send Publisher 'Check In'"
+
+
+                        ' .BarButtonItem2.ImageOptions.LargeImage = My.Resources.sendpdf_32x32
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.CheckinDocument
+                        .Text = sInvoiceFileName
+                        .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+                        .oOrderSetsDataTable = oOrderSets
+                        .oOrderID = oOrderID
+                        .SpreadsheetControl1.LoadDocument(sFile)
+                        '
+                        .iPartnerID = iPartnerID
+                        .sPartner = sPartner
+                        .SetPublisherCheckIn_FixedCells()
+                        '         .AddOrderSets()
+                        '.AddOrderItems()
+                        .AddPublisherCheckInItems()
+                        .StartPosition = FormStartPosition.CenterParent
+                        .Show()
+                        ' .LoadExcel()
+
+                    End With
+                Next
+
+
+
+
+            Case Else
+
+
+                Dim oSelectPartners As New frmOrderPublishersSelect
+
+                With oSelectPartners
+                    .oOrderID = oOrderID
+                    .oOrderPartners = oOrderPartners
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+
+                    If .bCanceled = True Then Exit Sub
+                    oSelectedPartners = .oPartnersSelected
+                End With
+
+                'Instead of a data table....here we have a list of select rows
+                For Each oDataRowView In oSelectedPartners
+
+
+                    iPartnerID = oDataRowView.Item("PartnerID")
+                    sPartner = oDataRowView.Item("PublisherShortName")
+                    ofrmPOPublisher = New frmPublisherPO
+
+                    'INV_KS_HAYSUSD_PO_0084220022
+                    sInvoiceFileName = "PublisherCheckIn_" & sBillToState & "_" & sBillTo_Name_NoSpace & "_" & sBHPO
+
+                    With ofrmPOPublisher
+
+                        .BarButtonItem1.Caption = "Save Publisher 'Check In' to Order Docs"
+                        .BarButtonItem2.Caption = "Send Publisher 'Check In'"
+
+
+                        ' .BarButtonItem2.ImageOptions.LargeImage = My.Resources.sendpdf_32x32
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.CheckinDocument
+                        .Text = sInvoiceFileName
+                        .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+                        .oOrderSetsDataTable = oOrderSets
+                        .oOrderID = oOrderID
+                        .SpreadsheetControl1.LoadDocument(sFile)
+                        '
+
+                        .SetPublisherCheckIn_FixedCells()
+                        '         .AddOrderSets()
+                        '.AddOrderItems()
+                        .iPartnerID = iPartnerID
+                        .sPartner = sPartner
+                        .AddPublisherCheckInItems()
+                        .StartPosition = FormStartPosition.CenterParent
+                        .Show()
+                        ' .LoadExcel()
+
+                    End With
+                Next
+
+
+        End Select
+
+
+
+
+
+
     End Sub
 End Class

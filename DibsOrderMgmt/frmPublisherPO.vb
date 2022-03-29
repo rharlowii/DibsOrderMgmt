@@ -11,6 +11,8 @@ Public Class frmPublisherPO
     Public ExcelBytes As Byte()
     Public oOrderID As Guid
     Public iPartnerID As Integer
+    Public sPartner As String
+
     Private oPartnerDataTable As DataTable
     Public oOrderItemsDataTable As DataTable
     Public oOrderSetsDataTable As DataTable
@@ -79,6 +81,32 @@ Public Class frmPublisherPO
         Const PackingSlip_ItemNumber As String = "B"
         Const PackingSlip_ItemDesc As String = "C"
         Const PackingSlip_ItemQTY As String = "E"
+
+
+    End Structure
+    Public Structure PublisherCheckInFixedCells
+        Const BHPackingSlipDateDate As String = "D9"
+        ' Const POBHNumber As String = "E8"
+        Const POBHNumber As String = "B9"
+
+        Const BillTo_Line1 As String = "A12"
+        Const BillTo_Line2 As String = "A13"
+        Const BillTo_Line3 As String = "A14"
+        Const BillTo_Line4 As String = "A15"
+        Const BillTo_Line5 As String = "A16"
+
+        Const ShipTo_Line1 As String = "C12"
+        Const ShipTo_Line2 As String = "C13"
+        Const ShipTo_Line3 As String = "C14"
+        Const ShipTo_Line4 As String = "C15"
+        Const ShipTo_Line5 As String = "C16"
+
+        Const PublisherCheckInItemsStartRow As Integer = 19
+
+        Const PublisherCheckIn_Partner As String = "A"
+        Const PublisherCheckIn_ItemNumber As String = "B"
+        Const PublisherCheckIn_ItemDesc As String = "C"
+        Const PublisherCheckIn_ItemQTY As String = "E"
 
 
     End Structure
@@ -452,6 +480,105 @@ endUpdate:
 endUpdate:
         oWorkSheet.Cells.EndUpdate()
     End Function
+
+    Public Function AddPublisherCheckInItems()
+
+        Dim oOrderItemRow As DataRow
+        Dim iStartRow As Integer
+        Dim iRowCount As Integer
+        Dim sItemPartner As String
+        Dim sItemCell As String
+        Dim sItemDescCell As String
+        Dim sItemQTYCell As String
+        Dim sItemListPriceCell As String
+        'Dim sItemDiscountCell As String
+        'Dim sItemUnitCostCell As String
+        'Dim sItemTotalCostCell As String
+        'Dim sSubTotalCell As String
+        'Dim sSubTotalStartCell As String
+        'Dim sSubTotalEndCell As String
+        Dim iOrderItemsCount As Integer
+        Dim oPartnerDiscount As Decimal
+        Dim sColorRange As String
+
+        Dim oBackColorForOdd As Color
+
+
+        Dim oWorkSheet As Spreadsheet.Worksheet
+        'Make you pass TRue, so we get all...not just a specific partner
+        LoadOrderItemsInfo(False)
+
+        oWorkSheet = SpreadsheetControl1.ActiveWorksheet
+
+        iStartRow = PublisherCheckInFixedCells.PublisherCheckInItemsStartRow
+        iRowCount = 0
+
+
+        iOrderItemsCount = oOrderItemsDataTable.Rows.Count
+        If iOrderItemsCount = 0 Then
+            'If no order items then we can bail
+            Exit Function
+        End If
+
+
+
+        '   oPartnerDiscount = oPartnerDataTable.Rows(0).Item("PrintDiscount")
+
+        oWorkSheet.Cells.BeginUpdate()
+        For Each oOrderItemRow In oOrderItemsDataTable.Rows
+
+
+            'Set the cell locations for the order items
+            sItemPartner = PublisherCheckInFixedCells.PublisherCheckIn_Partner & (iStartRow + iRowCount)
+            sItemCell = PublisherCheckInFixedCells.PublisherCheckIn_ItemNumber & (iStartRow + iRowCount)
+            sItemDescCell = PublisherCheckInFixedCells.PublisherCheckIn_ItemDesc & (iStartRow + iRowCount)
+            sItemQTYCell = PublisherCheckInFixedCells.PublisherCheckIn_ItemQTY & (iStartRow + iRowCount)
+
+
+            'Now set the Values is those cells
+            oWorkSheet.Range(sItemPartner).Value = oOrderItemRow.Item("PublisherShortName").ToString
+            oWorkSheet.Range(sItemCell).Value = oOrderItemRow.Item("ItemNumber").ToString
+            oWorkSheet.Range(sItemDescCell).Value = oOrderItemRow.Item("ItemDesc").ToString
+            oWorkSheet.Range(sItemQTYCell).Value = oOrderItemRow.Item("QTY").ToString
+
+
+
+
+            ''Need to Fix Sub Total formula
+            'sSubTotalCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount + 3)
+            'sSubTotalStartCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow)
+            'sSubTotalEndCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
+
+
+            'Need to Format the row
+
+
+
+            iRowCount = iRowCount + 1
+
+            'Go ahead and insert a new row for the next items or provide spacing
+            '(This one is a little differnent because of Partner Column)
+
+            oWorkSheet.Range(PublisherCheckInFixedCells.PublisherCheckIn_Partner & (iStartRow + iRowCount)).Insert(InsertCellsMode.EntireRow)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formats)
+            oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.NumberFormats)
+            ' oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formulas)
+            'So odd Rows, we want No Back color....on even leave the background color
+
+            sColorRange = PublisherCheckInFixedCells.PublisherCheckIn_Partner & (iStartRow + iRowCount) & ":" & PublisherCheckInFixedCells.PublisherCheckIn_ItemQTY & (iStartRow + iRowCount)
+            If iRowCount Mod 2 = 0 Then
+                'Even...Clear
+                oWorkSheet.Range(sColorRange).FillColor = Color.Transparent
+            Else
+                'Odd.Set Color
+
+                oWorkSheet.Range(sColorRange).FillColor = Color.LightGray
+            End If
+        Next
+        ' oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
+endUpdate:
+        oWorkSheet.Cells.EndUpdate()
+    End Function
     Public Function AddOrderSets()
 
         Dim oOrderSetItemRow As DataRow
@@ -683,6 +810,49 @@ endUpdate:
 
 
     End Function
+    Public Function SetPublisherCheckIn_FixedCells()
+        Dim oOrderRow As DataRow
+
+
+        Dim oWorkSheet As Spreadsheet.Worksheet
+
+
+        oWorkSheet = SpreadsheetControl1.ActiveWorksheet
+        oWorkSheet.Cells.BeginUpdate()
+        Dim sBillToCityStateZip As String
+        Dim sShipToCityStateZip As String
+
+        ' oWorkSheet.Range(CustomerPackingSlipFixedCells.).Value = Today.ToShortDateString
+        'Need to add PO numbers from 
+
+        'Need to add PO numbers from 
+        With oOrderInfoDataTable.Rows(0)
+            ' oWorkSheet.Range(CustomerPackingSlipFixedCells.).Value = .Item("BHPONumber").ToString
+            oWorkSheet.Range(PublisherCheckInFixedCells.POBHNumber).Value = .Item("BHPONumber").ToString
+
+            oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line1).Value = .Item("BillTo_Name").ToString
+            oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line2).Value = .Item("BillTo_Street").ToString
+
+            sBillToCityStateZip = .Item("BillTo_City").ToString & ", " & .Item("BillTo_State").ToString & " " & .Item("BillTo_Zip").ToString
+
+            oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line3).Value = sBillToCityStateZip
+            oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line4).Value = .Item("PurchasingContactPhone").ToString
+            ' oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line5).Value = .Item("Partner_Line5").ToString
+
+            oWorkSheet.Range(PublisherCheckInFixedCells.ShipTo_Line1).Value = .Item("ShipTo_Name").ToString
+            oWorkSheet.Range(PublisherCheckInFixedCells.ShipTo_Line2).Value = .Item("ShipTo_Street").ToString
+            sShipToCityStateZip = .Item("ShipTo_City").ToString & ", " & .Item("ShipTo_State").ToString & " " & .Item("ShipTo_Zip").ToString
+
+            oWorkSheet.Range(PublisherCheckInFixedCells.ShipTo_Line3).Value = sShipToCityStateZip
+            ' oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line4).Value = .Item("ShipTo_Line4").ToString
+            'oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line5).Value = .Item("ShipTo_Line5").ToString
+        End With
+
+        oWorkSheet.Cells.EndUpdate()
+
+
+
+    End Function
     Public Function SetCustomerPackingSlip_FixedCells()
         Dim oOrderRow As DataRow
 
@@ -710,7 +880,7 @@ endUpdate:
 
             oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line3).Value = sBillToCityStateZip
             oWorkSheet.Range(CustomerPackingSlipFixedCells.BillTo_Line4).Value = .Item("PurchasingContactPhone").ToString
-            ' oWorkSheet.Range(CustomerInvoiceFixedCells.BillTo_Line5).Value = .Item("Partner_Line5").ToString
+            ' oWorkSheet.Range(PublisherCheckInFixedCells.BillTo_Line5).Value = .Item("Partner_Line5").ToString
 
             oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line1).Value = .Item("ShipTo_Name").ToString
             oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line2).Value = .Item("ShipTo_Street").ToString
@@ -823,7 +993,7 @@ endUpdate:
         'THis saving the Partner PO Document
         Dim oOrderDoc As New OrderDocument
         Dim sReturn As String
-        Dim sPartner As String
+
         Dim iPartnerID As Integer
         Dim sOrderDocName As String
         Dim sBHPO As String
@@ -877,6 +1047,17 @@ endUpdate:
                 sMSG = "You are about 'Save/Replace' the Customer Packing Slip: '" & sBHPO & "' in the Order Documents. Are you sure you want to continue?"
                 sMsgCaption = "Save/Replace Packing Slip in Order Documents"
                 sOrderDocNotes = "Packing Slip Generated by 'The Hive' for Customer"
+
+            Case moDocTypes.CheckinDocument
+                'Need to add the extension or you can not open it on the other end
+
+                sOrderDocName = sBHPO & "_" & sPartner & "_" & "PublisherCheckIn" & ".xlsx"
+                'We save both PDF and XLSX
+                sOrderDocName_PDF = sOrderDocName.Replace(".xlsx", ".pdf")
+                sMSG = "You are about 'Save/Replace' the Publisher 'Check In': '" & sBHPO & "_" & sPartner & "' in the Order Documents. Are you sure you want to continue?"
+                sMsgCaption = "Save/Replace Publisher 'Check In' in Order Documents"
+                sOrderDocNotes = "Publisher 'Check In' Generated by 'The Hive' for Fulfillment"
+
 
             Case Else
 
@@ -976,6 +1157,12 @@ endUpdate:
 
                 'Need to add the extension or you can not open it on the other end
                 sOrderDocName = sBHPO & "_" & sPartner & "_PO_Final.xlsx"
+                'Try this out because using the temp file and attaching to email causes issue when forwarding.
+                'The forrwarded attachment has the temp file name
+
+                sTempFile = sTempFile.Replace(Path.GetFileName(sTempFile), sOrderDocName)
+
+
                 sSubject = "PO: " & sBHPO & "_" & sPartner
                 sBody = "Please process the attached PO: " & sBHPO & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
 
@@ -989,10 +1176,31 @@ endUpdate:
                 'Need to add the extension or you can not open it on the other end
 
                 sOrderDocName = "INV_" & sCustomerBillToState & "_" & sCustomerBillToName & "_PO_" & sCustomerPurchasingPONumber & ".pdf"
+                'Try this out because using the temp file and attaching to email causes issue when forwarding.
+                'The forrwarded attachment has the temp file name
+
+                sTempFile = sTempFile.Replace(Path.GetFileName(sTempFile), sOrderDocName)
+
                 sSubject = "Invoice from Brain Hive for PO: " & sCustomerBillToName & "_" & sCustomerPurchasingPONumber
                 sBody = "Please see the attached Invoice for: " & sCustomerPurchasingPONumber & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
                 SpreadsheetControl1.ExportToPdf(sTempFile)
                 iEmailType = BHEmailTypes.CustInvoiceEmail
+
+            Case moDocTypes.CheckinDocument
+                'Need to add the extension or you can not open it on the other end
+                sOrderDocName = sBHPO & "_" & sPartner & "_PublisherCheckIn.xlsx"
+                'Try this out because using the temp file and attaching to email causes issue when forwarding.
+                'The forrwarded attachment has the temp file name
+
+                sTempFile = sTempFile.Replace(Path.GetFileName(sTempFile), sOrderDocName)
+                sSubject = "Publisher Check In: " & sBHPO & "_" & sPartner
+                sBody = "Please see the attached Publisher Check In: " & sBHPO & "_" & sPartner & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
+
+
+                SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
+                'SpreadsheetControl1.Options.Save.CurrentFileName = sOrderDocName
+                iEmailType = BHEmailTypes.CheckinDocumentEmail
+
             Case Else
 
         End Select
@@ -1059,7 +1267,4 @@ endUpdate:
 
     End Sub
 
-    Private Sub BarButtonItem2_ItemClick_1(sender As Object, e As XtraBars.ItemClickEventArgs) Handles BarButtonItem2.ItemClick
-
-    End Sub
 End Class

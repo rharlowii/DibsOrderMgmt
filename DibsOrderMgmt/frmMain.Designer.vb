@@ -131,6 +131,8 @@ Partial Class frmMain
         Me.BarButtonItem1_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1_ViewBook = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1_ViewCover = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_EBookSales = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarStaticItem1 = New DevExpress.XtraBars.BarStaticItem()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.XtraTabPage1_MetaData = New DevExpress.XtraTab.XtraTabPage()
         Me.cmdMetaImport = New DevExpress.XtraEditors.SimpleButton()
@@ -149,8 +151,7 @@ Partial Class frmMain
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
         Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
-        Me.BarButtonItem1_EBookSales = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarStaticItem1 = New DevExpress.XtraBars.BarStaticItem()
+        Me.BarButtonItem1_PublisherCheckIn = New DevExpress.XtraBars.BarButtonItem()
         BarStaticItem1_divider = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -823,8 +824,8 @@ Partial Class frmMain
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1})
-        Me.BarManager1.MaxItemId = 17
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1, Me.BarButtonItem1_PublisherCheckIn})
+        Me.BarManager1.MaxItemId = 18
         '
         'barDockControlTop
         '
@@ -897,7 +898,7 @@ Partial Class frmMain
         '
         Me.BarSubItem1.Caption = "Reports/Quotes/Invoices"
         Me.BarSubItem1.Id = 7
-        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
+        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherCheckIn), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
         Me.BarSubItem1.Name = "BarSubItem1"
         '
         'BarButtonItem2_CreateQuote
@@ -941,6 +942,17 @@ Partial Class frmMain
         Me.BarButtonItem1_ViewCover.Caption = "View Book Cover"
         Me.BarButtonItem1_ViewCover.Id = 14
         Me.BarButtonItem1_ViewCover.Name = "BarButtonItem1_ViewCover"
+        '
+        'BarButtonItem1_EBookSales
+        '
+        Me.BarButtonItem1_EBookSales.Caption = "eBook Sales"
+        Me.BarButtonItem1_EBookSales.Id = 15
+        Me.BarButtonItem1_EBookSales.Name = "BarButtonItem1_EBookSales"
+        '
+        'BarStaticItem1
+        '
+        Me.BarStaticItem1.Id = 16
+        Me.BarStaticItem1.Name = "BarStaticItem1"
         '
         'Panel2
         '
@@ -1081,16 +1093,11 @@ Partial Class frmMain
         Me.PopupMenu1.Manager = Me.BarManager1
         Me.PopupMenu1.Name = "PopupMenu1"
         '
-        'BarButtonItem1_EBookSales
+        'BarButtonItem1_PublisherCheckIn
         '
-        Me.BarButtonItem1_EBookSales.Caption = "eBook Sales"
-        Me.BarButtonItem1_EBookSales.Id = 15
-        Me.BarButtonItem1_EBookSales.Name = "BarButtonItem1_EBookSales"
-        '
-        'BarStaticItem1
-        '
-        Me.BarStaticItem1.Id = 16
-        Me.BarStaticItem1.Name = "BarStaticItem1"
+        Me.BarButtonItem1_PublisherCheckIn.Caption = "Create Publisher 'Check In'"
+        Me.BarButtonItem1_PublisherCheckIn.Id = 17
+        Me.BarButtonItem1_PublisherCheckIn.Name = "BarButtonItem1_PublisherCheckIn"
         '
         'frmMain
         '
@@ -1258,4 +1265,5 @@ Partial Class frmMain
     Friend WithEvents BarButtonItem1_ViewCover As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem1_EBookSales As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarStaticItem1 As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents BarButtonItem1_PublisherCheckIn As DevExpress.XtraBars.BarButtonItem
 End Class

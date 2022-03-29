@@ -22,15 +22,19 @@ Partial Class frmOrderPublishersSelect
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.cmdCancel = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdOK = New DevExpress.XtraEditors.SimpleButton()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.CheckedListBoxControl1 = New DevExpress.XtraEditors.CheckedListBoxControl()
+        Me.BehaviorManager1 = New DevExpress.Utils.Behaviors.BehaviorManager(Me.components)
+        Me.cmdUnSelectAllSelectAll = New DevExpress.XtraEditors.SimpleButton()
         Me.Panel1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.CheckedListBoxControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BehaviorManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -58,7 +62,7 @@ Partial Class frmOrderPublishersSelect
         '
         Me.cmdCancel.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdCancel.Appearance.Options.UseFont = True
-        Me.cmdCancel.Location = New System.Drawing.Point(299, 273)
+        Me.cmdCancel.Location = New System.Drawing.Point(277, 473)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(122, 28)
         Me.cmdCancel.TabIndex = 80
@@ -68,7 +72,7 @@ Partial Class frmOrderPublishersSelect
         '
         Me.cmdOK.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdOK.Appearance.Options.UseFont = True
-        Me.cmdOK.Location = New System.Drawing.Point(144, 273)
+        Me.cmdOK.Location = New System.Drawing.Point(122, 473)
         Me.cmdOK.Name = "cmdOK"
         Me.cmdOK.Size = New System.Drawing.Size(122, 28)
         Me.cmdOK.TabIndex = 79
@@ -76,11 +80,12 @@ Partial Class frmOrderPublishersSelect
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.cmdUnSelectAllSelectAll)
         Me.GroupBox4.Controls.Add(Me.CheckedListBoxControl1)
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(12, 94)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(490, 173)
+        Me.GroupBox4.Size = New System.Drawing.Size(490, 364)
         Me.GroupBox4.TabIndex = 78
         Me.GroupBox4.TabStop = False
         '
@@ -92,20 +97,31 @@ Partial Class frmOrderPublishersSelect
         Me.CheckedListBoxControl1.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckedListBoxControl1.Appearance.Options.UseFont = True
         Me.CheckedListBoxControl1.DisplayMember = "PublisherShortName"
-        Me.CheckedListBoxControl1.Location = New System.Drawing.Point(6, 15)
+        Me.CheckedListBoxControl1.Location = New System.Drawing.Point(6, 52)
         Me.CheckedListBoxControl1.Name = "CheckedListBoxControl1"
         Me.CheckedListBoxControl1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.CheckedListBoxControl1.Size = New System.Drawing.Size(478, 152)
+        Me.CheckedListBoxControl1.Size = New System.Drawing.Size(478, 306)
         Me.CheckedListBoxControl1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.CheckedListBoxControl1.TabIndex = 0
         Me.CheckedListBoxControl1.ValueMember = "PartnerID"
+        '
+        'cmdUnSelectAllSelectAll
+        '
+        Me.cmdUnSelectAllSelectAll.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdUnSelectAllSelectAll.Appearance.Options.UseFont = True
+        Me.cmdUnSelectAllSelectAll.Location = New System.Drawing.Point(175, 18)
+        Me.cmdUnSelectAllSelectAll.Name = "cmdUnSelectAllSelectAll"
+        Me.cmdUnSelectAllSelectAll.Size = New System.Drawing.Size(166, 28)
+        Me.cmdUnSelectAllSelectAll.TabIndex = 81
+        Me.cmdUnSelectAllSelectAll.Tag = "UnSelectAll"
+        Me.cmdUnSelectAllSelectAll.Text = "&Un Select All"
         '
         'frmOrderPublishersSelect
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(538, 321)
+        Me.ClientSize = New System.Drawing.Size(538, 513)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmdOK)
@@ -116,6 +132,7 @@ Partial Class frmOrderPublishersSelect
         Me.Panel1.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         CType(Me.CheckedListBoxControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BehaviorManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -126,4 +143,6 @@ Partial Class frmOrderPublishersSelect
     Friend WithEvents cmdOK As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents GroupBox4 As GroupBox
     Friend WithEvents CheckedListBoxControl1 As DevExpress.XtraEditors.CheckedListBoxControl
+    Friend WithEvents cmdUnSelectAllSelectAll As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BehaviorManager1 As DevExpress.Utils.Behaviors.BehaviorManager
 End Class

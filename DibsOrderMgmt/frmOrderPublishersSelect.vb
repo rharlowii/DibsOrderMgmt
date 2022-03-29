@@ -39,4 +39,30 @@ Public Class frmOrderPublishersSelect
 
         Me.Close()
     End Sub
+
+    Private Sub cmdUnSelectAllSelectAll_Click(sender As Object, e As EventArgs) Handles cmdUnSelectAllSelectAll.Click
+        With cmdUnSelectAllSelectAll
+
+            If .Tag = "SelectAll" Then
+
+                CheckedListBoxControl1.CheckAll()
+
+                .Tag = "UnSelectAll"
+                .Text = "&Un Select All"
+                GoTo exitme
+            End If
+
+
+            If .Tag = "UnSelectAll" Then
+                CheckedListBoxControl1.UnCheckAll()
+                .Tag = "SelectAll"
+
+                .Text = "&Select All"
+                GoTo exitme
+            End If
+
+        End With
+exitme:
+        CheckedListBoxControl1.Refresh()
+    End Sub
 End Class
