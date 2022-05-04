@@ -661,4 +661,8 @@ BlankCountMaxHit:
         spreadAddFreeForm.ActiveWorksheet.Cells.Clear
         InitAddByISBNFreeForm()
     End Sub
+
+    Private Sub cmbPartner_EditValueChanged(sender As Object, e As EventArgs) Handles cmbPartner.EditValueChanged
+
+    End Sub
 End Class

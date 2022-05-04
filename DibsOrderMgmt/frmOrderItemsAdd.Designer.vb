@@ -33,13 +33,13 @@ Partial Class frmOrderItemsAdd
         Me.spreadAddByISBN = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
         Me.XtraTabPage2 = New DevExpress.XtraTab.XtraTabPage()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cmdClearOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
         Me.cmbPartner = New DevExpress.XtraEditors.LookUpEdit()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.cmbOrderSet2 = New DevExpress.XtraEditors.LookUpEdit()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmdAddOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
         Me.spreadAddFreeForm = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
-        Me.cmdClearOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
         Me.Panel1.SuspendLayout()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -197,6 +197,16 @@ Partial Class frmOrderItemsAdd
         Me.Panel2.Size = New System.Drawing.Size(1068, 55)
         Me.Panel2.TabIndex = 5
         '
+        'cmdClearOrderItemsFreeForm
+        '
+        Me.cmdClearOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdClearOrderItemsFreeForm.Appearance.Options.UseFont = True
+        Me.cmdClearOrderItemsFreeForm.Location = New System.Drawing.Point(854, 15)
+        Me.cmdClearOrderItemsFreeForm.Name = "cmdClearOrderItemsFreeForm"
+        Me.cmdClearOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
+        Me.cmdClearOrderItemsFreeForm.TabIndex = 82
+        Me.cmdClearOrderItemsFreeForm.Text = "Clear Order Items"
+        '
         'cmbPartner
         '
         Me.cmbPartner.Location = New System.Drawing.Point(85, 14)
@@ -282,16 +292,6 @@ Partial Class frmOrderItemsAdd
         Me.spreadAddFreeForm.Size = New System.Drawing.Size(1071, 368)
         Me.spreadAddFreeForm.TabIndex = 4
         Me.spreadAddFreeForm.Text = "SpreadsheetControl1"
-        '
-        'cmdClearOrderItemsFreeForm
-        '
-        Me.cmdClearOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdClearOrderItemsFreeForm.Appearance.Options.UseFont = True
-        Me.cmdClearOrderItemsFreeForm.Location = New System.Drawing.Point(854, 15)
-        Me.cmdClearOrderItemsFreeForm.Name = "cmdClearOrderItemsFreeForm"
-        Me.cmdClearOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
-        Me.cmdClearOrderItemsFreeForm.TabIndex = 82
-        Me.cmdClearOrderItemsFreeForm.Text = "Clear Order Items"
         '
         'frmOrderItemsAdd
         '

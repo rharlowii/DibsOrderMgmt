@@ -34,7 +34,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationRevision>40</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -86,6 +86,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>DibsOrderMgmt_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Azure.Core, Version=1.19.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
@@ -514,6 +517,12 @@
     <Compile Include="frmPDFViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmPubInvoiceItemsAdd.Designer.vb">
+      <DependentUpon>frmPubInvoiceItemsAdd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPubInvoiceItemsAdd.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPublisherPO.Designer.vb">
       <DependentUpon>frmPublisherPO.vb</DependentUpon>
     </Compile>
@@ -532,8 +541,15 @@
     <Compile Include="frmRTFViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmSchoolBookUsers.Designer.vb">
+      <DependentUpon>frmSchoolBookUsers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSchoolBookUsers.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="modAdmin.vb" />
     <Compile Include="modAZURE.vb" />
+    <Compile Include="modDibsOrderMgmt.vb" />
     <Compile Include="modDocMangement.vb" />
     <Compile Include="modEBookSaleItems.vb" />
     <Compile Include="modEmail.vb" />
@@ -544,11 +560,26 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="SplashScreen1.Designer.vb">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Content Include="HiveTemplates\HIVE_PublisherCheckin_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\BH_logo_NoWords.jpg" />
+    <EmbeddedResource Include="frmPubInvoiceItemsAdd.resx">
+      <DependentUpon>frmPubInvoiceItemsAdd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="My Project\app.manifest" />
     <None Include="Resources\pgPrevious.jpg" />
     <None Include="Resources\pgNext.jpg" />
     <EmbeddedResource Include="frmBrowser.resx">
@@ -611,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRTFViewer.resx">
       <DependentUpon>frmRTFViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSchoolBookUsers.resx">
+      <DependentUpon>frmSchoolBookUsers.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">

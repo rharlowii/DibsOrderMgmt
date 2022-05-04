@@ -5,6 +5,7 @@ Imports System.IO.FileInfo
 Imports Microsoft.VisualBasic.FileIO
 Public Class frmOrderDocuments
     Public oOrderID As Guid
+    Public PublisherInvoiceDocsOnly As Boolean = False  'OrderDocTypeId - 50 
 
     Sub New()
 

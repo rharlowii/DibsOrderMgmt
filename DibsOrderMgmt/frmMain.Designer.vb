@@ -64,8 +64,25 @@ Partial Class frmMain
         Me.colOrderStatusID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatusColor = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdExportOrdersGrid = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdRefreshGrid = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdNewOrder = New DevExpress.XtraEditors.SimpleButton()
+        Me.XtraTabPage1_PubInvoiceTracker = New DevExpress.XtraTab.XtraTabPage()
+        Me.gridPubInvoices = New DevExpress.XtraGrid.GridControl()
+        Me.GridView3 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.PubPaymentID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PartnerID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn4 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PublisherName = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PublisherInvoiceNumber = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PO_Amount = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.NetTermDays = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.DueDate = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PlanToPay = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.DatePaid = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemDateEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemDateEdit()
+        Me.Panel3 = New System.Windows.Forms.Panel()
         Me.XtraTabPage3_MetaSearch = New DevExpress.XtraTab.XtraTabPage()
         Me.GridMetaSearch = New DevExpress.XtraGrid.GridControl()
         Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -124,6 +141,7 @@ Partial Class frmMain
         Me.BarStaticItem2 = New DevExpress.XtraBars.BarStaticItem()
         Me.BarButtonItem1_PublisherPOs = New DevExpress.XtraBars.BarButtonItem()
         Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
+        Me.BarButtonItem1_PublisherCheckIn = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem2_CreateQuote = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1_CustomerInvoiceOrderSets = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1_CustomerInvoiceOrderItems = New DevExpress.XtraBars.BarButtonItem()
@@ -151,7 +169,7 @@ Partial Class frmMain
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
         Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
-        Me.BarButtonItem1_PublisherCheckIn = New DevExpress.XtraBars.BarButtonItem()
+        Me.cmdAddPubInvoices = New DevExpress.XtraEditors.SimpleButton()
         BarStaticItem1_divider = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -160,6 +178,12 @@ Partial Class frmMain
         CType(Me.DiBS_DB_ProdDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        Me.XtraTabPage1_PubInvoiceTracker.SuspendLayout()
+        CType(Me.gridPubInvoices, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateEdit1.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
         Me.XtraTabPage3_MetaSearch.SuspendLayout()
         CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -197,7 +221,7 @@ Partial Class frmMain
         Me.XtraTabControl1.SelectedTabPage = Me.XtraTabPage2_Orders
         Me.XtraTabControl1.Size = New System.Drawing.Size(1255, 686)
         Me.XtraTabControl1.TabIndex = 1
-        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage2_Orders, Me.XtraTabPage3_MetaSearch, Me.XtraTabPage1_MetaData})
+        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage2_Orders, Me.XtraTabPage1_PubInvoiceTracker, Me.XtraTabPage3_MetaSearch, Me.XtraTabPage1_MetaData})
         '
         'XtraTabPage2_Orders
         '
@@ -469,12 +493,24 @@ Partial Class frmMain
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel1.Controls.Add(Me.cmdExportOrdersGrid)
         Me.Panel1.Controls.Add(Me.cmdRefreshGrid)
         Me.Panel1.Controls.Add(Me.cmdNewOrder)
         Me.Panel1.Location = New System.Drawing.Point(6, 10)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1244, 60)
         Me.Panel1.TabIndex = 4
+        '
+        'cmdExportOrdersGrid
+        '
+        Me.cmdExportOrdersGrid.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdExportOrdersGrid.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdExportOrdersGrid.Appearance.Options.UseFont = True
+        Me.cmdExportOrdersGrid.Location = New System.Drawing.Point(8, 15)
+        Me.cmdExportOrdersGrid.Name = "cmdExportOrdersGrid"
+        Me.cmdExportOrdersGrid.Size = New System.Drawing.Size(130, 28)
+        Me.cmdExportOrdersGrid.TabIndex = 3
+        Me.cmdExportOrdersGrid.Text = "Export Orders"
         '
         'cmdRefreshGrid
         '
@@ -497,6 +533,153 @@ Partial Class frmMain
         Me.cmdNewOrder.Size = New System.Drawing.Size(130, 28)
         Me.cmdNewOrder.TabIndex = 1
         Me.cmdNewOrder.Text = "Create Order"
+        '
+        'XtraTabPage1_PubInvoiceTracker
+        '
+        Me.XtraTabPage1_PubInvoiceTracker.Controls.Add(Me.gridPubInvoices)
+        Me.XtraTabPage1_PubInvoiceTracker.Controls.Add(Me.Panel3)
+        Me.XtraTabPage1_PubInvoiceTracker.Name = "XtraTabPage1_PubInvoiceTracker"
+        Me.XtraTabPage1_PubInvoiceTracker.Size = New System.Drawing.Size(1253, 641)
+        Me.XtraTabPage1_PubInvoiceTracker.Text = "Pub Invoice Tracker"
+        '
+        'gridPubInvoices
+        '
+        Me.gridPubInvoices.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gridPubInvoices.DataMember = "omqryOrdersMain"
+        Me.gridPubInvoices.DataSource = Me.DiBS_DB_ProdDataSet1
+        Me.gridPubInvoices.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gridPubInvoices.Location = New System.Drawing.Point(4, 44)
+        Me.gridPubInvoices.MainView = Me.GridView3
+        Me.gridPubInvoices.Name = "gridPubInvoices"
+        Me.gridPubInvoices.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateEdit1})
+        Me.gridPubInvoices.Size = New System.Drawing.Size(1244, 553)
+        Me.gridPubInvoices.TabIndex = 8
+        Me.gridPubInvoices.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView3})
+        '
+        'GridView3
+        '
+        Me.GridView3.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GridView3.Appearance.Row.Options.UseFont = True
+        Me.GridView3.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.PubPaymentID, Me.OrderID, Me.PartnerID, Me.GridColumn4, Me.PublisherName, Me.PublisherInvoiceNumber, Me.PO_Amount, Me.NetTermDays, Me.DueDate, Me.PlanToPay, Me.DatePaid})
+        Me.GridView3.GridControl = Me.gridPubInvoices
+        Me.GridView3.Name = "GridView3"
+        Me.GridView3.OptionsBehavior.Editable = False
+        Me.GridView3.OptionsEditForm.ShowOnDoubleClick = DevExpress.Utils.DefaultBoolean.[True]
+        Me.GridView3.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.[True]
+        Me.GridView3.OptionsView.ShowAutoFilterRow = True
+        Me.GridView3.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
+        '
+        'PubPaymentID
+        '
+        Me.PubPaymentID.Caption = "Pub Payment ID"
+        Me.PubPaymentID.FieldName = "PubPaymentID"
+        Me.PubPaymentID.Name = "PubPaymentID"
+        '
+        'OrderID
+        '
+        Me.OrderID.FieldName = "OrderID"
+        Me.OrderID.Name = "OrderID"
+        '
+        'PartnerID
+        '
+        Me.PartnerID.Caption = "Partner ID"
+        Me.PartnerID.FieldName = "PartnerID"
+        Me.PartnerID.Name = "PartnerID"
+        '
+        'GridColumn4
+        '
+        Me.GridColumn4.Caption = "BH PO Number"
+        Me.GridColumn4.FieldName = "BHPONumber"
+        Me.GridColumn4.Name = "GridColumn4"
+        Me.GridColumn4.OptionsColumn.AllowEdit = False
+        Me.GridColumn4.Visible = True
+        Me.GridColumn4.VisibleIndex = 0
+        Me.GridColumn4.Width = 101
+        '
+        'PublisherName
+        '
+        Me.PublisherName.Caption = "Publisher Name"
+        Me.PublisherName.FieldName = "PublisherName"
+        Me.PublisherName.Name = "PublisherName"
+        Me.PublisherName.OptionsColumn.AllowEdit = False
+        Me.PublisherName.Visible = True
+        Me.PublisherName.VisibleIndex = 1
+        Me.PublisherName.Width = 101
+        '
+        'PublisherInvoiceNumber
+        '
+        Me.PublisherInvoiceNumber.Caption = "Pub Invoice #"
+        Me.PublisherInvoiceNumber.FieldName = "PublisherInvoiceNumber"
+        Me.PublisherInvoiceNumber.Name = "PublisherInvoiceNumber"
+        Me.PublisherInvoiceNumber.Visible = True
+        Me.PublisherInvoiceNumber.VisibleIndex = 2
+        Me.PublisherInvoiceNumber.Width = 101
+        '
+        'PO_Amount
+        '
+        Me.PO_Amount.Caption = "Pub Invoice Amount"
+        Me.PO_Amount.DisplayFormat.FormatString = "c2"
+        Me.PO_Amount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom
+        Me.PO_Amount.FieldName = "PO_Amount"
+        Me.PO_Amount.Name = "PO_Amount"
+        '
+        'NetTermDays
+        '
+        Me.NetTermDays.Caption = "Net Term"
+        Me.NetTermDays.FieldName = "NetTermDays"
+        Me.NetTermDays.Name = "NetTermDays"
+        Me.NetTermDays.OptionsColumn.AllowEdit = False
+        Me.NetTermDays.Visible = True
+        Me.NetTermDays.VisibleIndex = 3
+        Me.NetTermDays.Width = 101
+        '
+        'DueDate
+        '
+        Me.DueDate.Caption = "Due Date"
+        Me.DueDate.FieldName = "DueDate"
+        Me.DueDate.Name = "DueDate"
+        Me.DueDate.Visible = True
+        Me.DueDate.VisibleIndex = 4
+        Me.DueDate.Width = 101
+        '
+        'PlanToPay
+        '
+        Me.PlanToPay.Caption = "Plan To Pay Date"
+        Me.PlanToPay.FieldName = "PlanToPay"
+        Me.PlanToPay.Name = "PlanToPay"
+        Me.PlanToPay.Visible = True
+        Me.PlanToPay.VisibleIndex = 5
+        Me.PlanToPay.Width = 101
+        '
+        'DatePaid
+        '
+        Me.DatePaid.Caption = "Date Paid"
+        Me.DatePaid.ColumnEdit = Me.RepositoryItemDateEdit1
+        Me.DatePaid.FieldName = "DatePaid"
+        Me.DatePaid.Name = "DatePaid"
+        Me.DatePaid.Visible = True
+        Me.DatePaid.VisibleIndex = 6
+        Me.DatePaid.Width = 109
+        '
+        'RepositoryItemDateEdit1
+        '
+        Me.RepositoryItemDateEdit1.AutoHeight = False
+        Me.RepositoryItemDateEdit1.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateEdit1.Name = "RepositoryItemDateEdit1"
+        '
+        'Panel3
+        '
+        Me.Panel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel3.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel3.Controls.Add(Me.cmdAddPubInvoices)
+        Me.Panel3.Location = New System.Drawing.Point(5, 3)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(1244, 60)
+        Me.Panel3.TabIndex = 7
         '
         'XtraTabPage3_MetaSearch
         '
@@ -901,6 +1084,12 @@ Partial Class frmMain
         Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherPOs), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PublisherCheckIn), New DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, False, Me.BarButtonItem2_CreateQuote, False), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerInvoiceOrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_CustomerPackingSlip)})
         Me.BarSubItem1.Name = "BarSubItem1"
         '
+        'BarButtonItem1_PublisherCheckIn
+        '
+        Me.BarButtonItem1_PublisherCheckIn.Caption = "Create Publisher 'Check In'"
+        Me.BarButtonItem1_PublisherCheckIn.Id = 17
+        Me.BarButtonItem1_PublisherCheckIn.Name = "BarButtonItem1_PublisherCheckIn"
+        '
         'BarButtonItem2_CreateQuote
         '
         Me.BarButtonItem2_CreateQuote.Caption = "Create Quote"
@@ -1093,11 +1282,15 @@ Partial Class frmMain
         Me.PopupMenu1.Manager = Me.BarManager1
         Me.PopupMenu1.Name = "PopupMenu1"
         '
-        'BarButtonItem1_PublisherCheckIn
+        'cmdAddPubInvoices
         '
-        Me.BarButtonItem1_PublisherCheckIn.Caption = "Create Publisher 'Check In'"
-        Me.BarButtonItem1_PublisherCheckIn.Id = 17
-        Me.BarButtonItem1_PublisherCheckIn.Name = "BarButtonItem1_PublisherCheckIn"
+        Me.cmdAddPubInvoices.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdAddPubInvoices.Appearance.Options.UseFont = True
+        Me.cmdAddPubInvoices.Location = New System.Drawing.Point(1053, 7)
+        Me.cmdAddPubInvoices.Name = "cmdAddPubInvoices"
+        Me.cmdAddPubInvoices.Size = New System.Drawing.Size(175, 28)
+        Me.cmdAddPubInvoices.TabIndex = 6
+        Me.cmdAddPubInvoices.Text = "Add Pub Invoices"
         '
         'frmMain
         '
@@ -1121,6 +1314,12 @@ Partial Class frmMain
         CType(Me.DiBS_DB_ProdDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
+        Me.XtraTabPage1_PubInvoiceTracker.ResumeLayout(False)
+        CType(Me.gridPubInvoices, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateEdit1.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateEdit1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
         Me.XtraTabPage3_MetaSearch.ResumeLayout(False)
         CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1266,4 +1465,22 @@ Partial Class frmMain
     Friend WithEvents BarButtonItem1_EBookSales As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarStaticItem1 As DevExpress.XtraBars.BarStaticItem
     Friend WithEvents BarButtonItem1_PublisherCheckIn As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdExportOrdersGrid As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents XtraTabPage1_PubInvoiceTracker As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents gridPubInvoices As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GridView3 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents PubPaymentID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OrderID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PartnerID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn4 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PublisherName As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PublisherInvoiceNumber As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PO_Amount As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents NetTermDays As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents DueDate As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PlanToPay As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents DatePaid As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents RepositoryItemDateEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemDateEdit
+    Friend WithEvents cmdAddPubInvoices As DevExpress.XtraEditors.SimpleButton
 End Class

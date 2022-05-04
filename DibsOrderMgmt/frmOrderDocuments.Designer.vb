@@ -44,13 +44,13 @@ Partial Class frmOrderDocuments
         Me.BarButtonItem1_SendDocumentToEmail = New DevExpress.XtraBars.BarButtonItem()
         Me.BarStaticItem2 = New DevExpress.XtraBars.BarStaticItem()
         Me.BarButtonItem1_EditDocumentInfo = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarStaticItem3 = New DevExpress.XtraBars.BarStaticItem()
+        Me.BarButtonItem1_DeleteDocument = New DevExpress.XtraBars.BarButtonItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.cmdAddNewDocument = New DevExpress.XtraEditors.SimpleButton()
         Me.OmOrderDocumentsTableAdapter1 = New DibsOrderMgmt.DiBS_DB_ProdDataSet1TableAdapters.omOrderDocumentsTableAdapter()
         Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
-        Me.BarStaticItem3 = New DevExpress.XtraBars.BarStaticItem()
-        Me.BarButtonItem1_DeleteDocument = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.gridDocuments, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DiBS_DB_ProdDataSet11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,6 +88,7 @@ Partial Class frmOrderDocuments
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
         Me.GridView1.OptionsSelection.MultiSelect = True
+        Me.GridView1.OptionsView.ShowAutoFilterRow = True
         '
         'colOrderID
         '
@@ -217,6 +218,17 @@ Partial Class frmOrderDocuments
         Me.BarButtonItem1_EditDocumentInfo.Id = 4
         Me.BarButtonItem1_EditDocumentInfo.Name = "BarButtonItem1_EditDocumentInfo"
         '
+        'BarStaticItem3
+        '
+        Me.BarStaticItem3.Id = 5
+        Me.BarStaticItem3.Name = "BarStaticItem3"
+        '
+        'BarButtonItem1_DeleteDocument
+        '
+        Me.BarButtonItem1_DeleteDocument.Caption = "Delete Document"
+        Me.BarButtonItem1_DeleteDocument.Id = 6
+        Me.BarButtonItem1_DeleteDocument.Name = "BarButtonItem1_DeleteDocument"
+        '
         'Panel1
         '
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -266,17 +278,6 @@ Partial Class frmOrderDocuments
         Me.PopupMenu1.MenuAppearance.AppearanceMenu.Normal.Options.UseTextOptions = True
         Me.PopupMenu1.MenuAppearance.AppearanceMenu.Normal.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap
         Me.PopupMenu1.Name = "PopupMenu1"
-        '
-        'BarStaticItem3
-        '
-        Me.BarStaticItem3.Id = 5
-        Me.BarStaticItem3.Name = "BarStaticItem3"
-        '
-        'BarButtonItem1_DeleteDocument
-        '
-        Me.BarButtonItem1_DeleteDocument.Caption = "Delete Document"
-        Me.BarButtonItem1_DeleteDocument.Id = 6
-        Me.BarButtonItem1_DeleteDocument.Name = "BarButtonItem1_DeleteDocument"
         '
         'frmOrderDocuments
         '

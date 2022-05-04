@@ -2,6 +2,10 @@
 Imports System.Net
 
 Module modAdmin
+    Public MetaSearchTabClickedOnce As Boolean = False
+    Public PubInvoiceTabClickedOnce As Boolean = False
+
+
     'Need to chage relative path
     Public HiveTemplatePath As String = "Y:\MEP - Shared\BrainHive\BH_OrderMgmt\HIVE_Templates\"
     Private Function GetImageBase64(sImage64 As String, oPictureBox As PictureBox)

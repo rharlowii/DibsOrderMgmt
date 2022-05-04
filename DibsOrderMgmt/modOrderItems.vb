@@ -251,4 +251,27 @@ Module modOrderItems
         Return sReturn
     End Function
 
+    Public Function GetAddPubInvoiceOrders() As DataTable
+
+        'Basically, we only want to get BH PO #s where we actively are going to 
+        '    Dim sSQL As String = "SELECT OrderId,BHPONumber FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 AND OrderStatusID<=40 ORDER BY BHPONumber "
+        Dim sSQL As String = "SELECT BHPONumber as BHPONumberID,BHPONumber,OrderID FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 AND OrderStatusID<=40 ORDER BY BHPONumber "
+
+        'BHPONumberID
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        Dim iCount As Integer
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+        da.Fill(ds)
+        oConnection.Close()
+
+        Return ds.Tables(0)
+
+
+
+    End Function
+
 End Module

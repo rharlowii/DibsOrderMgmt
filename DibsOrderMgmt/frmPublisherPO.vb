@@ -59,7 +59,7 @@ Public Class frmPublisherPO
 
     End Structure
     Public Structure CustomerPackingSlipFixedCells
-        Const BHPackingSlipDateDate As String = "D9"
+        Const BHPackingSlipDateDate As String = "B7"
         ' Const POBHNumber As String = "E8"
         Const POCustomerNumber As String = "B9"
 
@@ -80,7 +80,7 @@ Public Class frmPublisherPO
         Const PackingSlip_Partner As String = "A"
         Const PackingSlip_ItemNumber As String = "B"
         Const PackingSlip_ItemDesc As String = "C"
-        Const PackingSlip_ItemQTY As String = "E"
+        Const PackingSlip_ItemQTY As String = "D"
 
 
     End Structure
@@ -889,6 +889,9 @@ endUpdate:
             oWorkSheet.Range(CustomerPackingSlipFixedCells.ShipTo_Line3).Value = sShipToCityStateZip
             ' oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line4).Value = .Item("ShipTo_Line4").ToString
             'oWorkSheet.Range(CustomerInvoiceFixedCells.ShipTo_Line5).Value = .Item("ShipTo_Line5").ToString
+
+            oWorkSheet.Range(CustomerPackingSlipFixedCells.BHPackingSlipDateDate).Value = Today
+
         End With
 
         oWorkSheet.Cells.EndUpdate()
@@ -1124,7 +1127,7 @@ endUpdate:
         Dim sCustomerPurchasingPONumber As String
         Dim moDocTypes As New clsDibsOrderMgmt.OrderDocTypes
         Dim sReturn As String
-        Dim sPartner As String
+
         Dim iPartnerID As Integer
         Dim sOrderDocName As String
         Dim sSubject As String
@@ -1196,6 +1199,21 @@ endUpdate:
                 sSubject = "Publisher Check In: " & sBHPO & "_" & sPartner
                 sBody = "Please see the attached Publisher Check In: " & sBHPO & "_" & sPartner & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
 
+
+                SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
+                'SpreadsheetControl1.Options.Save.CurrentFileName = sOrderDocName
+                iEmailType = BHEmailTypes.CheckinDocumentEmail
+
+            Case moDocTypes.CustPackingSlip
+
+                'Need to add the extension or you can not open it on the other end
+                sOrderDocName = sBHPO & "_CustomerPackingSlip.xlsx"
+
+                sTempFile = sTempFile.Replace(Path.GetFileName(sTempFile), sOrderDocName)
+                sSubject = "Customer Packing Slip for: " & sBHPO
+                sBody = "Please see the attached customer packing slip for: " & sBHPO & "<br>" & "<br>" & "Please put the customer PO #: " & sCustomerPurchasingPONumber & " on all boxes." & "<br>" & vbCrLf
+
+                sBody = sBody & "Please let me know if you have any questions." & vbCrLf & vbCrLf
 
                 SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
                 'SpreadsheetControl1.Options.Save.CurrentFileName = sOrderDocName

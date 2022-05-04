@@ -254,14 +254,15 @@ Module modImportMetaData
                 oMetaRow.ATOS = -5000
             End If
 
+            'added a check to make sure the column still exists...for minor columns
+            If .Hardcover_Print_ISBN_13Col <> EMPTYCOLName And oRow.Table.Columns.Contains(.Hardcover_Print_ISBN_13Col) Then
 
-            If .Hardcover_Print_ISBN_13Col <> EMPTYCOLName Then
                 oMetaRow.Hardcover_Print_ISBN_13 = GetISBN(oRow.Item(.Hardcover_Print_ISBN_13Col).ToString)
             Else
                 oMetaRow.Hardcover_Print_ISBN_13 = ""
             End If
 
-            If .Hardcover_Print_List_PriceCol <> EMPTYCOLName Then
+            If .Hardcover_Print_List_PriceCol <> EMPTYCOLName And oRow.Table.Columns.Contains(.Hardcover_Print_List_PriceCol) Then
                 oMetaRow.Hardcover_Print_List_Price = GetPrice(oRow.Item(.Hardcover_Print_List_PriceCol).ToString)
             Else
                 oMetaRow.Hardcover_Print_List_Price = 0.00
@@ -367,7 +368,7 @@ Module modImportMetaData
             End If
 
 
-            If .Grade_LevelCol <> EMPTYCOLName Then
+            If .Grade_LevelCol <> EMPTYCOLName And oRow.Table.Columns.Contains(.Grade_LevelCol) Then
                 oMetaRow.Grade_Level = oRow.Item(.Grade_LevelCol).ToString
             Else
                 oMetaRow.Grade_Level = ""
@@ -520,7 +521,7 @@ Module modImportMetaData
 
         resultString = ""
 
-        If sPrice <> "" Then
+        If sPrice <> "" And sPrice <> "EMPTYCOL" Then
             resultString = sPrice
         Else
             resultString = "0.00"
