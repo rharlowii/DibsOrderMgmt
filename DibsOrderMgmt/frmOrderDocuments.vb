@@ -3,8 +3,18 @@ Imports DevExpress.XtraBars
 Imports System.IO.FileInfo
 
 Imports Microsoft.VisualBasic.FileIO
+Imports DibsOrderMgmt.clsDibsOrderMgmt
+
 Public Class frmOrderDocuments
     Public oOrderID As Guid
+    Public PartnerID As Integer
+    Public PubInvoiceNumber As String
+    Public PubPaymentID As String
+
+    Public DocTypeSpecific As clsDibsOrderMgmt.OrderDocTypes = OrderDocTypes.NoDocumentType
+
+
+
     Public PublisherInvoiceDocsOnly As Boolean = False  'OrderDocTypeId - 50 
 
     Sub New()
@@ -26,6 +36,18 @@ Public Class frmOrderDocuments
             '.dgv_Grid.DataSource = ds.Tables(0)
             .oOrderID = oOrderID
 
+            Select Case DocTypeSpecific
+                Case OrderDocTypes.PubInvoice
+                    .PartnerID = PartnerID
+                    .PubInvoiceNumber = PubInvoiceNumber
+                    .DocTypeSpecific = OrderDocTypes.PubInvoice
+                    .PubPaymentID = PubPaymentID
+
+
+
+                Case Else
+
+            End Select
 
             .ShowDialog()
 
@@ -40,11 +62,20 @@ Public Class frmOrderDocuments
 
     Private Sub LoadDocumentsGrid()
 
-        Dim sSQL As String = "SELECT omOrderDocuments.* ,omOrderDoctypes.OrderDocTypeName FROM dbo.omOrderDocuments INNER JOIN dbo.omOrderDoctypes ON omOrderDocuments.OrderDocTypeID = omOrderDoctypes.OrderDocTypeID where OrderID='" & oOrderID.ToString & "'"
+        Dim sSQL As String
 
         Dim ds As New DataSet
         Dim da As SqlDataAdapter
         Dim iCount As Integer
+
+        Select Case DocTypeSpecific
+            Case clsDibsOrderMgmt.OrderDocTypes.PubInvoice
+                'Only get Pub Invoice type 60 for specific PubPaymentID
+                sSQL = "SELECT omOrderDocuments.* ,omOrderDoctypes.OrderDocTypeName FROM dbo.omOrderDocuments INNER JOIN dbo.omOrderDoctypes ON omOrderDocuments.OrderDocTypeID = omOrderDoctypes.OrderDocTypeID where OrderID='" & oOrderID.ToString & "' and omOrderDocuments.OrderDocTypeID=60 and omOrderDocuments.PubPaymentID='" & PubPaymentID & "'"
+            Case Else
+                sSQL = "SELECT omOrderDocuments.* ,omOrderDoctypes.OrderDocTypeName FROM dbo.omOrderDocuments INNER JOIN dbo.omOrderDoctypes ON omOrderDocuments.OrderDocTypeID = omOrderDoctypes.OrderDocTypeID where OrderID='" & oOrderID.ToString & "'"
+
+        End Select
 
         oConnection = New SqlConnection(sConnectionString)
         oConnection.Open()
@@ -349,9 +380,9 @@ Public Class frmOrderDocuments
             sDocumentName = oRow.Item("OrderDocName").ToString()
 
             sMSG = "You are about to Permanetly delete the document: '" & sDocumentName & " Are you sure you want to continue?"
-            iMsgRtrn = MessageBox.Show(sMSG, "Delete Document?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            iMSGRtrn = MessageBox.Show(sMSG, "Delete Document?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
 
-            If iMsgRtrn = DialogResult.Cancel Then
+            If iMSGRtrn = DialogResult.Cancel Then
                 Exit Sub
 
             End If

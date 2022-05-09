@@ -38,6 +38,7 @@ Module modDocMangement
         Public bFromDragDrop As Boolean
         Public bExistingDocument As Boolean
         Public bReplaceDocument As Boolean
+        Public PubPaymentID As String
 
 
     End Structure
@@ -77,7 +78,7 @@ Module modDocMangement
 
         If oOrderDocument.bExistingDocument = False Or oOrderDocument.bReplaceDocument = True Then
 
-            sEXEC = "omOrderDocuments_IU_ALT @OrderID,@DocumentID,@OrderDocName,@OrderDoc,@OrderDocTypeID ,@OrderDocNotes, @CreateTime, @UpdateTime,@PartnerID"
+            sEXEC = "omOrderDocuments_IU_ALT @OrderID,@DocumentID,@OrderDocName,@OrderDoc,@OrderDocTypeID ,@OrderDocNotes, @CreateTime, @UpdateTime,@PartnerID,@PubPaymentID"
 
         Else
             sEXEC = "UPDATE dbo.omOrderDocuments SET OrderDocName = @OrderDocName,OrderDocTypeID = @OrderDocTypeID,OrderDocNotes =@OrderDocNotes,UpdateTime = GETDATE() where DocumentID = @DocumentID"
@@ -107,8 +108,14 @@ Module modDocMangement
 
                 .Parameters.Add("@PartnerID", SqlDbType.Int).Value = oOrderDocument.PartnerID
 
-            Else
+                If oOrderDocument.PubPaymentID = "" Then
+                    .Parameters.Add("@PubPaymentID", SqlDbType.UniqueIdentifier).Value = DBNull.Value
+                Else
+                    .Parameters.Add("@PubPaymentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(oOrderDocument.PubPaymentID)
 
+                End If
+
+            Else
 
 
                 .Parameters.Add("@DocumentID", SqlDbType.UniqueIdentifier).Value = oOrderDocument.DocumentID

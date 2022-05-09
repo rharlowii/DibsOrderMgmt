@@ -82,7 +82,7 @@ Public Class frmMain
 
     Private Sub LoadPubInvoiceGrid()
 
-        Dim sSQL As String = "SELECT * FROM omqryPubInvoiceTracker Order By BHPONumber"
+        Dim sSQL As String = "SELECT * FROM omqryPubInvoiceTracker Order By DatePaid ASC, DueDate"
 
         Dim ds As New DataSet
         Dim da As SqlDataAdapter
@@ -417,7 +417,7 @@ Public Class frmMain
             .oOrderID = oOrderID
             .StartPosition = FormStartPosition.CenterParent
 
-            .ShowDialog()
+            .Show(Me.Owner)
 
         End With
     End Sub
@@ -1289,5 +1289,240 @@ Public Class frmMain
     Private Sub cmdAddPubInvoices_Click(sender As Object, e As EventArgs) Handles cmdAddPubInvoices.Click
         frmPubInvoiceItemsAdd.Show()
 
+    End Sub
+
+    Private Sub cmdRefreshPubInvoicesGrid_Click(sender As Object, e As EventArgs) Handles cmdRefreshPubInvoicesGrid.Click
+        LoadPubInvoiceGrid()
+
+    End Sub
+
+    Private Sub cmdMarkPubInvoicesPaid_Click(sender As Object, e As EventArgs) Handles cmdMarkPubInvoicesPaid.Click
+        Dim oOrderID As Guid
+        'Gridview3 is Pub Invoices
+        Dim oPubInvoicesView As GridView
+
+        oPubInvoicesView = GridView3
+        Dim selectedRowHandles As Int32() = oPubInvoicesView.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim iSelectedRowsCount As Integer
+        Dim oPubInvoiceItems As New List(Of PubInvoiceItem)
+        Dim oPubInvoicesDataTable As New DataTable
+
+        Dim oPubInvoiceItem As PubInvoiceItem
+        Dim sLastPublisher As String
+        Dim sDifferentPubs As String
+
+        Dim TotalInvoiceAmounts As Decimal
+
+
+        'We modified this to handle the customer PO as well
+        ' Dim frmCustomerInvoice As New frmPublisherPO
+
+
+
+        If selectedRowHandles.Count = 0 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+
+        sLastPublisher = ""
+        For Each selectedRowHandle In selectedRowHandles
+            'selectedRowHandle = selectedRowHandles(0)
+            'Gridview3 is Pub Invoices
+            oRow = oPubInvoicesView.GetDataRow(selectedRowHandle)
+
+            oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+            oPubInvoiceItem = New PubInvoiceItem
+
+            With oRow
+                oPubInvoiceItem.PubPaymentID = .Item("PubPaymentID").ToString
+                oPubInvoiceItem.PartnerID = .Item("PartnerID").ToString
+                oPubInvoiceItem.BHPONumber = .Item("BHPONumber").ToString
+                oPubInvoiceItem.PublisherName = .Item("PublisherName").ToString
+                oPubInvoiceItem.PublisherInvoiceNumber = .Item("PublisherInvoiceNumber").ToString
+                oPubInvoiceItem.InvoiceAmount = .Item("InvoiceAmount").ToString
+
+                If .Item("DatePaid") Is DBNull.Value Then
+                    'Want Date to be null
+                Else
+                    oPubInvoiceItem.DatePaid = .Item("DatePaid")
+                    'Need to show msg and exit
+                    MsgBox("You can not include existing paid Invoices. (" & oPubInvoiceItem.PublisherInvoiceNumber & ")",, "Error: Invoice already paid.")
+                    Exit Sub
+                End If
+
+
+                TotalInvoiceAmounts = TotalInvoiceAmounts + oPubInvoiceItem.InvoiceAmount
+
+                If sLastPublisher <> "" Then
+                    'Should mix different publishers when ACH Payment notice and marking as paid
+
+                    If oPubInvoiceItem.PublisherName <> sLastPublisher Then
+                        sDifferentPubs = oPubInvoiceItem.PublisherName & " / " & sLastPublisher
+                        MsgBox("You can NOT mark two differnt Publishers/Partners Invoices paid at the sametime. (" & sDifferentPubs & ")",, "Error: Differnt Pub Partners")
+                        Exit Sub
+
+                    End If
+                Else
+                    sLastPublisher = oPubInvoiceItem.PublisherName
+                End If
+
+            End With
+            oPubInvoiceItems.Add(oPubInvoiceItem)
+
+        Next
+
+
+
+        Dim ofrmACHPayment As New frmACHDateScheduled
+
+        With ofrmACHPayment
+            .oPubInvoiceItems = oPubInvoiceItems
+            .TotalInvoices = TotalInvoiceAmounts
+            .PublisherName = sLastPublisher
+            .iPartnerID = oPubInvoiceItem.PartnerID
+
+
+            .ShowDialog()
+        End With
+
+
+
+        'oRow.Item("OrderID").ToString()
+
+        '  oOrderItems = GetOrderItemsInOrder(oOrderID.ToString)
+
+
+        LoadPubInvoiceGrid()
+
+
+
+
+    End Sub
+
+    Private Sub gridPubInvoices_Click(sender As Object, e As EventArgs) Handles gridPubInvoices.Click
+
+    End Sub
+
+    Private Sub gridPubInvoices_MouseUp(sender As Object, e As MouseEventArgs) Handles gridPubInvoices.MouseUp
+        If e.Button = MouseButtons.Right Then
+            PopupMenu2.ShowPopup(Control.MousePosition)
+        End If
+    End Sub
+
+    Private Sub BarButtonItem2_PubInvoiceDocs_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem2_PubInvoiceDocs.ItemClick
+        Dim oEditOrderID As Guid
+
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim iPartnerID As Integer
+        Dim PubInvoiceNumber As String
+        Dim PubPaymentID As String
+
+        Dim selectedRowHandles As Int32() = GridView3.GetSelectedRows()
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView3.GetDataRow(selectedRowHandle)
+
+        'oRow.Item("OrderID").ToString()
+        oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        iPartnerID = oRow.Item("PartnerID")
+        PubInvoiceNumber = oRow.Item("PublisherInvoiceNumber").ToString
+        PubPaymentID = oRow.Item("PubPaymentID").ToString
+
+        Dim oForm As New frmOrderDocuments
+
+        With oForm
+            '.dgv_Grid.DataSource = ds.Tables(0)
+            .oOrderID = oEditOrderID
+            .PartnerID = iPartnerID
+            .PubInvoiceNumber = PubInvoiceNumber
+            .DocTypeSpecific = clsDibsOrderMgmt.OrderDocTypes.PubInvoice
+            .PubPaymentID = PubPaymentID
+            .LabelControl1.Text = "Documents - Pub Invoices"
+
+            .StartPosition = FormStartPosition.CenterParent
+
+            ' .MdiParent = Me
+            .Show()
+
+
+        End With
+    End Sub
+
+    Private Sub BarButtonItem1_PubInvoiceDetail_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_PubInvoiceDetail.ItemClick
+        ShowPubInvoiceDetail()
+    End Sub
+    Private Sub ShowPubInvoiceDetail()
+        Dim oEditOrderID As Guid
+
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim iPartnerID As Integer
+        Dim PubInvoiceNumber As String
+        Dim PubPaymentID As String
+        Dim BHPONumber As String
+        Dim InvoiceAmount As Decimal
+        Dim DueDate As Date
+        Dim PlanToPay As Date
+
+        Dim selectedRowHandles As Int32() = GridView3.GetSelectedRows()
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView3.GetDataRow(selectedRowHandle)
+
+        'oRow.Item("OrderID").ToString()
+        oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        iPartnerID = oRow.Item("PartnerID")
+        PubInvoiceNumber = oRow.Item("PublisherInvoiceNumber").ToString
+        PubPaymentID = oRow.Item("PubPaymentID").ToString
+        BHPONumber = oRow.Item("BHPONumber").ToString
+        InvoiceAmount = oRow.Item("InvoiceAmount").ToString
+        DueDate = oRow.Item("DueDate")
+        PlanToPay = oRow.Item("PlanToPay")
+
+        Dim oForm As New frmPubInvoiceItemsAdd
+
+        With oForm
+            .UpdateExisitngPubInvoice = True
+
+            .OrderID = oEditOrderID.ToString
+            .PubPaymentID = PubPaymentID
+
+            .BHPONumber_Orig = BHPONumber
+            .PartnerID_Orig = iPartnerID
+            ''.cmbBHPONumber.Enabled = False
+            '.cmbPartner.Enabled = False
+            .txtPubInvoiceNumber.Text = PubInvoiceNumber
+
+            .txtInvoiceAmount.Text = FormatCurrency(InvoiceAmount)
+            .DateEditDueDate.EditValue = DueDate
+            .DateEditPlanToPayDate.EditValue = PlanToPay
+
+
+            .PubPaymentID = PubPaymentID
+            .LabelControl1.Text = "Add/Update Pub Invoice"
+
+            .StartPosition = FormStartPosition.CenterParent
+
+            ' .MdiParent = Me
+            .Show()
+
+
+        End With
+    End Sub
+
+    Private Sub GridView3_DoubleClick(sender As Object, e As EventArgs) Handles GridView3.DoubleClick
+        ShowPubInvoiceDetail()
     End Sub
 End Class

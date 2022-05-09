@@ -70,7 +70,7 @@ Partial Class frmOrderDocuments
         Me.gridDocuments.MainView = Me.GridView1
         Me.gridDocuments.MenuManager = Me.BarManager1
         Me.gridDocuments.Name = "gridDocuments"
-        Me.gridDocuments.Size = New System.Drawing.Size(795, 351)
+        Me.gridDocuments.Size = New System.Drawing.Size(1139, 351)
         Me.gridDocuments.TabIndex = 0
         Me.gridDocuments.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -160,7 +160,7 @@ Partial Class frmOrderDocuments
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager1
-        Me.barDockControlTop.Size = New System.Drawing.Size(800, 0)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1144, 0)
         '
         'barDockControlBottom
         '
@@ -168,7 +168,7 @@ Partial Class frmOrderDocuments
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.barDockControlBottom.Location = New System.Drawing.Point(0, 450)
         Me.barDockControlBottom.Manager = Me.BarManager1
-        Me.barDockControlBottom.Size = New System.Drawing.Size(800, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1144, 0)
         '
         'barDockControlLeft
         '
@@ -182,7 +182,7 @@ Partial Class frmOrderDocuments
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(800, 0)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1144, 0)
         Me.barDockControlRight.Manager = Me.BarManager1
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 450)
         '
@@ -238,7 +238,7 @@ Partial Class frmOrderDocuments
         Me.Panel1.Controls.Add(Me.cmdAddNewDocument)
         Me.Panel1.Location = New System.Drawing.Point(4, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(795, 78)
+        Me.Panel1.Size = New System.Drawing.Size(1139, 78)
         Me.Panel1.TabIndex = 2
         '
         'LabelControl1
@@ -253,9 +253,10 @@ Partial Class frmOrderDocuments
         '
         'cmdAddNewDocument
         '
+        Me.cmdAddNewDocument.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdAddNewDocument.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdAddNewDocument.Appearance.Options.UseFont = True
-        Me.cmdAddNewDocument.Location = New System.Drawing.Point(599, 35)
+        Me.cmdAddNewDocument.Location = New System.Drawing.Point(953, 35)
         Me.cmdAddNewDocument.Name = "cmdAddNewDocument"
         Me.cmdAddNewDocument.Size = New System.Drawing.Size(175, 28)
         Me.cmdAddNewDocument.TabIndex = 5
@@ -284,7 +285,7 @@ Partial Class frmOrderDocuments
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(1144, 450)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.gridDocuments)
         Me.Controls.Add(Me.barDockControlLeft)

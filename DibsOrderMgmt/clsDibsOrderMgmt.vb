@@ -12,4 +12,6 @@
         Other = 1000
 
     End Enum
+
+
 End Class

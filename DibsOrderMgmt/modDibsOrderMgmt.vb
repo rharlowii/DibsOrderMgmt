@@ -3,7 +3,7 @@ Imports System.Data.SqlClient
 
 Module modDibsOrderMgmt
 
-    Public Structure PubInvoiceItems
+    Public Structure PubInvoiceItem
         Public PubPaymentID As String
         Public OrderID As String
         Public PartnerID As Integer
@@ -14,10 +14,10 @@ Module modDibsOrderMgmt
         Public DatePaid As Date
 
         Public BHPONumber As String '' ' Optional
-
+        Public PublisherName As String ' Optional
 
     End Structure
-    Public Function omPubPaymentTracker_IU_ALT(oPubInvoiceItem As PubInvoiceItems, oOrderID As Guid) As String
+    Public Function omPubPaymentTracker_IU_ALT(oPubInvoiceItem As PubInvoiceItem) As String
 
 
         Dim sEXEC As String
@@ -33,7 +33,7 @@ Module modDibsOrderMgmt
 
         With myCommand
             .Parameters.Add("@PubPaymentID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(oPubInvoiceItem.PubPaymentID)
-            .Parameters.Add("@OrderID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(oOrderID)
+            .Parameters.Add("@OrderID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(oPubInvoiceItem.OrderID)
 
             .Parameters.Add("@PartnerID", SqlDbType.Int).Value = oPubInvoiceItem.PartnerID
 
@@ -41,9 +41,25 @@ Module modDibsOrderMgmt
             .Parameters.Add("@PublisherInvoiceNumber", SqlDbType.NVarChar).Value = oPubInvoiceItem.PublisherInvoiceNumber
             .Parameters.Add("@InvoiceAmount", SqlDbType.Decimal).Value = oPubInvoiceItem.InvoiceAmount
 
-            .Parameters.Add("@DueDate", SqlDbType.Date).Value = oPubInvoiceItem.DueDate
-            .Parameters.Add("@PlanToPay", SqlDbType.Date).Value = oPubInvoiceItem.PlanToPlay
-            .Parameters.Add("@DatePaid", SqlDbType.Date).Value = oPubInvoiceItem.DatePaid
+            If oPubInvoiceItem.DueDate = DateTime.MinValue Then
+                .Parameters.Add("@DueDate", SqlDbType.Date).Value = DBNull.Value
+            Else
+                .Parameters.Add("@DueDate", SqlDbType.Date).Value = oPubInvoiceItem.DueDate
+            End If
+
+            If oPubInvoiceItem.PlanToPlay = DateTime.MinValue Then
+                .Parameters.Add("@PlanToPlay", SqlDbType.Date).Value = DBNull.Value
+            Else
+                .Parameters.Add("@PlanToPay", SqlDbType.Date).Value = oPubInvoiceItem.PlanToPlay
+            End If
+
+
+            If oPubInvoiceItem.DatePaid = DateTime.MinValue Then
+                .Parameters.Add("@DatePaid", SqlDbType.Date).Value = DBNull.Value
+
+            Else
+                .Parameters.Add("@DatePaid", SqlDbType.Date).Value = oPubInvoiceItem.DatePaid
+            End If
 
 
 

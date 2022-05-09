@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.IO.FileInfo
 Imports System.Text
+Imports DibsOrderMgmt.clsDibsOrderMgmt
 Imports Microsoft.VisualBasic.FileIO
 
 
@@ -14,6 +15,11 @@ Public Class frmNewDocument
     Public DocFullFilePath As String = ""
     Public bDragDropFileInMemory As Boolean = False
     Public oDragDragDropFileBytes As Byte()
+    Public PartnerID As Integer
+    Public PubInvoiceNumber As String
+    Public PubPaymentID As String
+
+    Public DocTypeSpecific As OrderDocTypes = OrderDocTypes.NoDocumentType
 
 
     Private Sub cmd_FileSelect2_Click(sender As Object, e As EventArgs) Handles cmd_FileSelect2.Click
@@ -97,7 +103,13 @@ Public Class frmNewDocument
             .OrderDocFilePath = DocFullFilePath
             .OrderID = oOrderID
             .DocumentID = oDocumentID
+            If DocTypeSpecific = OrderDocTypes.PubInvoice Then
+                .PartnerID = PartnerID
+                .PubPaymentID = PubPaymentID
+            Else
+                .PubPaymentID = ""
 
+            End If
             .OrderDocName = txtOrderDocName.Text
             .OrderDocTypeID = cmbDocumentType.EditValue
             .OrderDocNotes = txtDocNotes.Text
@@ -152,8 +164,16 @@ Public Class frmNewDocument
             .ValueMember = "OrderDocTypeID"
 
 
-
         End With
+
+        Select Case DocTypeSpecific
+            Case OrderDocTypes.PubInvoice
+                cmbDocumentType.EditValue = 60
+                cmbDocumentType.Enabled = False
+                txtDocNotes.Text = "Invoice: " & PubInvoiceNumber
+
+            Case Else
+        End Select
 
     End Sub
 
