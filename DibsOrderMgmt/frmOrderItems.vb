@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports DevExpress.XtraBars
+Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Card
 Imports DevExpress.XtraGrid.Views.Grid
 
@@ -159,6 +160,40 @@ Public Class frmOrderItems
 
             .Parameters.Add("@ListPrice", SqlDbType.Decimal).Value = oListPrice
             .Parameters.Add("@ExtendedPrice", SqlDbType.Decimal).Value = oExtendedPrice
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+        oConnection.Close()
+
+        Return sReturn
+    End Function
+
+    Public Function UpdateQTYMissingBackOrdered(oOrderItemID As String, iQTYMissing As Integer, iBackOrdered As Integer, oBackOrderedDate As String)
+
+        Dim sEXEC As String = "UPDATE dbo.omOrderItems SET QTYMissing = @QTYMissing,BackOrdered = @BackOrdered,BackOrderedDate = @BackOrderedDate WHERE OrderItemID = @OrderItemID"
+
+        Dim sReturn As String
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        With myCommand
+            .Parameters.Add("@OrderItemID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(oOrderItemID.ToString)
+
+            .Parameters.Add("@QTYMissing", SqlDbType.Int).Value = iQTYMissing
+
+            .Parameters.Add("@BackOrdered", SqlDbType.Int).Value = iBackOrdered
+
+            If oBackOrderedDate.ToString.Length > 0 Then
+                .Parameters.Add("@BackOrderedDate", SqlDbType.Date).Value = oBackOrderedDate.ToString
+            Else
+                .Parameters.Add("@BackOrderedDate", SqlDbType.Date).Value = DBNull.Value
+
+            End If
+
 
             sReturn = .ExecuteNonQuery
 
@@ -406,5 +441,38 @@ Public Class frmOrderItems
         '        e.Appearance.ForeColor = Color.Red
         '    End If
         'End If
+    End Sub
+
+    Private Sub Gridview1_CustomRowCellEdit(sender As Object, e As CustomRowCellEditEventArgs) Handles Gridview1.CustomRowCellEdit
+
+    End Sub
+
+    Private Sub Gridview1_RowUpdated(sender As Object, e As RowObjectEventArgs) Handles Gridview1.RowUpdated
+        'This is where you update the Database after updating the 
+        Dim rowView As DataRowView = TryCast(e.Row, DataRowView)
+        Dim row As DataRow = rowView.Row
+
+        Dim sOrderItemID As String
+
+        Dim iQTYMissing As Integer
+        Dim iBackOrdered As Integer
+
+        Dim oBackorderedDate As String
+
+        'Need to validate
+        With row
+            sOrderItemID = .Item("OrderItemID").ToString
+            iQTYMissing = .Item("QTYMissing")
+            iBackOrdered = .Item("BackOrdered")
+            oBackorderedDate = .Item("BackorderedDate").ToString
+        End With
+        'Update DB
+
+        UpdateQTYMissingBackOrdered(sOrderItemID, iQTYMissing, iBackOrdered, oBackorderedDate)
+
+    End Sub
+
+    Private Sub gridOrderItems_Click(sender As Object, e As EventArgs) Handles gridOrderItems.Click
+
     End Sub
 End Class

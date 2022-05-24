@@ -187,6 +187,7 @@ Partial Class frmMain
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
         Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
         Me.PopupMenu2 = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.BarButtonItem2_MissingOrderItemsPub = New DevExpress.XtraBars.BarButtonItem()
         BarStaticItem1_divider = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
@@ -1129,8 +1130,8 @@ Partial Class frmMain
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1, Me.BarButtonItem1_PublisherCheckIn, Me.BarButtonItem1_PubInvoiceDetail, Me.BarButtonItem1_Divider1, Me.BarButtonItem1, Me.BarButtonItem2_PubInvoiceDocs, Me.BarButtonItem1_DuplicateOrder})
-        Me.BarManager1.MaxItemId = 23
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1, Me.BarButtonItem1_PublisherCheckIn, Me.BarButtonItem1_PubInvoiceDetail, Me.BarButtonItem1_Divider1, Me.BarButtonItem1, Me.BarButtonItem2_PubInvoiceDocs, Me.BarButtonItem1_DuplicateOrder, Me.BarButtonItem2_MissingOrderItemsPub})
+        Me.BarManager1.MaxItemId = 24
         '
         'barDockControlTop
         '
@@ -1396,7 +1397,7 @@ Partial Class frmMain
         '
         'PopupMenu_Orders
         '
-        Me.PopupMenu_Orders.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem_OrderDetail), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_Documents), New DevExpress.XtraBars.LinkPersistInfo(BarStaticItem1_divider), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_DuplicateOrder), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem2), New DevExpress.XtraBars.LinkPersistInfo(Me.BarSubItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EBookSales)})
+        Me.PopupMenu_Orders.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem_OrderDetail), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_Documents), New DevExpress.XtraBars.LinkPersistInfo(BarStaticItem1_divider), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem2_MissingOrderItemsPub), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_DuplicateOrder), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem2), New DevExpress.XtraBars.LinkPersistInfo(Me.BarSubItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EBookSales)})
         Me.PopupMenu_Orders.Manager = Me.BarManager1
         Me.PopupMenu_Orders.MenuAppearance.AppearanceMenu.Hovered.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PopupMenu_Orders.MenuAppearance.AppearanceMenu.Hovered.Options.UseFont = True
@@ -1450,6 +1451,12 @@ Partial Class frmMain
         Me.PopupMenu2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_PubInvoiceDetail), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_Divider1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem2_PubInvoiceDocs), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1)})
         Me.PopupMenu2.Manager = Me.BarManager1
         Me.PopupMenu2.Name = "PopupMenu2"
+        '
+        'BarButtonItem2_MissingOrderItemsPub
+        '
+        Me.BarButtonItem2_MissingOrderItemsPub.Caption = "Missing Order Item (PO)"
+        Me.BarButtonItem2_MissingOrderItemsPub.Id = 23
+        Me.BarButtonItem2_MissingOrderItemsPub.Name = "BarButtonItem2_MissingOrderItemsPub"
         '
         'frmMain
         '
@@ -1661,4 +1668,5 @@ Partial Class frmMain
     Friend WithEvents SalesRepID As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents OrderStatusComm As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents OrderStatusCommID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents BarButtonItem2_MissingOrderItemsPub As DevExpress.XtraBars.BarButtonItem
 End Class

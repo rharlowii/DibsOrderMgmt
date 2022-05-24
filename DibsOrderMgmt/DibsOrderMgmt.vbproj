@@ -750,6 +750,9 @@
     <Content Include="HiveTemplates\HIVE_PublisherCheckin_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="HiveTemplates\HIVE_PublisherMissingItems_Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\BH_logo_NoWords.jpg" />
     <EmbeddedResource Include="frmACHDateScheduled.resx">
       <DependentUpon>frmACHDateScheduled.vb</DependentUpon>

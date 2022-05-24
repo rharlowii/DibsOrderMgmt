@@ -173,7 +173,7 @@ Public Class frmPublisherPO
     Private Sub SpreadsheetControl1_CellValueChanged(sender As Object, e As SpreadsheetCellEventArgs)
         ' CustomSaveBarButtonItem1.Enabled = True
     End Sub
-    Public Function AddOrderItems(Optional bAllPartners As Boolean = False)
+    Public Function AddOrderItems(Optional bAllPartners As Boolean = False, Optional bMissingOrderItems As Boolean = False)
         'This is Publisher PO
         Dim oOrderItemRow As DataRow
         Dim iStartRow As Integer
@@ -219,31 +219,39 @@ Public Class frmPublisherPO
             sItemCell = POPubFixedCells.OrderItemCol_ItemNumber & (iStartRow + iRowCount)
             sItemDescCell = POPubFixedCells.OrderItemCol_ItemDesc & (iStartRow + iRowCount)
             sItemQTYCell = POPubFixedCells.OrderItemCol_ItemQTY & (iStartRow + iRowCount)
-            sItemListPriceCell = POPubFixedCells.OrderItemCol_ItemListPrice & (iStartRow + iRowCount)
-            sItemDiscountCell = POPubFixedCells.OrderItemCol_ItemDiscount & (iStartRow + iRowCount)
-            sItemUnitCostCell = POPubFixedCells.OrderItemCol_ItemUnitCost & (iStartRow + iRowCount)
-            sItemTotalCostCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
+
+            If bMissingOrderItems = False Then
+                sItemListPriceCell = POPubFixedCells.OrderItemCol_ItemListPrice & (iStartRow + iRowCount)
+                sItemDiscountCell = POPubFixedCells.OrderItemCol_ItemDiscount & (iStartRow + iRowCount)
+                sItemUnitCostCell = POPubFixedCells.OrderItemCol_ItemUnitCost & (iStartRow + iRowCount)
+                sItemTotalCostCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
+            End If
 
             'Now set the Values is those cells
             oWorkSheet.Range(sItemCell).Value = oOrderItemRow.Item("ItemNumber").ToString
             oWorkSheet.Range(sItemDescCell).Value = oOrderItemRow.Item("ItemDesc").ToString
             oWorkSheet.Range(sItemQTYCell).Value = oOrderItemRow.Item("QTY").ToString
-            oWorkSheet.Range(sItemListPriceCell).Value = oOrderItemRow.Item("ListPrice").ToString
-
-            'Need to get Discount from Partners table
-            oWorkSheet.Range(sItemDiscountCell).Value = oPartnerDiscount
 
 
-            'Need to add the formulas
-            'In this case....the discount is listed for example as 65%...so we must subtract that from 1 to get at the correct 35% for unit cost
-            oWorkSheet.Range(sItemUnitCostCell).Formula = "=" & sItemListPriceCell & "* (1-" & sItemDiscountCell & ")"
-            oWorkSheet.Range(sItemTotalCostCell).Formula = "=" & sItemUnitCostCell & "*" & sItemQTYCell
+            If bMissingOrderItems = False Then
 
-            'Need to Fix Sub Total formula
-            sSubTotalCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount + 3)
-            sSubTotalStartCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow)
-            sSubTotalEndCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
 
+                oWorkSheet.Range(sItemListPriceCell).Value = oOrderItemRow.Item("ListPrice").ToString
+
+                'Need to get Discount from Partners table
+                oWorkSheet.Range(sItemDiscountCell).Value = oPartnerDiscount
+
+
+                'Need to add the formulas
+                'In this case....the discount is listed for example as 65%...so we must subtract that from 1 to get at the correct 35% for unit cost
+                oWorkSheet.Range(sItemUnitCostCell).Formula = "=" & sItemListPriceCell & "* (1-" & sItemDiscountCell & ")"
+                oWorkSheet.Range(sItemTotalCostCell).Formula = "=" & sItemUnitCostCell & "*" & sItemQTYCell
+
+                'Need to Fix Sub Total formula
+                sSubTotalCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount + 3)
+                sSubTotalStartCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow)
+                sSubTotalEndCell = POPubFixedCells.OrderItemCol_ItemTotalCost & (iStartRow + iRowCount)
+            End If
 
             'Need to Format the row
 
@@ -257,7 +265,12 @@ Public Class frmPublisherPO
             oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.NumberFormats)
             ' oWorkSheet.Rows(iStartRow + iRowCount - 1).CopyFrom(oWorkSheet.Rows(iStartRow + iRowCount), PasteSpecial.Formulas)
         Next
-        oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
+        If bMissingOrderItems = False Then
+
+
+            oWorkSheet.Range(sSubTotalCell).Formula = "=Sum(" & sSubTotalStartCell & ":" & sSubTotalEndCell & ")"
+        End If
+
 endUpdate:
         oWorkSheet.Cells.EndUpdate()
     End Function
@@ -697,7 +710,7 @@ endUpdate:
 endUpdate:
         oWorkSheet.Cells.EndUpdate()
     End Function
-    Public Function SetPublisherPO_FixedCells()
+    Public Function SetPublisherPO_FixedCells(Optional bPubMissingItems As Boolean = False)
         Dim oPartnerRow As DataRow
         Dim sMSG As String
         Dim iRtrn As DialogResult
@@ -948,7 +961,7 @@ endUpdate:
 
 
     End Sub
-    Private Sub LoadOrderItemsInfo(Optional bAllPartners As Boolean = False)
+    Private Sub LoadOrderItemsInfo(Optional bAllPartners As Boolean = False, Optional bMissingItems As Boolean = False)
 
         Dim sSQL As String
         Dim sState As String
@@ -957,13 +970,25 @@ endUpdate:
 
         If bAllPartners = False Then
             'Sort by asc, so they are inserted Desc
-            sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' AND PartnerID={PartnerID}  ORDER BY ItemDesc ASC"
+            If bMissingItems = False Then
+                sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' AND PartnerID={PartnerID}  ORDER BY ItemDesc ASC"
+
+            Else
+                sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' AND PartnerID={PartnerID} and QTYMissing > 0  ORDER BY ItemDesc ASC"
+
+            End If
 
             sSQL = sSQL.Replace("{OrderID}", oOrderID.ToString)
             sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
         Else
             'Sort by asc, so they are inserted Desc
-            sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' ORDER BY ItemDesc ASC"
+            If bMissingItems = False Then
+                sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' ORDER BY ItemDesc ASC"
+            Else
+                sSQL = "SELECT * FROM omqryOrderItems WHERE orderid='{OrderID}' and QTYMissing > 0  ORDER BY ItemDesc ASC"
+                'bMissingItems
+            End If
+
 
             sSQL = sSQL.Replace("{OrderID}", oOrderID.ToString)
 

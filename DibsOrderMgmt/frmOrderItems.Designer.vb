@@ -23,7 +23,7 @@ Partial Class frmOrderItems
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridLevelNode2 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
+        Dim GridLevelNode1 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
         Me.gridOrderItems = New DevExpress.XtraGrid.GridControl()
         Me.Gridview1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colOrderItemID = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -40,6 +40,10 @@ Partial Class frmOrderItems
         Me.colListPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colExtendedPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.SubOrderItemID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.QTYMissing = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemTextEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
+        Me.BackOrdered = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.BackOrderedDate = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.CardView1 = New DevExpress.XtraGrid.Views.Card.CardView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
@@ -62,6 +66,7 @@ Partial Class frmOrderItems
         Me.PopupMenu_OrderItems = New DevExpress.XtraBars.PopupMenu(Me.components)
         CType(Me.gridOrderItems, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Gridview1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CardView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,11 +80,12 @@ Partial Class frmOrderItems
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gridOrderItems.DataMember = "omqryOrderItems"
         Me.gridOrderItems.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        GridLevelNode2.RelationName = "Level1"
-        Me.gridOrderItems.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode2})
+        GridLevelNode1.RelationName = "Level1"
+        Me.gridOrderItems.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode1})
         Me.gridOrderItems.Location = New System.Drawing.Point(0, 92)
         Me.gridOrderItems.MainView = Me.Gridview1
         Me.gridOrderItems.Name = "gridOrderItems"
+        Me.gridOrderItems.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemTextEdit1})
         Me.gridOrderItems.Size = New System.Drawing.Size(1135, 567)
         Me.gridOrderItems.TabIndex = 7
         Me.gridOrderItems.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.Gridview1, Me.CardView1})
@@ -88,14 +94,15 @@ Partial Class frmOrderItems
         '
         Me.Gridview1.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!)
         Me.Gridview1.Appearance.Row.Options.UseFont = True
-        Me.Gridview1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderItemID, Me.colOrderID, Me.colOrderSetID, Me.colBoxNumber, Me.colSetName, Me.colPartnerID, Me.colPublisherShortName, Me.colMetaDataID, Me.colItemNumber, Me.colItemDesc, Me.colQTY, Me.colListPrice, Me.colExtendedPrice, Me.SubOrderItemID})
+        Me.Gridview1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderItemID, Me.colOrderID, Me.colOrderSetID, Me.colBoxNumber, Me.colSetName, Me.colPartnerID, Me.colPublisherShortName, Me.colMetaDataID, Me.colItemNumber, Me.colItemDesc, Me.colQTY, Me.colListPrice, Me.colExtendedPrice, Me.SubOrderItemID, Me.QTYMissing, Me.BackOrdered, Me.BackOrderedDate})
         Me.Gridview1.GridControl = Me.gridOrderItems
         Me.Gridview1.GroupCount = 1
         Me.Gridview1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ExtendedPrice", Nothing, "(Set Name: SUM={0:0.##})"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "OrderItemID", Nothing, "")})
         Me.Gridview1.Name = "Gridview1"
         Me.Gridview1.OptionsBehavior.AutoExpandAllGroups = True
-        Me.Gridview1.OptionsBehavior.Editable = False
+        Me.Gridview1.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click
         Me.Gridview1.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
+        Me.Gridview1.OptionsMenu.ShowGroupSummaryEditorItem = True
         Me.Gridview1.OptionsSelection.MultiSelect = True
         Me.Gridview1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
         Me.Gridview1.OptionsView.ShowAutoFilterRow = True
@@ -121,14 +128,14 @@ Partial Class frmOrderItems
         '
         Me.colBoxNumber.FieldName = "BoxNumber"
         Me.colBoxNumber.Name = "colBoxNumber"
-        Me.colBoxNumber.Visible = True
-        Me.colBoxNumber.VisibleIndex = 6
+        Me.colBoxNumber.OptionsColumn.AllowEdit = False
         Me.colBoxNumber.Width = 221
         '
         'colSetName
         '
         Me.colSetName.FieldName = "SetName"
         Me.colSetName.Name = "colSetName"
+        Me.colSetName.OptionsColumn.AllowEdit = False
         Me.colSetName.Visible = True
         Me.colSetName.VisibleIndex = 4
         '
@@ -136,12 +143,14 @@ Partial Class frmOrderItems
         '
         Me.colPartnerID.FieldName = "PartnerID"
         Me.colPartnerID.Name = "colPartnerID"
+        Me.colPartnerID.OptionsColumn.AllowEdit = False
         '
         'colPublisherShortName
         '
         Me.colPublisherShortName.FieldName = "PublisherShortName"
         Me.colPublisherShortName.MinWidth = 10
         Me.colPublisherShortName.Name = "colPublisherShortName"
+        Me.colPublisherShortName.OptionsColumn.AllowEdit = False
         Me.colPublisherShortName.Visible = True
         Me.colPublisherShortName.VisibleIndex = 0
         Me.colPublisherShortName.Width = 120
@@ -155,6 +164,7 @@ Partial Class frmOrderItems
         '
         Me.colItemNumber.FieldName = "ItemNumber"
         Me.colItemNumber.Name = "colItemNumber"
+        Me.colItemNumber.OptionsColumn.AllowEdit = False
         Me.colItemNumber.Visible = True
         Me.colItemNumber.VisibleIndex = 1
         Me.colItemNumber.Width = 142
@@ -163,6 +173,7 @@ Partial Class frmOrderItems
         '
         Me.colItemDesc.FieldName = "ItemDesc"
         Me.colItemDesc.Name = "colItemDesc"
+        Me.colItemDesc.OptionsColumn.AllowEdit = False
         Me.colItemDesc.Visible = True
         Me.colItemDesc.VisibleIndex = 2
         Me.colItemDesc.Width = 253
@@ -171,6 +182,8 @@ Partial Class frmOrderItems
         '
         Me.colQTY.FieldName = "QTY"
         Me.colQTY.Name = "colQTY"
+        Me.colQTY.OptionsColumn.AllowEdit = False
+        Me.colQTY.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.[False]
         Me.colQTY.Visible = True
         Me.colQTY.VisibleIndex = 3
         Me.colQTY.Width = 95
@@ -179,6 +192,8 @@ Partial Class frmOrderItems
         '
         Me.colListPrice.FieldName = "ListPrice"
         Me.colListPrice.Name = "colListPrice"
+        Me.colListPrice.OptionsColumn.AllowEdit = False
+        Me.colListPrice.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.[False]
         Me.colListPrice.Visible = True
         Me.colListPrice.VisibleIndex = 4
         Me.colListPrice.Width = 108
@@ -187,6 +202,7 @@ Partial Class frmOrderItems
         '
         Me.colExtendedPrice.FieldName = "ExtendedPrice"
         Me.colExtendedPrice.Name = "colExtendedPrice"
+        Me.colExtendedPrice.OptionsColumn.AllowEdit = False
         Me.colExtendedPrice.Visible = True
         Me.colExtendedPrice.VisibleIndex = 5
         Me.colExtendedPrice.Width = 171
@@ -196,6 +212,36 @@ Partial Class frmOrderItems
         Me.SubOrderItemID.Caption = "GridColumn1"
         Me.SubOrderItemID.FieldName = "SubOrderItemID"
         Me.SubOrderItemID.Name = "SubOrderItemID"
+        '
+        'QTYMissing
+        '
+        Me.QTYMissing.Caption = "QTY Missing"
+        Me.QTYMissing.ColumnEdit = Me.RepositoryItemTextEdit1
+        Me.QTYMissing.FieldName = "QTYMissing"
+        Me.QTYMissing.Name = "QTYMissing"
+        Me.QTYMissing.Visible = True
+        Me.QTYMissing.VisibleIndex = 6
+        '
+        'RepositoryItemTextEdit1
+        '
+        Me.RepositoryItemTextEdit1.AutoHeight = False
+        Me.RepositoryItemTextEdit1.Name = "RepositoryItemTextEdit1"
+        '
+        'BackOrdered
+        '
+        Me.BackOrdered.Caption = "BackOrdered?"
+        Me.BackOrdered.FieldName = "BackOrdered"
+        Me.BackOrdered.Name = "BackOrdered"
+        Me.BackOrdered.Visible = True
+        Me.BackOrdered.VisibleIndex = 7
+        '
+        'BackOrderedDate
+        '
+        Me.BackOrderedDate.Caption = "Back Ordered Date"
+        Me.BackOrderedDate.FieldName = "BackOrderedDate"
+        Me.BackOrderedDate.Name = "BackOrderedDate"
+        Me.BackOrderedDate.Visible = True
+        Me.BackOrderedDate.VisibleIndex = 8
         '
         'CardView1
         '
@@ -374,6 +420,7 @@ Partial Class frmOrderItems
         Me.Text = "frmOrderItems"
         CType(Me.gridOrderItems, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Gridview1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CardView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -420,4 +467,8 @@ Partial Class frmOrderItems
     Friend WithEvents CardView1 As DevExpress.XtraGrid.Views.Card.CardView
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl2_TotalRows As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents QTYMissing As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents BackOrdered As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents BackOrderedDate As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents RepositoryItemTextEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 End Class

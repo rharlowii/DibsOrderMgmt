@@ -8,6 +8,7 @@
         CustPackingSlip = 45
         PubPO = 50
         PubInvoice = 60
+        PubMissingItems = 70
         CheckinDocument = 900
         Other = 1000
 

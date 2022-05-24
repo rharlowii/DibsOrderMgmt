@@ -158,6 +158,33 @@ Module modOrderItems
         Return ds.Tables(0)
 
     End Function
+    Public Function GetPartnersInOrderMissingItems(sOrderID As String) As DataTable
+        Dim sSQL As String
+
+        sSQL = "Select omOrderItems.PartnerID,omOrderItems.OrderID,omPartners.PublisherShortName " &
+            "From dbo.omOrderItems " &
+            "INNER Join dbo.omPartners " &
+            "On omOrderItems.PartnerID = omPartners.PartnerID " &
+            "WHERE omOrderItems.OrderID = '{OrderID}' and QTYMissing > 0" &
+            "GROUP BY omOrderItems.PartnerID " &
+            ",omOrderItems.OrderID " &
+            ",omPartners.PublisherShortName"
+
+        sSQL = sSQL.Replace("{OrderID}", sOrderID)
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+
+
+        da.Fill(ds)
+        oConnection.Close()
+
+        Return ds.Tables(0)
+
+    End Function
     Public Function GetOrderSetsInOrder(sOrderID As String) As DataTable
         Dim sSQL As String
 

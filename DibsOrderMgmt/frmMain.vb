@@ -1737,4 +1737,116 @@ Public Class frmMain
         LoadMetaSearchGrid()
     End Sub
 
+    Private Sub BarButtonItem2_MissingOrderItemsPub_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem2_MissingOrderItemsPub.ItemClick
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim iPartnerID As Integer
+        Dim iPartnerCnt As Integer
+        Dim oForms As List(Of frmPublisherPO)
+        Dim ofrmPOPublisher As frmPublisherPO
+        Dim oSelectedPartners As List(Of DataRowView)
+
+        Dim oOrderPartners As DataTable
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        oOrderPartners = GetPartnersInOrderMissingItems(oOrderID.ToString)
+        iPartnerCnt = oOrderPartners.Rows.Count
+
+        'Need to swap this out later...maybe store in DB
+        sFile = HiveTemplatePath & "HIVE_PublisherMissingItems_Template.xlsx"
+
+        Select Case iPartnerCnt
+            Case 0
+                MsgBox("There are no missing order items in this Order from a Partner.")
+                Exit Sub
+
+            Case 1
+
+                'Only 1 or, so go an launch each
+                For Each oRow In oOrderPartners.Rows
+                    iPartnerID = oRow.Item("PartnerID")
+                    ofrmPOPublisher = New frmPublisherPO
+
+
+                    With ofrmPOPublisher
+                        .Text = oRow.Item("PublisherShortName").ToString & " - Missing Items: "
+                        .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+                        .iPartnerID = iPartnerID
+                        .oOrderID = oOrderID
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubMissingItems
+                        .SpreadsheetControl1.LoadDocument(sFile)
+                        .SetPublisherPO_FixedCells(True)
+                        .AddOrderItems(False, True)
+                        .StartPosition = FormStartPosition.CenterParent
+                        .Show()
+                        ' .LoadExcel()
+
+                    End With
+                Next
+
+
+
+
+            Case Else
+
+
+                Dim oSelectPartners As New frmOrderPublishersSelect
+
+                With oSelectPartners
+                    .oOrderID = oOrderID
+                    .oOrderPartners = oOrderPartners
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+
+                    If .bCanceled = True Then Exit Sub
+                    oSelectedPartners = .oPartnersSelected
+                End With
+
+                'Instead of a data table....here we have a list of select rows
+                For Each oDataRowView In oSelectedPartners
+                    iPartnerID = oDataRowView.Row.Item("PartnerID")
+                    ofrmPOPublisher = New frmPublisherPO
+
+                    With ofrmPOPublisher
+                        .Text = oDataRowView.Row.Item("PublisherShortName").ToString & " - PO: "
+                        .oOrderInfoDataTable = GetOrderInfo(oOrderID)
+                        .iPartnerID = iPartnerID
+                        .oOrderID = oOrderID
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubPO
+                        .SpreadsheetControl1.LoadDocument(sFile)
+                        .SetPublisherPO_FixedCells()
+                        .AddOrderItems()
+                        .StartPosition = FormStartPosition.CenterParent
+                        .Show()
+
+
+
+
+                    End With
+                Next
+
+
+        End Select
+
+
+
+
+
+
+    End Sub
 End Class
