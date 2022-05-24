@@ -23,7 +23,7 @@ Partial Class frmOrderItems
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridLevelNode1 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
+        Dim GridLevelNode2 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
         Me.gridOrderItems = New DevExpress.XtraGrid.GridControl()
         Me.Gridview1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colOrderItemID = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -42,6 +42,8 @@ Partial Class frmOrderItems
         Me.SubOrderItemID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.CardView1 = New DevExpress.XtraGrid.Views.Card.CardView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl2_TotalRows = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.cmdAddOrderItems = New DevExpress.XtraEditors.SimpleButton()
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
@@ -73,8 +75,8 @@ Partial Class frmOrderItems
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gridOrderItems.DataMember = "omqryOrderItems"
         Me.gridOrderItems.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        GridLevelNode1.RelationName = "Level1"
-        Me.gridOrderItems.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode1})
+        GridLevelNode2.RelationName = "Level1"
+        Me.gridOrderItems.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode2})
         Me.gridOrderItems.Location = New System.Drawing.Point(0, 92)
         Me.gridOrderItems.MainView = Me.Gridview1
         Me.gridOrderItems.Name = "gridOrderItems"
@@ -89,11 +91,13 @@ Partial Class frmOrderItems
         Me.Gridview1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderItemID, Me.colOrderID, Me.colOrderSetID, Me.colBoxNumber, Me.colSetName, Me.colPartnerID, Me.colPublisherShortName, Me.colMetaDataID, Me.colItemNumber, Me.colItemDesc, Me.colQTY, Me.colListPrice, Me.colExtendedPrice, Me.SubOrderItemID})
         Me.Gridview1.GridControl = Me.gridOrderItems
         Me.Gridview1.GroupCount = 1
-        Me.Gridview1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ExtendedPrice", Nothing, "(Set Name: SUM={0:0.##})")})
+        Me.Gridview1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ExtendedPrice", Nothing, "(Set Name: SUM={0:0.##})"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "OrderItemID", Nothing, "")})
         Me.Gridview1.Name = "Gridview1"
         Me.Gridview1.OptionsBehavior.AutoExpandAllGroups = True
         Me.Gridview1.OptionsBehavior.Editable = False
+        Me.Gridview1.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
         Me.Gridview1.OptionsSelection.MultiSelect = True
+        Me.Gridview1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
         Me.Gridview1.OptionsView.ShowAutoFilterRow = True
         Me.Gridview1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
         Me.Gridview1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colSetName, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -206,12 +210,34 @@ Partial Class frmOrderItems
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.LabelControl2)
+        Me.Panel1.Controls.Add(Me.LabelControl2_TotalRows)
         Me.Panel1.Controls.Add(Me.LabelControl1)
         Me.Panel1.Controls.Add(Me.cmdAddOrderItems)
         Me.Panel1.Location = New System.Drawing.Point(0, 5)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1135, 81)
         Me.Panel1.TabIndex = 6
+        '
+        'LabelControl2
+        '
+        Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl2.Appearance.Options.UseFont = True
+        Me.LabelControl2.Location = New System.Drawing.Point(680, 58)
+        Me.LabelControl2.Name = "LabelControl2"
+        Me.LabelControl2.Size = New System.Drawing.Size(152, 19)
+        Me.LabelControl2.TabIndex = 9
+        Me.LabelControl2.Text = "Total Order Items:"
+        '
+        'LabelControl2_TotalRows
+        '
+        Me.LabelControl2_TotalRows.Appearance.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl2_TotalRows.Appearance.Options.UseFont = True
+        Me.LabelControl2_TotalRows.Location = New System.Drawing.Point(838, 58)
+        Me.LabelControl2_TotalRows.Name = "LabelControl2_TotalRows"
+        Me.LabelControl2_TotalRows.Size = New System.Drawing.Size(10, 19)
+        Me.LabelControl2_TotalRows.TabIndex = 8
+        Me.LabelControl2_TotalRows.Text = "0"
         '
         'LabelControl1
         '
@@ -392,4 +418,6 @@ Partial Class frmOrderItems
     Friend WithEvents BarButtonItem1_SubOrderItem As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents SubOrderItemID As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents CardView1 As DevExpress.XtraGrid.Views.Card.CardView
+    Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LabelControl2_TotalRows As DevExpress.XtraEditors.LabelControl
 End Class

@@ -40,6 +40,8 @@ Partial Class frmMain
         Me.colPO_TotalAmount = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.OrderSetsTotal = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatus = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderStatusDigital = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderStatusComm = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colDueDate = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.ShipTo_ATTN = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colBillTo_Street = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -53,6 +55,7 @@ Partial Class frmMain
         Me.colPurchasingContactPhone = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colPurchasingContactEmail = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colPurchasingPONumber = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.CompanyName = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colEnteredBy = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderNotes = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colSpecialInstruction = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -63,7 +66,12 @@ Partial Class frmMain
         Me.colPO_Shipping = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatusID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colOrderStatusColor = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderStatusDigitalID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderStatusDigitalColor = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.SalesRepID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.OrderStatusCommID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdeBookMgmt = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdExportOrdersGrid = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdRefreshGrid = New DevExpress.XtraEditors.SimpleButton()
         Me.cmdNewOrder = New DevExpress.XtraEditors.SimpleButton()
@@ -158,7 +166,9 @@ Partial Class frmMain
         Me.BarButtonItem1_Divider1 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem2_PubInvoiceDocs = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_DuplicateOrder = New DevExpress.XtraBars.BarButtonItem()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.SimpleButton3 = New DevExpress.XtraEditors.SimpleButton()
         Me.XtraTabPage1_MetaData = New DevExpress.XtraTab.XtraTabPage()
         Me.cmdMetaImport = New DevExpress.XtraEditors.SimpleButton()
         Me.panelTop = New System.Windows.Forms.Panel()
@@ -195,6 +205,7 @@ Partial Class frmMain
         CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.XtraTabPage1_MetaData.SuspendLayout()
         Me.panelTop.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -265,10 +276,13 @@ Partial Class frmMain
         '
         Me.GridView1.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GridView1.Appearance.Row.Options.UseFont = True
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderID, Me.colDistrictID, Me.colSchoolID, Me.colBHPONumber, Me.colOrderDate, Me.colBillTo_State, Me.colBillTo_Name, Me.colShipTo_Name, Me.colPO_TotalAmount, Me.OrderSetsTotal, Me.colOrderStatus, Me.colDueDate, Me.ShipTo_ATTN, Me.colBillTo_Street, Me.colBillTo_City, Me.colBillTo_Zip, Me.colShipTo_Street, Me.colShipTo_City, Me.colShipTo_Zip, Me.colShipTo_State, Me.colPurchasingContactName, Me.colPurchasingContactPhone, Me.colPurchasingContactEmail, Me.colPurchasingPONumber, Me.colEnteredBy, Me.colOrderNotes, Me.colSpecialInstruction, Me.colCreateTime, Me.colUpdateTime, Me.PO_DiscountAmount, Me.colPO_Amount, Me.colPO_Shipping, Me.colOrderStatusID, Me.colOrderStatusColor})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colOrderID, Me.colDistrictID, Me.colSchoolID, Me.colBHPONumber, Me.colOrderDate, Me.colBillTo_State, Me.colBillTo_Name, Me.colShipTo_Name, Me.colPO_TotalAmount, Me.OrderSetsTotal, Me.colOrderStatus, Me.OrderStatusDigital, Me.OrderStatusComm, Me.colDueDate, Me.ShipTo_ATTN, Me.colBillTo_Street, Me.colBillTo_City, Me.colBillTo_Zip, Me.colShipTo_Street, Me.colShipTo_City, Me.colShipTo_Zip, Me.colShipTo_State, Me.colPurchasingContactName, Me.colPurchasingContactPhone, Me.colPurchasingContactEmail, Me.colPurchasingPONumber, Me.CompanyName, Me.colEnteredBy, Me.colOrderNotes, Me.colSpecialInstruction, Me.colCreateTime, Me.colUpdateTime, Me.PO_DiscountAmount, Me.colPO_Amount, Me.colPO_Shipping, Me.colOrderStatusID, Me.colOrderStatusColor, Me.OrderStatusDigitalID, Me.OrderStatusDigitalColor, Me.SalesRepID, Me.OrderStatusCommID})
         Me.GridView1.GridControl = Me.gridOrders
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
+        Me.GridView1.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
+        Me.GridView1.OptionsSelection.MultiSelect = True
+        Me.GridView1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
         Me.GridView1.OptionsView.ShowAutoFilterRow = True
         Me.GridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
         '
@@ -291,10 +305,11 @@ Partial Class frmMain
         '
         Me.colBHPONumber.Caption = "BH PO Number"
         Me.colBHPONumber.FieldName = "BHPONumber"
+        Me.colBHPONumber.MinWidth = 105
         Me.colBHPONumber.Name = "colBHPONumber"
         Me.colBHPONumber.Visible = True
         Me.colBHPONumber.VisibleIndex = 0
-        Me.colBHPONumber.Width = 101
+        Me.colBHPONumber.Width = 105
         '
         'colOrderDate
         '
@@ -303,7 +318,7 @@ Partial Class frmMain
         Me.colOrderDate.Name = "colOrderDate"
         Me.colOrderDate.Visible = True
         Me.colOrderDate.VisibleIndex = 1
-        Me.colOrderDate.Width = 101
+        Me.colOrderDate.Width = 97
         '
         'colBillTo_State
         '
@@ -312,7 +327,7 @@ Partial Class frmMain
         Me.colBillTo_State.Name = "colBillTo_State"
         Me.colBillTo_State.Visible = True
         Me.colBillTo_State.VisibleIndex = 2
-        Me.colBillTo_State.Width = 101
+        Me.colBillTo_State.Width = 23
         '
         'colBillTo_Name
         '
@@ -321,7 +336,7 @@ Partial Class frmMain
         Me.colBillTo_Name.Name = "colBillTo_Name"
         Me.colBillTo_Name.Visible = True
         Me.colBillTo_Name.VisibleIndex = 3
-        Me.colBillTo_Name.Width = 101
+        Me.colBillTo_Name.Width = 115
         '
         'colShipTo_Name
         '
@@ -330,7 +345,7 @@ Partial Class frmMain
         Me.colShipTo_Name.Name = "colShipTo_Name"
         Me.colShipTo_Name.Visible = True
         Me.colShipTo_Name.VisibleIndex = 4
-        Me.colShipTo_Name.Width = 101
+        Me.colShipTo_Name.Width = 102
         '
         'colPO_TotalAmount
         '
@@ -341,7 +356,7 @@ Partial Class frmMain
         Me.colPO_TotalAmount.Name = "colPO_TotalAmount"
         Me.colPO_TotalAmount.Visible = True
         Me.colPO_TotalAmount.VisibleIndex = 6
-        Me.colPO_TotalAmount.Width = 101
+        Me.colPO_TotalAmount.Width = 90
         '
         'OrderSetsTotal
         '
@@ -350,8 +365,6 @@ Partial Class frmMain
         Me.OrderSetsTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom
         Me.OrderSetsTotal.FieldName = "OrderSetsTotal"
         Me.OrderSetsTotal.Name = "OrderSetsTotal"
-        Me.OrderSetsTotal.Visible = True
-        Me.OrderSetsTotal.VisibleIndex = 7
         Me.OrderSetsTotal.Width = 101
         '
         'colOrderStatus
@@ -360,8 +373,25 @@ Partial Class frmMain
         Me.colOrderStatus.FieldName = "OrderStatus"
         Me.colOrderStatus.Name = "colOrderStatus"
         Me.colOrderStatus.Visible = True
-        Me.colOrderStatus.VisibleIndex = 8
-        Me.colOrderStatus.Width = 100
+        Me.colOrderStatus.VisibleIndex = 7
+        Me.colOrderStatus.Width = 103
+        '
+        'OrderStatusDigital
+        '
+        Me.OrderStatusDigital.Caption = "Digital Status"
+        Me.OrderStatusDigital.FieldName = "OrderStatusDigital"
+        Me.OrderStatusDigital.Name = "OrderStatusDigital"
+        Me.OrderStatusDigital.Visible = True
+        Me.OrderStatusDigital.VisibleIndex = 8
+        Me.OrderStatusDigital.Width = 77
+        '
+        'OrderStatusComm
+        '
+        Me.OrderStatusComm.Caption = "Commission Status"
+        Me.OrderStatusComm.FieldName = "OrderStatusComm"
+        Me.OrderStatusComm.Name = "OrderStatusComm"
+        Me.OrderStatusComm.Visible = True
+        Me.OrderStatusComm.VisibleIndex = 9
         '
         'colDueDate
         '
@@ -369,8 +399,8 @@ Partial Class frmMain
         Me.colDueDate.FieldName = "DueDate"
         Me.colDueDate.Name = "colDueDate"
         Me.colDueDate.Visible = True
-        Me.colDueDate.VisibleIndex = 9
-        Me.colDueDate.Width = 101
+        Me.colDueDate.VisibleIndex = 10
+        Me.colDueDate.Width = 90
         '
         'ShipTo_ATTN
         '
@@ -435,7 +465,16 @@ Partial Class frmMain
         Me.colPurchasingPONumber.Name = "colPurchasingPONumber"
         Me.colPurchasingPONumber.Visible = True
         Me.colPurchasingPONumber.VisibleIndex = 5
-        Me.colPurchasingPONumber.Width = 101
+        Me.colPurchasingPONumber.Width = 102
+        '
+        'CompanyName
+        '
+        Me.CompanyName.Caption = "Sales Rep Company"
+        Me.CompanyName.FieldName = "CompanyName"
+        Me.CompanyName.Name = "CompanyName"
+        Me.CompanyName.Visible = True
+        Me.CompanyName.VisibleIndex = 11
+        Me.CompanyName.Width = 95
         '
         'colEnteredBy
         '
@@ -443,8 +482,8 @@ Partial Class frmMain
         Me.colEnteredBy.FieldName = "EnteredBy"
         Me.colEnteredBy.Name = "colEnteredBy"
         Me.colEnteredBy.Visible = True
-        Me.colEnteredBy.VisibleIndex = 10
-        Me.colEnteredBy.Width = 101
+        Me.colEnteredBy.VisibleIndex = 12
+        Me.colEnteredBy.Width = 108
         '
         'colOrderNotes
         '
@@ -462,8 +501,8 @@ Partial Class frmMain
         Me.colCreateTime.FieldName = "CreateTime"
         Me.colCreateTime.Name = "colCreateTime"
         Me.colCreateTime.Visible = True
-        Me.colCreateTime.VisibleIndex = 11
-        Me.colCreateTime.Width = 109
+        Me.colCreateTime.VisibleIndex = 13
+        Me.colCreateTime.Width = 127
         '
         'colUpdateTime
         '
@@ -496,11 +535,38 @@ Partial Class frmMain
         Me.colOrderStatusColor.FieldName = "OrderStatusColor"
         Me.colOrderStatusColor.Name = "colOrderStatusColor"
         '
+        'OrderStatusDigitalID
+        '
+        Me.OrderStatusDigitalID.Caption = "OrderStatusDigitalID"
+        Me.OrderStatusDigitalID.FieldName = "OrderStatusDigitalID"
+        Me.OrderStatusDigitalID.Name = "OrderStatusDigitalID"
+        '
+        'OrderStatusDigitalColor
+        '
+        Me.OrderStatusDigitalColor.Caption = "OrderStatusDigitalColor"
+        Me.OrderStatusDigitalColor.FieldName = "OrderStatusDigitalColor"
+        Me.OrderStatusDigitalColor.Name = "OrderStatusDigitalColor"
+        '
+        'SalesRepID
+        '
+        Me.SalesRepID.Caption = "SalesRepID"
+        Me.SalesRepID.FieldName = "SalesRepID"
+        Me.SalesRepID.Name = "SalesRepID"
+        '
+        'OrderStatusCommID
+        '
+        Me.OrderStatusCommID.Caption = "OrderStatusCommID"
+        Me.OrderStatusCommID.FieldName = "OrderStatusCommID"
+        Me.OrderStatusCommID.Name = "OrderStatusCommID"
+        Me.OrderStatusCommID.Visible = True
+        Me.OrderStatusCommID.VisibleIndex = 14
+        '
         'Panel1
         '
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel1.Controls.Add(Me.cmdeBookMgmt)
         Me.Panel1.Controls.Add(Me.cmdExportOrdersGrid)
         Me.Panel1.Controls.Add(Me.cmdRefreshGrid)
         Me.Panel1.Controls.Add(Me.cmdNewOrder)
@@ -508,6 +574,16 @@ Partial Class frmMain
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1244, 60)
         Me.Panel1.TabIndex = 4
+        '
+        'cmdeBookMgmt
+        '
+        Me.cmdeBookMgmt.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdeBookMgmt.Appearance.Options.UseFont = True
+        Me.cmdeBookMgmt.Location = New System.Drawing.Point(144, 15)
+        Me.cmdeBookMgmt.Name = "cmdeBookMgmt"
+        Me.cmdeBookMgmt.Size = New System.Drawing.Size(130, 28)
+        Me.cmdeBookMgmt.TabIndex = 4
+        Me.cmdeBookMgmt.Text = "eBook Mgmt."
         '
         'cmdExportOrdersGrid
         '
@@ -576,6 +652,7 @@ Partial Class frmMain
         Me.GridView3.OptionsEditForm.ShowOnDoubleClick = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView3.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView3.OptionsSelection.MultiSelect = True
+        Me.GridView3.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
         Me.GridView3.OptionsView.ShowAutoFilterRow = True
         Me.GridView3.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
         '
@@ -1052,8 +1129,8 @@ Partial Class frmMain
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1, Me.BarButtonItem1_PublisherCheckIn, Me.BarButtonItem1_PubInvoiceDetail, Me.BarButtonItem1_Divider1, Me.BarButtonItem1, Me.BarButtonItem2_PubInvoiceDocs})
-        Me.BarManager1.MaxItemId = 22
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem_OrderDetail, Me.BarButtonItem1_Documents, Me.BarButtonItem1_OrderSets, Me.BarButtonItem1_OrderItems, BarStaticItem1_divider, Me.BarStaticItem2, Me.BarButtonItem1_PublisherPOs, Me.BarSubItem1, Me.BarButtonItem1_CreateQuote, Me.BarButtonItem2_CreateQuote, Me.BarButtonItem1_CustomerInvoiceOrderSets, Me.BarButtonItem1_CustomerInvoiceOrderItems, Me.BarButtonItem1_CustomerPackingSlip, Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem1_EBookSales, Me.BarStaticItem1, Me.BarButtonItem1_PublisherCheckIn, Me.BarButtonItem1_PubInvoiceDetail, Me.BarButtonItem1_Divider1, Me.BarButtonItem1, Me.BarButtonItem2_PubInvoiceDocs, Me.BarButtonItem1_DuplicateOrder})
+        Me.BarManager1.MaxItemId = 23
         '
         'barDockControlTop
         '
@@ -1210,15 +1287,33 @@ Partial Class frmMain
         Me.BarButtonItem2_PubInvoiceDocs.Id = 21
         Me.BarButtonItem2_PubInvoiceDocs.Name = "BarButtonItem2_PubInvoiceDocs"
         '
+        'BarButtonItem1_DuplicateOrder
+        '
+        Me.BarButtonItem1_DuplicateOrder.Caption = "Duplicate Order"
+        Me.BarButtonItem1_DuplicateOrder.Id = 22
+        Me.BarButtonItem1_DuplicateOrder.Name = "BarButtonItem1_DuplicateOrder"
+        '
         'Panel2
         '
         Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel2.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel2.Controls.Add(Me.SimpleButton3)
         Me.Panel2.Location = New System.Drawing.Point(4, 11)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1244, 60)
         Me.Panel2.TabIndex = 6
+        '
+        'SimpleButton3
+        '
+        Me.SimpleButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.SimpleButton3.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SimpleButton3.Appearance.Options.UseFont = True
+        Me.SimpleButton3.Location = New System.Drawing.Point(1111, 18)
+        Me.SimpleButton3.Name = "SimpleButton3"
+        Me.SimpleButton3.Size = New System.Drawing.Size(130, 28)
+        Me.SimpleButton3.TabIndex = 3
+        Me.SimpleButton3.Text = "Refresh Grid"
         '
         'XtraTabPage1_MetaData
         '
@@ -1261,6 +1356,7 @@ Partial Class frmMain
         Me.SimpleButton2.Size = New System.Drawing.Size(130, 28)
         Me.SimpleButton2.TabIndex = 3
         Me.SimpleButton2.Text = "Test Docs Open"
+        Me.SimpleButton2.Visible = False
         '
         'SimpleButton1
         '
@@ -1300,7 +1396,7 @@ Partial Class frmMain
         '
         'PopupMenu_Orders
         '
-        Me.PopupMenu_Orders.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem_OrderDetail), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_Documents), New DevExpress.XtraBars.LinkPersistInfo(BarStaticItem1_divider), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem2), New DevExpress.XtraBars.LinkPersistInfo(Me.BarSubItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EBookSales)})
+        Me.PopupMenu_Orders.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem_OrderDetail), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_Documents), New DevExpress.XtraBars.LinkPersistInfo(BarStaticItem1_divider), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderSets), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_OrderItems), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_DuplicateOrder), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem2), New DevExpress.XtraBars.LinkPersistInfo(Me.BarSubItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarStaticItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EBookSales)})
         Me.PopupMenu_Orders.Manager = Me.BarManager1
         Me.PopupMenu_Orders.MenuAppearance.AppearanceMenu.Hovered.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PopupMenu_Orders.MenuAppearance.AppearanceMenu.Hovered.Options.UseFont = True
@@ -1387,6 +1483,7 @@ Partial Class frmMain
         CType(Me.GridMetaSearch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
         Me.XtraTabPage1_MetaData.ResumeLayout(False)
         Me.panelTop.ResumeLayout(False)
         Me.panelTop.PerformLayout()
@@ -1554,4 +1651,14 @@ Partial Class frmMain
     Friend WithEvents BarButtonItem1_Divider1 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem2_PubInvoiceDocs As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem1_DuplicateOrder As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdeBookMgmt As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents SimpleButton3 As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents OrderStatusDigital As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents CompanyName As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OrderStatusDigitalID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OrderStatusDigitalColor As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents SalesRepID As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OrderStatusComm As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents OrderStatusCommID As DevExpress.XtraGrid.Columns.GridColumn
 End Class

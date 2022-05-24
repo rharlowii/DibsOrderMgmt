@@ -73,6 +73,7 @@ Public Class frmPubInvoiceItemsAdd
     End Sub
     Private Sub LoadOrderPartners2(BHPONumber As String)
         'SELECT SchoolDistricts.State FROM dbo.SchoolDistricts GROUP BY SchoolDistricts.State ORDER BY SchoolDistricts.State
+        Dim msOrderID As String
 
         If BHPONumber = "" Then
             'No Order Selected...so clear
@@ -83,9 +84,21 @@ Public Class frmPubInvoiceItemsAdd
         Else
 
 
-            Dim sSQL As String = "SELECT * FROM dbo.omqryOrderPartners where BHPONumber='{BHPONumber}' Order BY PublisherName"
+            Dim sSQL As String = "SELECT * FROM dbo.omqryOrderPartners where BHPONumber='{BHPONumber}'"
+            'PartnerID>1000000 are our 3PL like CES
+            'Need to append all of the 3PL so we can track invoices with having to add them to the order
+            'partnerid>=1000000
+            Dim sSQLUnion As String
+            sSQLUnion = "UNION SELECT PartnerID,PublisherName,'{BHPONumber}' AS BHPONumber,'{OrderID}' AS OrderID FROM omPartners WHERE partnerid>=1000000 Order BY PublisherName"
 
             sSQL = sSQL.Replace("{BHPONumber}", BHPONumber)
+            sSQLUnion = sSQLUnion.Replace("{BHPONumber}", BHPONumber)
+
+            msOrderID = Guid.Empty.ToString
+            sSQLUnion = sSQLUnion.Replace("{OrderID}", msOrderID)
+
+            sSQL = sSQL & vbCrLf & sSQLUnion
+
 
             Dim ds As New DataSet
             Dim da As SqlDataAdapter
@@ -233,7 +246,7 @@ Public Class frmPubInvoiceItemsAdd
             Exit Sub
         End If
 
-        If InvoiceAmount < 0 Then
+        If IsNumeric(InvoiceAmount) = False Then
             MsgBox("You must enter a valid Invoice Amount.")
             Exit Sub
         End If
@@ -311,4 +324,8 @@ Public Class frmPubInvoiceItemsAdd
 
 
     End Function
+
+    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
+
+    End Sub
 End Class

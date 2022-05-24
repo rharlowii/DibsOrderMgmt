@@ -5,6 +5,8 @@ Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class frmOrderItems
     Public oOrderID As Guid
+    Public BHPONumber As String
+
     Sub New()
 
         InitializeComponent()
@@ -13,7 +15,10 @@ Public Class frmOrderItems
     End Sub
 
     Private Sub frmOrderItems_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim iRowCount As Integer
         LoadOrdersItemsGrid()
+
+
     End Sub
 
     Private Sub LoadOrdersItemsGrid()
@@ -23,6 +28,7 @@ Public Class frmOrderItems
         Dim ds As New DataSet
         Dim da As SqlDataAdapter
         Dim iCount As Integer
+        Dim iRowCnt As Integer
 
 
         Dim daDetail As SqlDataAdapter
@@ -31,6 +37,8 @@ Public Class frmOrderItems
         oConnection.Open()
         da = New SqlDataAdapter(sSQL, oConnection)
         da.Fill(ds, "omOrderItems")
+        iRowCnt = ds.Tables(0).Rows.Count
+        LabelControl2_TotalRows.Text = iRowCnt
 
 
         'Lets Try and do the detail - Begin
@@ -90,6 +98,8 @@ Public Class frmOrderItems
         End With
         gridOrderItems.LevelTree.Nodes.Add("omOrderItemsomOrderItemSubs", cardView1)
 
+
+
     End Sub
 
     Private Sub cmdAddOrderItems_Click(sender As Object, e As EventArgs) Handles cmdAddOrderItems.Click
@@ -100,6 +110,7 @@ Public Class frmOrderItems
         Dim oAddItems As New frmOrderItemsAdd
 
         With oAddItems
+            .LabelControl1.Text = .LabelControl1.Text & " - " & BHPONumber
             .oOrderID = oOrderID
 
             .ShowDialog()

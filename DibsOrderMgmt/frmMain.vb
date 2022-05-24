@@ -54,6 +54,10 @@ Public Class frmMain
 
             gridOrders.DataSource = ds.Tables(0)
 
+            'With ds.Tables(0).Rows(0)
+            '    MsgBox(.Item("OrderStatusDigital"))
+            'End With
+
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
@@ -177,13 +181,6 @@ Public Class frmMain
         e.Graphics.FillRectangle(ColorBrush, rect)
     End Sub
 
-    Private Sub gridOrders_Click(sender As Object, e As EventArgs) Handles gridOrders.Click
-
-    End Sub
-
-    Private Sub gridOrders_Paint(sender As Object, e As PaintEventArgs) Handles gridOrders.Paint
-
-    End Sub
 
     Private Sub GridView1_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridView1.RowCellStyle
         Dim view As GridView = TryCast(sender, GridView)
@@ -200,10 +197,33 @@ Public Class frmMain
 
             End If
 
-
-            'e.Appearance.BackColor = If(_mark, Color.LightGreen, Color.LightSalmon)
-            'e.Appearance.TextOptions.HAlignment = If(_mark, HorzAlignment.Far, HorzAlignment.Near)
         End If
+
+
+        If e.Column.FieldName = "OrderStatusDigital" Then
+            If Not IsNothing(view.GetRowCellValue(e.RowHandle, "OrderStatusDigitalColor")) Then
+                sColorName = view.GetRowCellValue(e.RowHandle, "OrderStatusDigitalColor").ToString
+                If IsNothing(sColorName) Or sColorName = "" Then Exit Sub
+                oColor = Color.FromName(sColorName)
+                e.Appearance.BackColor = oColor
+
+            End If
+
+        End If
+
+
+        If e.Column.FieldName = "OrderStatusComm" Then
+            If Not IsNothing(view.GetRowCellValue(e.RowHandle, "OrderStatusCommColor")) Then
+                sColorName = view.GetRowCellValue(e.RowHandle, "OrderStatusCommColor").ToString
+                If IsNothing(sColorName) Or sColorName = "" Then Exit Sub
+                oColor = Color.FromName(sColorName)
+                e.Appearance.BackColor = oColor
+
+            End If
+
+        End If
+
+
         'If e.Column.FieldName = "Length" Then
         '    Dim _length As Double = CDbl(e.CellValue)
         '    If _length > 25 Then
@@ -222,6 +242,7 @@ Public Class frmMain
         Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
         Dim selectedRowHandle As Int32
         Dim oRow As DataRow
+        Dim sBHPONumber As String
 
         If selectedRowHandles.Count <> 1 Then
             MsgBox("Must select 1 Row")
@@ -233,12 +254,16 @@ Public Class frmMain
 
         'oRow.Item("OrderID").ToString()
         oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        sBHPONumber = oRow.Item("BHPONumber").ToString()
 
 
         Dim oForm As New frmOrderDocuments
 
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
+            .BHPONumber = sBHPONumber
+            .LabelControl1.Text = .LabelControl1.Text & " - " & sBHPONumber
+
             .oOrderID = oEditOrderID
             .StartPosition = FormStartPosition.CenterParent
 
@@ -255,29 +280,32 @@ Public Class frmMain
     End Sub
 
     Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
-        Dim sOrderID As String
+        ''Dim sOrderID As String
 
-        sOrderID = "88ca28fb-c71a-4971-af40-cb84d48bdc17"
-
-
-        'Dim ofrmBrowser As New frmEBookSales
-        ''frmEBookSalesAdd
-        'With ofrmBrowser
-        '    .oOrderID = Guid.Parse(sOrderID)
-        '    .bAllEBookSales = True
-        '    ' .HTMLFolder = seBookPath
-
-        '    .Show()
-        'End With
-
-        Dim oFrm As New frmSchoolBookUsers
-
-        With oFrm
+        ''sOrderID = "88ca28fb-c71a-4971-af40-cb84d48bdc17"
 
 
-            .Show()
-        End With
+        '''Dim ofrmBrowser As New frmEBookSales
+        ''''frmEBookSalesAdd
+        '''With ofrmBrowser
+        '''    .oOrderID = Guid.Parse(sOrderID)
+        '''    .bAllEBookSales = True
+        '''    ' .HTMLFolder = seBookPath
 
+        '''    .Show()
+        '''End With
+
+        ''Dim oFrm As New frmSchoolBookUsers
+
+        ''With oFrm
+
+
+        ''    .Show()
+        ''End With
+        'Dim sTempFolder As String
+        'sTempFolder = "Y:\MEP - Shared\BrainHive\BH_OrderMgmt\temp"
+        '' PasteFilesFromClipboard(sTempFolder)
+        'GetFileFromClipBoard()
 
 
     End Sub
@@ -310,7 +338,7 @@ Public Class frmMain
 
     End Sub
 
-    Public Sub LoadOrderDetail()
+    Public Sub LoadOrderDetail(Optional sOrderID As String = "")
         Dim oEditOrderID As Guid
         Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
         Dim selectedRowHandle As Int32
@@ -318,18 +346,25 @@ Public Class frmMain
 
         Try
             Me.Cursor = Cursors.WaitCursor
+            'Basically need to determing if it coming from a grid click or from code
 
-            If selectedRowHandles.Count <> 1 Then
-                MsgBox("Must select 1 Row")
-                Exit Sub
+            If sOrderID = "" Then
+                'Came from Grid Click
+                If selectedRowHandles.Count <> 1 Then
+                    MsgBox("Must select 1 Row")
+                    Exit Sub
+                End If
+                selectedRowHandle = selectedRowHandles(0)
+
+                oRow = GridView1.GetDataRow(selectedRowHandle)
+
+                'oRow.Item("OrderID").ToString()
+                oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+            Else
+                'Came from code....like duplicate order
+
+                oEditOrderID = Guid.Parse(sOrderID)
             End If
-            selectedRowHandle = selectedRowHandles(0)
-
-            oRow = GridView1.GetDataRow(selectedRowHandle)
-
-            'oRow.Item("OrderID").ToString()
-            oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
-
 
             Dim oForm As New frmNewOrder
 
@@ -360,6 +395,7 @@ Public Class frmMain
         Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
         Dim selectedRowHandle As Int32
         Dim oRow As DataRow
+        Dim sBHPONumber As String
 
         If selectedRowHandles.Count <> 1 Then
             MsgBox("Must select 1 Row")
@@ -371,12 +407,13 @@ Public Class frmMain
 
         'oRow.Item("OrderID").ToString()
         oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
-
+        sBHPONumber = oRow.Item("BHPONumber").ToString()
 
         Dim oForm As New frmOrderSets
 
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
+            .LabelControl1.Text = .LabelControl1.Text & " - " & sBHPONumber
             .oOrderID = oEditOrderID
             .StartPosition = FormStartPosition.CenterParent
 
@@ -396,6 +433,9 @@ Public Class frmMain
         Dim oOrderID As Guid
         Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
         Dim selectedRowHandle As Int32
+        Dim sBHPONumber As String
+        Dim iRowsCnt As Integer
+
         Dim oRow As DataRow
 
         If selectedRowHandles.Count <> 1 Then
@@ -406,14 +446,17 @@ Public Class frmMain
 
         oRow = GridView1.GetDataRow(selectedRowHandle)
 
+
         'oRow.Item("OrderID").ToString()
         oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
-
+        sBHPONumber = oRow.Item("BHPONumber").ToString()
 
         Dim oForm As New frmOrderItems
 
         With oForm
             '.dgv_Grid.DataSource = ds.Tables(0)
+            .BHPONumber = sBHPONumber
+            .LabelControl1.Text = .LabelControl1.Text & " - " & sBHPONumber
             .oOrderID = oOrderID
             .StartPosition = FormStartPosition.CenterParent
 
@@ -1525,4 +1568,173 @@ Public Class frmMain
     Private Sub GridView3_DoubleClick(sender As Object, e As EventArgs) Handles GridView3.DoubleClick
         ShowPubInvoiceDetail()
     End Sub
+
+    Private Sub BarButtonItem1_DuplicateOrder_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_DuplicateOrder.ItemClick
+
+        Dim oOrderIDToDuplicate As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim sNewDuplicatedOrderID As String
+        Dim iMsgResult As MsgBoxResult
+        Dim sMSG As String
+        Dim BHPONumber As String
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        'oRow.Item("OrderID").ToString()
+        oOrderIDToDuplicate = Guid.Parse(oRow.Item("OrderID").ToString())
+        BHPONumber = oRow.Item("BHPONumber").ToString()
+        sMSG = "You are about to Duplicate the Order : '" & BHPONumber & "'. Are you sure you want to continue?"
+        iMsgResult = MessageBox.Show(Me.Owner, sMSG, "Duplicate Order?", MessageBoxButtons.YesNo)
+
+        If iMsgResult = MsgBoxResult.No Then Exit Sub
+
+        'Duplicate Order
+        sNewDuplicatedOrderID = DuplicateOrder(oOrderIDToDuplicate)
+        ' sNewDuplicatedOrderID = "a314546b-39da-48c6-a890-6cd273c78c8a"
+
+        If sNewDuplicatedOrderID <> "" Then
+            'Ask if they want to copy the OrderSets & OrderItems
+            sMSG = "You you have duplicated : '" & BHPONumber & "'. Do you want to duplicate the 'Order Sets' and 'Order Items' as well?"
+            iMsgResult = MessageBox.Show(Me.Owner, sMSG, "Duplicate 'Order Sets' and 'Order Items'?", MessageBoxButtons.YesNo)
+
+            If iMsgResult = MsgBoxResult.Yes Then
+                'THey said yes...now duplicate
+                'Now duplicate the Order Sets and Order Items
+                DuplicateOrderSetsOrderItems(oOrderIDToDuplicate.ToString, sNewDuplicatedOrderID)
+            End If
+            'Open up the duplicated Order detail 
+            LoadOrderDetail(sNewDuplicatedOrderID)
+
+
+
+        End If
+
+        'Duplicate OrderSets & OrderItems
+
+
+    End Sub
+
+    Private Sub DuplicateOrderSetsOrderItems(sOrderIDToDuplicate As String, sNewDuplicatedOrderID As String)
+
+           
+        Dim sDuplicateOrderSets_SQL As String
+        Dim sDuplicateOrderItems_SQLTemp As String
+        Dim sDuplicateOrderItems_SQL As String
+
+        Dim sDuplicateOrderItemsNoOrderSets_SQLTemp As String
+        Dim sDuplicateOrderItemsNoOrderSets_SQL As String
+
+        Dim oDuplicateOrderSetsDataTable As DataTable
+        Dim oRow As DataRow
+        Dim iRowCount As Integer
+        Dim oDuplicateOrderSets As New List(Of DuplicateOrderSet)
+        Dim oDuplicateOrderSet As DuplicateOrderSet
+        Dim oNewOrderSet As OrderSet
+        Dim sReturn As String
+        Dim sReturn2 As String
+
+
+        sDuplicateOrderSets_SQL = "SELECT NewID() AS OrderSetID,OrderSetID as OrderSetIDOrig, '{sNewDuplicatedOrderID}' AS OrderID,SetName,SetDesc,QTY,ListPrice,ExtendPrice FROM omOrderSets WHERE OrderID='{sOrderIDToDuplicate}'"
+
+
+        sDuplicateOrderSets_SQL = sDuplicateOrderSets_SQL.Replace("{sNewDuplicatedOrderID}", sNewDuplicatedOrderID)
+        sDuplicateOrderSets_SQL = sDuplicateOrderSets_SQL.Replace("{sOrderIDToDuplicate}", sOrderIDToDuplicate)
+
+        'sDuplicateOrderItems_SQLTemp = "SELECT newID() AS OrderItemID, '{sNewDuplicatedOrderID}' AS OrderId, '{sNewOrderSetID}' as OrderSetID,PartnerID,ItemNumber,ItemDesc,QTY,ListPrice,ExtendedPrice FROM omOrderItems WHERE omOrderItems.OrderSetID='{sOrderSetIDOrig}'"
+        sDuplicateOrderItems_SQLTemp = "INSERT INTO omOrderItems(OrderItemID,OrderId,OrderSetID,PartnerID,MetaDataID,ItemNumber,ItemDesc,QTY,ListPrice,ExtendedPrice,SubOrderItemID) SELECT newID() AS OrderItemID,'{sNewDuplicatedOrderID}' AS OrderId, '{sNewOrderSetID}' as OrderSetID,PartnerID,MetaDataID,ItemNumber,ItemDesc,QTY,ListPrice,ExtendedPrice,SubOrderItemID FROM omOrderItems WHERE omOrderItems.OrderSetID='{sOrderSetIDOrig}'"
+        sDuplicateOrderItemsNoOrderSets_SQLTemp = "INSERT INTO omOrderItems(OrderItemID,OrderId,OrderSetID,PartnerID,MetaDataID,ItemNumber,ItemDesc,QTY,ListPrice,ExtendedPrice,SubOrderItemID) SELECT newID() AS OrderItemID,'{sNewDuplicatedOrderID}' AS OrderId,OrderSetID,PartnerID,MetaDataID,ItemNumber,ItemDesc,QTY,ListPrice,ExtendedPrice,SubOrderItemID FROM omOrderItems WHERE omOrderItems.OrderID='{sOrderIDToDuplicate}' and OrderSetID='00000000-0000-0000-0000-000000000000'"
+
+        'The new order ID will be the same
+        sDuplicateOrderItems_SQLTemp = sDuplicateOrderItems_SQLTemp.Replace("{sNewDuplicatedOrderID}", sNewDuplicatedOrderID)
+        sDuplicateOrderItemsNoOrderSets_SQLTemp = sDuplicateOrderItemsNoOrderSets_SQLTemp.Replace("{sNewDuplicatedOrderID}", sNewDuplicatedOrderID)
+        sDuplicateOrderItemsNoOrderSets_SQLTemp = sDuplicateOrderItemsNoOrderSets_SQLTemp.Replace("{sOrderIDToDuplicate}", sOrderIDToDuplicate)
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sDuplicateOrderSets_SQL, oConnection)
+
+
+        da.Fill(ds)
+        oConnection.Close()
+
+        oDuplicateOrderSetsDataTable = ds.Tables(0)
+        iRowCount = ds.Tables(0).Rows.Count
+
+        If iRowCount > 0 Then
+            'This path get all of the OrderItems that are assigned to a OrderSEt
+            'But you can OrderItems that do not belong to a OrderSEt
+            'THeir ordersetID='00000000-0000-0000-0000-000000000000'
+
+            For Each oRow In oDuplicateOrderSetsDataTable.Rows
+                oDuplicateOrderSet = New DuplicateOrderSet
+                oNewOrderSet = New OrderSet
+
+                With oNewOrderSet
+                    .OrderID = sNewDuplicatedOrderID
+                    .OrderSetID = oRow.Item("OrderSetID").ToString
+                    .SetName = oRow.Item("SetName").ToString
+                    .SetDesc = oRow.Item("SetDesc").ToString
+                    .QTY = oRow.Item("QTY")
+                    .ListPrice = oRow.Item("ListPrice")
+                    .ExtendedPrice = oRow.Item("ExtendPrice")
+
+                End With
+
+                'Will need the orginal ids when copy the order items
+
+                With oDuplicateOrderSet
+                    .OrderIDOrig = sOrderIDToDuplicate
+                    .OrderSetIDOrig = oRow.Item("OrderSetIDOrig").ToString
+                    .OrderSetNew = oNewOrderSet
+
+
+                End With
+
+                oDuplicateOrderSets.Add(oDuplicateOrderSet)
+
+            Next
+
+
+            'Now lets Add then ordersets and the order items
+
+            For Each oDuplicateOrderSet In oDuplicateOrderSets
+                'Temp comment out
+                omOrderSets_IU(oDuplicateOrderSet.OrderSetNew)
+                sDuplicateOrderItems_SQL = ""
+                'Create the 
+                sDuplicateOrderItems_SQL = sDuplicateOrderItems_SQLTemp
+                'Now have to put in the New OrderSetID and Original Order SetID
+                sDuplicateOrderItems_SQL = sDuplicateOrderItems_SQL.Replace("{sNewOrderSetID}", oDuplicateOrderSet.OrderSetNew.OrderSetID)
+                sDuplicateOrderItems_SQL = sDuplicateOrderItems_SQL.Replace("{sOrderSetIDOrig}", oDuplicateOrderSet.OrderSetIDOrig)
+
+                sReturn = InsertDuplicateOrderItems(sDuplicateOrderItems_SQL)
+            Next
+
+
+        End If
+
+        'No Order Set rows....so check to see if there are just Orderitems
+        sDuplicateOrderItemsNoOrderSets_SQL = sDuplicateOrderItemsNoOrderSets_SQLTemp
+        sReturn2 = InsertDuplicateOrderItems(sDuplicateOrderItemsNoOrderSets_SQL)
+
+
+    End Sub
+
+    Private Sub cmdeBookMgmt_Click(sender As Object, e As EventArgs) Handles cmdeBookMgmt.Click
+        frmEBookMGMT.Show()
+    End Sub
+
+    Private Sub SimpleButton3_Click(sender As Object, e As EventArgs) Handles SimpleButton3.Click
+        LoadMetaSearchGrid()
+    End Sub
+
 End Class

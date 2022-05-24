@@ -137,4 +137,51 @@ Module modAdmin
 
         End Try
     End Function
+
+    Public Sub PasteFilesFromClipboard(ByVal aTargetFolder As String)
+        Dim aFileDropList = Clipboard.GetFileDropList()
+        If aFileDropList Is Nothing OrElse aFileDropList.Count = 0 Then Return
+        Dim aMove As Boolean = False
+        Dim aDataDropEffect = Clipboard.GetData("Preferred DropEffect")
+
+        If aDataDropEffect IsNot Nothing Then
+            Dim aDropEffect As MemoryStream = CType(aDataDropEffect, MemoryStream)
+            Dim aMoveEffect As Byte() = New Byte(3) {}
+            aDropEffect.Read(aMoveEffect, 0, aMoveEffect.Length)
+            Dim aDragDropEffects = CType(BitConverter.ToInt32(aMoveEffect, 0), DragDropEffects)
+            aMove = aDragDropEffects.HasFlag(DragDropEffects.Move)
+        End If
+
+        For Each aFileName As String In aFileDropList
+
+            If aMove Then
+            Else
+            End If
+        Next
+    End Sub
+
+    <Flags>
+    Public Enum DragDropEffects
+        Scroll = Integer.MinValue
+        All = -2147483645
+        None = 0
+        Copy = 1
+        Move = 2
+        Link = 4
+    End Enum
+
+    Public Function GetFileFromClipBoard()
+        If My.Computer.Clipboard.ContainsData("specialFormat") Then
+            MsgBox("Data found.")
+        End If
+
+        MsgBox(My.Computer.Clipboard.GetType().ToString)
+        If My.Computer.Clipboard.ContainsData("FileGroupDescriptorW") Then
+            MsgBox("Data found.")
+        End If
+
+    End Function
+
+
+
 End Module

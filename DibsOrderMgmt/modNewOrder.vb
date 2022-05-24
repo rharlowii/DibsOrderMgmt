@@ -40,9 +40,16 @@ Public Structure Order
     Public PO_Shipping As Decimal
     Public PO_TotalAmount As Decimal
     Public OrderStatus As Integer
+    Public OrderStatusDigital As Integer
+    Public OrderStatusComm As Integer
 
     Public CreateTime As Date
+    Public TrackingNumbers As String
 
+    Public SalesRepID As Guid
+    Public CommissionRate As Decimal
+    Public OrderDescShort As String
+    Public OrderHasDiffCommisionItems As Integer
 
 End Structure
 Module modNewOrder
@@ -144,7 +151,9 @@ Module modNewOrder
 
         'sp_Insert_CollectionBooks_Into_SchoolBooks 'c47cf20d-b1bc-4e9c-8c4e-28a8c9ae192d', 'e6a391c2-7b67-458a-982a-12884be44946','35761',1
 
-        Dim sEXEC As String = "omOrders_IU @OrderID,@DistrictID,@SchoolID,@BHPONumber,@BillTo_Name ,@BillTo_Street,@BillTo_City ,@BillTo_Zip ,@BillTo_State ,@ShipTo_Name ,@ShipTo_Street ,@ShipTo_City ,@ShipTo_Zip ,@ShipTo_State ,@ShipTo_ATTN,@PurchasingContactName,@PurchasingContactPhone,@PurchasingContactEmail,@PurchasingPONumber,@OrderNotes,@OrderDate,@DueDate,@SpecialInstruction,@EnteredBy, @CreateTime, @UpdateTime,@PO_Amount,@PO_DiscountAmount,@PO_Shipping,@PO_TotalAmount,@OrderStatusID"
+        Dim sEXEC As String = "omOrders_IU @OrderID,@DistrictID,@SchoolID,@BHPONumber,@BillTo_Name ,@BillTo_Street,@BillTo_City ,@BillTo_Zip ,@BillTo_State ,@ShipTo_Name ,@ShipTo_Street ,@ShipTo_City ,@ShipTo_Zip ,@ShipTo_State ,@ShipTo_ATTN,@PurchasingContactName,@PurchasingContactPhone,@PurchasingContactEmail,@PurchasingPONumber,@OrderNotes,@OrderDate,@DueDate,@SpecialInstruction,@EnteredBy, @CreateTime, @UpdateTime,@PO_Amount,@PO_DiscountAmount,@PO_Shipping,@PO_TotalAmount,@OrderStatusID,@TrackingNumbers,@SalesRepID,@CommissionRate,@OrderDescShort,@OrderHasDiffCommisionItems,@OrderStatusDigitalID,@OrderStatusCommID"
+
+
         Dim sReturn As String
 
         oConnection = New SqlConnection(sConnectionString)
@@ -212,6 +221,15 @@ Module modNewOrder
 
             .Parameters.Add("@OrderStatusID", SqlDbType.Decimal).Value = oOrder.OrderStatus
 
+            .Parameters.Add("@TrackingNumbers", SqlDbType.NVarChar).Value = oOrder.TrackingNumbers
+
+            .Parameters.Add("@OrderStatusDigitalID", SqlDbType.Int).Value = oOrder.OrderStatusDigital
+            .Parameters.Add("@OrderStatusCommID", SqlDbType.Int).Value = oOrder.OrderStatusComm
+
+            .Parameters.Add("@SalesRepID", SqlDbType.UniqueIdentifier).Value = oOrder.SalesRepID
+            .Parameters.Add("@CommissionRate", SqlDbType.Decimal).Value = oOrder.CommissionRate
+            .Parameters.Add("@OrderDescShort", SqlDbType.NVarChar).Value = oOrder.OrderDescShort
+            .Parameters.Add("@OrderHasDiffCommisionItems", SqlDbType.Bit).Value = oOrder.OrderHasDiffCommisionItems
 
 
             sReturn = .ExecuteNonQuery
@@ -279,6 +297,100 @@ Module modNewOrder
             End With
         End If
         Return oAddress
+
+    End Function
+
+    Public Function DuplicateOrder(oOrderIDToDuplicate As Guid) As String
+
+
+        'Get the Order to Duplicate
+
+
+
+        Dim oDuplicateOrder As New Order
+        Dim oBillToAddress As New AddressStructure
+        Dim oShipToAddress As New AddressStructure
+        Dim oOrderDataTable As DataTable
+        Dim sReturn As String
+        Dim oNewOrderID As Guid
+        oOrderDataTable = GetOrderInfo(oOrderIDToDuplicate)
+        oNewOrderID = Guid.NewGuid
+
+
+
+        With oOrderDataTable.Rows(0)
+            oBillToAddress.AddressName = .Item("BillTo_Name").ToString
+            oBillToAddress.StreetAddress = .Item("BillTo_Street").ToString
+            oBillToAddress.City = .Item("BillTo_City").ToString
+            oBillToAddress.Zip = .Item("BillTo_Zip").ToString
+            oBillToAddress.State = .Item("BillTo_State").ToString
+
+        End With
+
+        With oOrderDataTable.Rows(0)
+            oShipToAddress.AddressName = .Item("ShipTo_Name").ToString
+            oShipToAddress.StreetAddress = .Item("ShipTo_Street").ToString
+            oShipToAddress.City = .Item("ShipTo_City").ToString
+            oShipToAddress.Zip = .Item("ShipTo_Zip").ToString
+            oShipToAddress.State = .Item("ShipTo_State").ToString
+            oShipToAddress.ATTN = .Item("ShipTo_ATTN").ToString
+
+        End With
+
+        With oOrderDataTable.Rows(0)
+
+            'Need to give a new order before adding to database
+            oDuplicateOrder.OrderID = oNewOrderID
+
+            oDuplicateOrder.DistrictID = .Item("DistrictID").ToString
+
+            oDuplicateOrder.SchoolID = .Item("SchoolID").ToString
+
+
+
+            oDuplicateOrder.BHPONumber = .Item("BHPONumber").ToString & " (Duplicate)"
+
+            oDuplicateOrder.BillToAddress = oBillToAddress
+            oDuplicateOrder.ShipToAddress = oShipToAddress
+
+            oDuplicateOrder.PurchasingContactName = .Item("PurchasingContactName").ToString
+            oDuplicateOrder.PurchasingContactPhone = .Item("PurchasingContactPhone").ToString
+            oDuplicateOrder.PurchasingContactEmail = .Item("PurchasingContactEmail").ToString
+            oDuplicateOrder.PurchasingPONumber = .Item("PurchasingPONumber").ToString
+            oDuplicateOrder.PurchasingPODueDate = .Item("DueDate").ToString
+
+            oDuplicateOrder.OrderNotes = .Item("OrderNotes").ToString
+
+            oDuplicateOrder.PO_Amount = 0.00
+            oDuplicateOrder.PO_DiscountAmount = 0.00
+            oDuplicateOrder.PO_TotalAmount = 0.00
+            oDuplicateOrder.PO_Shipping = 0.00
+
+            oDuplicateOrder.OrderStatus = 0
+
+            'Need to keep these because we write back to DB
+
+
+            oDuplicateOrder.CreateTime = Now()
+
+
+
+
+
+        End With
+
+        sReturn = omOrders_IU(oDuplicateOrder, False)
+
+        Select Case sReturn
+            Case "1"
+                Return oDuplicateOrder.OrderID.ToString
+
+            Case ""
+                Return ""
+
+            Case Else
+                Return ""
+        End Select
 
     End Function
 End Module

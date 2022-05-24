@@ -16,6 +16,7 @@ Public Class frmOrderDocuments
 
 
     Public PublisherInvoiceDocsOnly As Boolean = False  'OrderDocTypeId - 50 
+    Public BHPONumber As String
 
     Sub New()
 
@@ -46,6 +47,7 @@ Public Class frmOrderDocuments
 
 
                 Case Else
+                    .GroupBox2.Text = .GroupBox2.Text & " - " & BHPONumber
 
             End Select
 
@@ -215,7 +217,7 @@ Public Class frmOrderDocuments
                 sFileExt = FileIO.FileSystem.GetFileInfo(sOrderDocName).Extension
             End If
 
-            Select Case sFileExt
+            Select Case sFileExt.ToLower
                 Case ".xls", ".xlsx", ".csv"
                     OpenExcel(oDocumentID.ToString)
                 Case "", ".pdf"

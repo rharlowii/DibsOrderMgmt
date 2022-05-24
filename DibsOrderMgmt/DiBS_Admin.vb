@@ -440,10 +440,7 @@ SkipToNext:
 
 
 
-    Public Function RemoveHyphens(sText As String)
-        RemoveHyphens = sText.Replace("-", "")
 
-    End Function
     Public Function IsBookinDiBS_ISBN(sISBN As String, ByRef sBookID As String) As Integer
 
         'SELECT @iCount=COUNT(*) FROM Books WHERE ISBN=@ISBN

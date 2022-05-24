@@ -37,8 +37,19 @@ Module modOrderItems
 
 
 
-    End Structure
 
+
+    End Structure
+    Public Structure DuplicateOrderSet
+
+        Public OrderSetIDOrig As String
+        Public OrderIDOrig As String
+        Public OrderSetNew As OrderSet
+
+
+
+
+    End Structure
     Public Enum OrderItemStatus
         NotFoundInDB = -1
         NoStaus = 0
@@ -48,6 +59,8 @@ Module modOrderItems
 
 
     End Enum
+
+
 
     Public Structure PartnerList
         Public iPartnerID As Integer
@@ -274,4 +287,71 @@ Module modOrderItems
 
     End Function
 
+    Public Function omOrderSets_IU(oOrderSet As Object) As String
+
+        'sp_Insert_CollectionBooks_Into_SchoolBooks 'c47cf20d-b1bc-4e9c-8c4e-28a8c9ae192d', 'e6a391c2-7b67-458a-982a-12884be44946','35761',1
+        'Hack to get around passing structures
+        Dim moOrderSet As OrderSet
+        moOrderSet = oOrderSet
+
+        ' Dim sEXEC As String = "omOrderSets_IU @OrderSetID,@OrderID,@BoxNumber,@SetName,@SetDesc"
+        Dim sEXEC As String = "omOrderSets_IU @OrderSetID,@OrderID,@SetName,@SetDesc,@QTY,@ListPrice,@ExtendPrice"
+        Dim sReturn As String
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        Dim oOrderSetID As Guid
+
+        oOrderSetID = Guid.NewGuid
+
+
+        With myCommand
+
+            .Parameters.Add("@OrderSetID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(moOrderSet.OrderSetID)
+            .Parameters.Add("@OrderID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(moOrderSet.OrderID)
+
+            .Parameters.Add("@QTY", SqlDbType.Int).Value = moOrderSet.QTY
+            .Parameters.Add("@SetName", SqlDbType.NVarChar).Value = moOrderSet.SetName
+            .Parameters.Add("@SetDesc", SqlDbType.NVarChar).Value = moOrderSet.SetDesc
+
+            .Parameters.Add("@ListPrice", SqlDbType.Decimal).Value = moOrderSet.ListPrice
+            .Parameters.Add("@ExtendPrice", SqlDbType.Decimal).Value = moOrderSet.ExtendedPrice
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+
+
+        oConnection.Close()
+
+        Return sReturn
+
+    End Function
+
+    Public Function InsertDuplicateOrderItems(InsertDuplicateOrderItemsSQL As String) As String
+
+        'You are actually updating 
+        Dim sEXEC As String = InsertDuplicateOrderItemsSQL
+
+        Dim sReturn As String
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        With myCommand
+
+
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+        oConnection.Close()
+
+        Return sReturn
+    End Function
 End Module

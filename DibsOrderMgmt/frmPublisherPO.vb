@@ -1125,6 +1125,8 @@ endUpdate:
         Dim sCustomerBillToName As String
         Dim sCustomerBillToState As String
         Dim sCustomerPurchasingPONumber As String
+        Dim sTrackingNumbers As String
+
         Dim moDocTypes As New clsDibsOrderMgmt.OrderDocTypes
         Dim sReturn As String
 
@@ -1134,6 +1136,8 @@ endUpdate:
         Dim sBody As String
         Dim sOrderID As String
         Dim mbNeedToUpdateMainGrid As Boolean
+        Dim POEmail As String
+
         Dim sTOEmail As String
         Dim sCCEmail As String
         Dim iEmailType As BHEmailTypes
@@ -1142,6 +1146,9 @@ endUpdate:
         sCustomerBillToName = oOrderInfoDataTable.Rows(0).Item("BillTo_Name").ToString
         sCustomerBillToState = oOrderInfoDataTable.Rows(0).Item("BillTo_State").ToString
         sCustomerPurchasingPONumber = oOrderInfoDataTable.Rows(0).Item("PurchasingPONumber").ToString
+        sTrackingNumbers = oOrderInfoDataTable.Rows(0).Item("TrackingNumbers").ToString
+        POEmail = oOrderInfoDataTable.Rows(0).Item("PurchasingContactEmail").ToString
+
         sTempFile = System.IO.Path.GetTempFileName()
         sOrderID = oOrderInfoDataTable.Rows(0).Item("OrderID").ToString
         iEmailType = BHEmailTypes.NoEmailType
@@ -1177,6 +1184,11 @@ endUpdate:
 
                 sTempFile = sTempFile.Replace(".tmp", ".pdf")
                 'Need to add the extension or you can not open it on the other end
+                'Incase disitrct has "/" in name like WSFCS
+                sCustomerBillToName = sCustomerBillToName.Replace("\", "-").ToString
+                sCustomerBillToName = sCustomerBillToName.Replace("/", "-").ToString
+
+
 
                 sOrderDocName = "INV_" & sCustomerBillToState & "_" & sCustomerBillToName & "_PO_" & sCustomerPurchasingPONumber & ".pdf"
                 'Try this out because using the temp file and attaching to email causes issue when forwarding.
@@ -1186,6 +1198,15 @@ endUpdate:
 
                 sSubject = "Invoice from Brain Hive for PO: " & sCustomerBillToName & "_" & sCustomerPurchasingPONumber
                 sBody = "Please see the attached Invoice for: " & sCustomerPurchasingPONumber & "<br>" & "<br>" & "Please let me know if you have any questions." & vbCrLf & vbCrLf
+
+                If sTrackingNumbers.Length > 0 Then
+                    sBody = sBody & "<br>" & "<br>" & "Tracking Number(s):" & sTrackingNumbers
+                End If
+
+                If POEmail.Length > 0 Then
+                    sTOEmail = POEmail
+                End If
+
                 SpreadsheetControl1.ExportToPdf(sTempFile)
                 iEmailType = BHEmailTypes.CustInvoiceEmail
 

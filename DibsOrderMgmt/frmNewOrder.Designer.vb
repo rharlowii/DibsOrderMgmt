@@ -23,6 +23,8 @@ Partial Class frmNewOrder
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdViewDocuments = New DevExpress.XtraEditors.SimpleButton()
+        Me.cmdSetDistrictBillTo = New DevExpress.XtraEditors.SimpleButton()
         Me.cmbSchools2 = New DevExpress.XtraEditors.LookUpEdit()
         Me.cmbDistricts2 = New DevExpress.XtraEditors.LookUpEdit()
         Me.cmbStates2 = New DevExpress.XtraEditors.LookUpEdit()
@@ -49,6 +51,8 @@ Partial Class frmNewOrder
         Me.txtBillTo_Street = New System.Windows.Forms.TextBox()
         Me.txtBillTo_City = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.txtTrackingNumbers = New System.Windows.Forms.TextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtShipTo_Attn = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -87,7 +91,19 @@ Partial Class frmNewOrder
         Me.cmbOrderStatus = New DevExpress.XtraEditors.LookUpEdit()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txtCreateTime = New System.Windows.Forms.TextBox()
-        Me.cmdSetDistrictBillTo = New DevExpress.XtraEditors.SimpleButton()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.cmbOrderHasDiffCommisionItems = New System.Windows.Forms.ComboBox()
+        Me.cmbSalesRep = New DevExpress.XtraEditors.LookUpEdit()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.txtSalesRep_OrderDescShort = New System.Windows.Forms.TextBox()
+        Me.txtSalesRep_CommissionRate = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.cmbOrderStatusDigital = New DevExpress.XtraEditors.LookUpEdit()
+        Me.cmbOrderStatusComm = New DevExpress.XtraEditors.LookUpEdit()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.cmbSchools2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cmbDistricts2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,6 +113,10 @@ Partial Class frmNewOrder
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.cmbOrderStatus.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox5.SuspendLayout()
+        CType(Me.cmbSalesRep.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbOrderStatusDigital.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbOrderStatusComm.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -104,6 +124,7 @@ Partial Class frmNewOrder
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.cmdViewDocuments)
         Me.Panel1.Controls.Add(Me.cmdSetDistrictBillTo)
         Me.Panel1.Controls.Add(Me.cmbSchools2)
         Me.Panel1.Controls.Add(Me.cmbDistricts2)
@@ -121,6 +142,27 @@ Partial Class frmNewOrder
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1259, 97)
         Me.Panel1.TabIndex = 0
+        '
+        'cmdViewDocuments
+        '
+        Me.cmdViewDocuments.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdViewDocuments.Appearance.Options.UseFont = True
+        Me.cmdViewDocuments.Location = New System.Drawing.Point(1062, 27)
+        Me.cmdViewDocuments.Name = "cmdViewDocuments"
+        Me.cmdViewDocuments.Size = New System.Drawing.Size(194, 28)
+        Me.cmdViewDocuments.TabIndex = 53
+        Me.cmdViewDocuments.Text = "View Documents"
+        '
+        'cmdSetDistrictBillTo
+        '
+        Me.cmdSetDistrictBillTo.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSetDistrictBillTo.Appearance.Options.UseFont = True
+        Me.cmdSetDistrictBillTo.Location = New System.Drawing.Point(339, 3)
+        Me.cmdSetDistrictBillTo.Name = "cmdSetDistrictBillTo"
+        Me.cmdSetDistrictBillTo.Size = New System.Drawing.Size(194, 28)
+        Me.cmdSetDistrictBillTo.TabIndex = 52
+        Me.cmdSetDistrictBillTo.Text = "Set &District Bill To"
+        Me.cmdSetDistrictBillTo.ToolTip = "a"
         '
         'cmbSchools2
         '
@@ -278,7 +320,7 @@ Partial Class frmNewOrder
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.Location = New System.Drawing.Point(3, 107)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(361, 207)
+        Me.GroupBox3.Size = New System.Drawing.Size(361, 274)
         Me.GroupBox3.TabIndex = 60
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Bill To:"
@@ -387,6 +429,8 @@ Partial Class frmNewOrder
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.txtTrackingNumbers)
+        Me.GroupBox2.Controls.Add(Me.Label23)
         Me.GroupBox2.Controls.Add(Me.Label11)
         Me.GroupBox2.Controls.Add(Me.txtShipTo_Attn)
         Me.GroupBox2.Controls.Add(Me.Label5)
@@ -402,10 +446,29 @@ Partial Class frmNewOrder
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(387, 108)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(361, 206)
+        Me.GroupBox2.Size = New System.Drawing.Size(361, 273)
         Me.GroupBox2.TabIndex = 55
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Ship To:"
+        '
+        'txtTrackingNumbers
+        '
+        Me.txtTrackingNumbers.Location = New System.Drawing.Point(6, 212)
+        Me.txtTrackingNumbers.Multiline = True
+        Me.txtTrackingNumbers.Name = "txtTrackingNumbers"
+        Me.txtTrackingNumbers.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtTrackingNumbers.Size = New System.Drawing.Size(349, 55)
+        Me.txtTrackingNumbers.TabIndex = 73
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.Location = New System.Drawing.Point(15, 193)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(255, 16)
+        Me.Label23.TabIndex = 30
+        Me.Label23.Text = "Tracking Numbers (Separate by comma):"
         '
         'Label11
         '
@@ -513,7 +576,7 @@ Partial Class frmNewOrder
         '
         Me.cmdSave.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSave.Appearance.Options.UseFont = True
-        Me.cmdSave.Location = New System.Drawing.Point(448, 527)
+        Me.cmdSave.Location = New System.Drawing.Point(435, 601)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(130, 28)
         Me.cmdSave.TabIndex = 32
@@ -523,7 +586,7 @@ Partial Class frmNewOrder
         '
         Me.cmdCancel.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdCancel.Appearance.Options.UseFont = True
-        Me.cmdCancel.Location = New System.Drawing.Point(588, 527)
+        Me.cmdCancel.Location = New System.Drawing.Point(575, 601)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(130, 28)
         Me.cmdCancel.TabIndex = 33
@@ -544,7 +607,7 @@ Partial Class frmNewOrder
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(766, 108)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(361, 247)
+        Me.GroupBox1.Size = New System.Drawing.Size(361, 273)
         Me.GroupBox1.TabIndex = 71
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "PO Contact:"
@@ -636,11 +699,11 @@ Partial Class frmNewOrder
         '
         'txtOrderNotes
         '
-        Me.txtOrderNotes.Location = New System.Drawing.Point(398, 394)
+        Me.txtOrderNotes.Location = New System.Drawing.Point(387, 543)
         Me.txtOrderNotes.Multiline = True
         Me.txtOrderNotes.Name = "txtOrderNotes"
         Me.txtOrderNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtOrderNotes.Size = New System.Drawing.Size(828, 115)
+        Me.txtOrderNotes.Size = New System.Drawing.Size(828, 52)
         Me.txtOrderNotes.TabIndex = 72
         '
         'GroupBox4
@@ -654,7 +717,7 @@ Partial Class frmNewOrder
         Me.GroupBox4.Controls.Add(Me.txtPO_Shipping)
         Me.GroupBox4.Controls.Add(Me.txtPO_TotalAmount)
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.Location = New System.Drawing.Point(3, 320)
+        Me.GroupBox4.Location = New System.Drawing.Point(3, 387)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(361, 189)
         Me.GroupBox4.TabIndex = 73
@@ -740,7 +803,7 @@ Partial Class frmNewOrder
         '
         'cmbOrderStatus
         '
-        Me.cmbOrderStatus.Location = New System.Drawing.Point(398, 362)
+        Me.cmbOrderStatus.Location = New System.Drawing.Point(387, 511)
         Me.cmbOrderStatus.Name = "cmbOrderStatus"
         Me.cmbOrderStatus.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
         Me.cmbOrderStatus.Properties.Appearance.BackColor = System.Drawing.Color.White
@@ -768,7 +831,7 @@ Partial Class frmNewOrder
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(397, 335)
+        Me.Label18.Location = New System.Drawing.Point(386, 484)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(117, 20)
         Me.Label18.TabIndex = 75
@@ -777,21 +840,189 @@ Partial Class frmNewOrder
         'txtCreateTime
         '
         Me.txtCreateTime.Enabled = False
-        Me.txtCreateTime.Location = New System.Drawing.Point(705, 365)
+        Me.txtCreateTime.Location = New System.Drawing.Point(509, 485)
         Me.txtCreateTime.Name = "txtCreateTime"
-        Me.txtCreateTime.Size = New System.Drawing.Size(277, 20)
+        Me.txtCreateTime.Size = New System.Drawing.Size(156, 20)
         Me.txtCreateTime.TabIndex = 76
         '
-        'cmdSetDistrictBillTo
+        'GroupBox5
         '
-        Me.cmdSetDistrictBillTo.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdSetDistrictBillTo.Appearance.Options.UseFont = True
-        Me.cmdSetDistrictBillTo.Location = New System.Drawing.Point(339, 3)
-        Me.cmdSetDistrictBillTo.Name = "cmdSetDistrictBillTo"
-        Me.cmdSetDistrictBillTo.Size = New System.Drawing.Size(194, 28)
-        Me.cmdSetDistrictBillTo.TabIndex = 52
-        Me.cmdSetDistrictBillTo.Text = "Set &District Bill To"
-        Me.cmdSetDistrictBillTo.ToolTip = "a"
+        Me.GroupBox5.Controls.Add(Me.cmbOrderHasDiffCommisionItems)
+        Me.GroupBox5.Controls.Add(Me.cmbSalesRep)
+        Me.GroupBox5.Controls.Add(Me.Label29)
+        Me.GroupBox5.Controls.Add(Me.Label26)
+        Me.GroupBox5.Controls.Add(Me.Label27)
+        Me.GroupBox5.Controls.Add(Me.Label28)
+        Me.GroupBox5.Controls.Add(Me.txtSalesRep_OrderDescShort)
+        Me.GroupBox5.Controls.Add(Me.txtSalesRep_CommissionRate)
+        Me.GroupBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox5.Location = New System.Drawing.Point(387, 387)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(740, 87)
+        Me.GroupBox5.TabIndex = 77
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Sales Rep"
+        '
+        'cmbOrderHasDiffCommisionItems
+        '
+        Me.cmbOrderHasDiffCommisionItems.FormattingEnabled = True
+        Me.cmbOrderHasDiffCommisionItems.Items.AddRange(New Object() {"", "Yes", "No"})
+        Me.cmbOrderHasDiffCommisionItems.Location = New System.Drawing.Point(663, 53)
+        Me.cmbOrderHasDiffCommisionItems.Name = "cmbOrderHasDiffCommisionItems"
+        Me.cmbOrderHasDiffCommisionItems.Size = New System.Drawing.Size(62, 28)
+        Me.cmbOrderHasDiffCommisionItems.TabIndex = 78
+        '
+        'cmbSalesRep
+        '
+        Me.cmbSalesRep.Location = New System.Drawing.Point(92, 20)
+        Me.cmbSalesRep.Name = "cmbSalesRep"
+        Me.cmbSalesRep.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
+        Me.cmbSalesRep.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.cmbSalesRep.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbSalesRep.Properties.Appearance.ForeColor = System.Drawing.Color.Black
+        Me.cmbSalesRep.Properties.Appearance.Options.UseBackColor = True
+        Me.cmbSalesRep.Properties.Appearance.Options.UseFont = True
+        Me.cmbSalesRep.Properties.Appearance.Options.UseForeColor = True
+        Me.cmbSalesRep.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cmbSalesRep.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesRepID", "SalesRepID", 20, DevExpress.Utils.FormatType.None, "", False, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.Ascending, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("CompanyName", "CompanyName", 25, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("TerritoryName", "TerritoryName", 30, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default])})
+        Me.cmbSalesRep.Properties.DisplayMember = "CompanyName"
+        Me.cmbSalesRep.Properties.EditValueChangedDelay = 1
+        Me.cmbSalesRep.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
+        Me.cmbSalesRep.Properties.NullText = ""
+        Me.cmbSalesRep.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete
+        Me.cmbSalesRep.Properties.SortColumnIndex = 1
+        Me.cmbSalesRep.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        Me.cmbSalesRep.Properties.UseDropDownRowsAsMaxCount = True
+        Me.cmbSalesRep.Properties.ValidateOnEnterKey = True
+        Me.cmbSalesRep.Properties.ValueMember = "SalesRepID"
+        Me.cmbSalesRep.Size = New System.Drawing.Size(347, 26)
+        Me.cmbSalesRep.TabIndex = 75
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.Location = New System.Drawing.Point(481, 59)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(176, 16)
+        Me.Label29.TabIndex = 57
+        Me.Label29.Text = "Different Commission Items?"
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.Location = New System.Drawing.Point(537, 31)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(117, 16)
+        Me.Label26.TabIndex = 25
+        Me.Label26.Text = "Commission Rate:"
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.Location = New System.Drawing.Point(3, 57)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(80, 16)
+        Me.Label27.TabIndex = 24
+        Me.Label27.Text = "Order Desc:"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.Location = New System.Drawing.Point(10, 25)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(75, 16)
+        Me.Label28.TabIndex = 23
+        Me.Label28.Text = "Sales Rep:"
+        '
+        'txtSalesRep_OrderDescShort
+        '
+        Me.txtSalesRep_OrderDescShort.Location = New System.Drawing.Point(92, 51)
+        Me.txtSalesRep_OrderDescShort.Name = "txtSalesRep_OrderDescShort"
+        Me.txtSalesRep_OrderDescShort.Size = New System.Drawing.Size(347, 26)
+        Me.txtSalesRep_OrderDescShort.TabIndex = 76
+        '
+        'txtSalesRep_CommissionRate
+        '
+        Me.txtSalesRep_CommissionRate.Location = New System.Drawing.Point(660, 21)
+        Me.txtSalesRep_CommissionRate.Name = "txtSalesRep_CommissionRate"
+        Me.txtSalesRep_CommissionRate.Size = New System.Drawing.Size(65, 26)
+        Me.txtSalesRep_CommissionRate.TabIndex = 77
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(677, 486)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(123, 20)
+        Me.Label24.TabIndex = 78
+        Me.Label24.Text = "Digital Status:"
+        '
+        'cmbOrderStatusDigital
+        '
+        Me.cmbOrderStatusDigital.Location = New System.Drawing.Point(681, 509)
+        Me.cmbOrderStatusDigital.Name = "cmbOrderStatusDigital"
+        Me.cmbOrderStatusDigital.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
+        Me.cmbOrderStatusDigital.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.cmbOrderStatusDigital.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbOrderStatusDigital.Properties.Appearance.ForeColor = System.Drawing.Color.Black
+        Me.cmbOrderStatusDigital.Properties.Appearance.Options.UseBackColor = True
+        Me.cmbOrderStatusDigital.Properties.Appearance.Options.UseFont = True
+        Me.cmbOrderStatusDigital.Properties.Appearance.Options.UseForeColor = True
+        Me.cmbOrderStatusDigital.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cmbOrderStatusDigital.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusDigitalID", "OrderStatusDigitalID", 20, DevExpress.Utils.FormatType.None, "", False, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.Ascending, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusDigital", "OrderStatusDigital", 25, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusDigitalColor", "OrderStatusDigitalColor", 5, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default])})
+        Me.cmbOrderStatusDigital.Properties.DisplayMember = "OrderStatusDigital"
+        Me.cmbOrderStatusDigital.Properties.EditValueChangedDelay = 1
+        Me.cmbOrderStatusDigital.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
+        Me.cmbOrderStatusDigital.Properties.NullText = ""
+        Me.cmbOrderStatusDigital.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete
+        Me.cmbOrderStatusDigital.Properties.SortColumnIndex = 1
+        Me.cmbOrderStatusDigital.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        Me.cmbOrderStatusDigital.Properties.UseDropDownRowsAsMaxCount = True
+        Me.cmbOrderStatusDigital.Properties.ValidateOnEnterKey = True
+        Me.cmbOrderStatusDigital.Properties.ValueMember = "OrderStatusDigitalID"
+        Me.cmbOrderStatusDigital.Size = New System.Drawing.Size(278, 26)
+        Me.cmbOrderStatusDigital.TabIndex = 79
+        '
+        'cmbOrderStatusComm
+        '
+        Me.cmbOrderStatusComm.Location = New System.Drawing.Point(986, 509)
+        Me.cmbOrderStatusComm.Name = "cmbOrderStatusComm"
+        Me.cmbOrderStatusComm.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.[False]
+        Me.cmbOrderStatusComm.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.cmbOrderStatusComm.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbOrderStatusComm.Properties.Appearance.ForeColor = System.Drawing.Color.Black
+        Me.cmbOrderStatusComm.Properties.Appearance.Options.UseBackColor = True
+        Me.cmbOrderStatusComm.Properties.Appearance.Options.UseFont = True
+        Me.cmbOrderStatusComm.Properties.Appearance.Options.UseForeColor = True
+        Me.cmbOrderStatusComm.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cmbOrderStatusComm.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusCommID", "OrderStatusCommID", 20, DevExpress.Utils.FormatType.None, "", False, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.Ascending, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusComm", "OrderStatusComm", 25, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("OrderStatusCommColor", "OrderStatusCommColor", 5, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.[Default], DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.[Default])})
+        Me.cmbOrderStatusComm.Properties.DisplayMember = "OrderStatusComm"
+        Me.cmbOrderStatusComm.Properties.EditValueChangedDelay = 1
+        Me.cmbOrderStatusComm.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
+        Me.cmbOrderStatusComm.Properties.NullText = ""
+        Me.cmbOrderStatusComm.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete
+        Me.cmbOrderStatusComm.Properties.SortColumnIndex = 1
+        Me.cmbOrderStatusComm.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        Me.cmbOrderStatusComm.Properties.UseDropDownRowsAsMaxCount = True
+        Me.cmbOrderStatusComm.Properties.ValidateOnEnterKey = True
+        Me.cmbOrderStatusComm.Properties.ValueMember = "OrderStatusCommID"
+        Me.cmbOrderStatusComm.Size = New System.Drawing.Size(229, 26)
+        Me.cmbOrderStatusComm.TabIndex = 81
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(982, 486)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(154, 20)
+        Me.Label25.TabIndex = 80
+        Me.Label25.Text = "Comission Status:"
         '
         'frmNewOrder
         '
@@ -799,7 +1030,12 @@ Partial Class frmNewOrder
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1264, 572)
+        Me.ClientSize = New System.Drawing.Size(1264, 639)
+        Me.Controls.Add(Me.cmbOrderStatusComm)
+        Me.Controls.Add(Me.Label25)
+        Me.Controls.Add(Me.cmbOrderStatusDigital)
+        Me.Controls.Add(Me.Label24)
+        Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.txtCreateTime)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.cmbOrderStatus)
@@ -827,6 +1063,11 @@ Partial Class frmNewOrder
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.cmbOrderStatus.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        CType(Me.cmbSalesRep.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbOrderStatusDigital.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbOrderStatusComm.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -898,4 +1139,20 @@ Partial Class frmNewOrder
     Friend WithEvents Label19 As Label
     Friend WithEvents txtPO_DiscountAmount As TextBox
     Friend WithEvents cmdSetDistrictBillTo As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents txtTrackingNumbers As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Label28 As Label
+    Friend WithEvents txtSalesRep_OrderDescShort As TextBox
+    Friend WithEvents txtSalesRep_CommissionRate As TextBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents cmbSalesRep As DevExpress.XtraEditors.LookUpEdit
+    Friend WithEvents cmbOrderHasDiffCommisionItems As ComboBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents cmbOrderStatusDigital As DevExpress.XtraEditors.LookUpEdit
+    Friend WithEvents cmdViewDocuments As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents cmbOrderStatusComm As DevExpress.XtraEditors.LookUpEdit
+    Friend WithEvents Label25 As Label
 End Class

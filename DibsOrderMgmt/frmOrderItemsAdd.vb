@@ -5,6 +5,7 @@ Imports DevExpress.Spreadsheet
 Public Class frmOrderItemsAdd
 
     Public oOrderID As Guid
+    Public BPPONumber As String
 
     Private Sub frmOrderItemsAdd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'TODO: This line of code loads data into the 'DiBS_DB_ProdDataSet3.omPartners' table. You can move, or remove it, as needed.
