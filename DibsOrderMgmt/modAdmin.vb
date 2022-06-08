@@ -1,7 +1,19 @@
-﻿Imports System.IO
+﻿Imports System.Data.SqlClient
+Imports System.IO
 Imports System.Net
 
 Module modAdmin
+
+    Public Structure UserAccount
+        Public ID As String
+        Public First As String
+        Public Last As String
+        Public LoginID As String
+        Public RoleID As String
+
+
+
+    End Structure
     Public MetaSearchTabClickedOnce As Boolean = False
     Public PubInvoiceTabClickedOnce As Boolean = False
 
@@ -182,6 +194,61 @@ Module modAdmin
 
     End Function
 
+    Public Function SetCoverImage(sISBN As String, sAWSCoverImageURL As String)
 
+        Dim saveCommand As String
+        Dim iAffected As Integer
+
+
+
+        saveCommand = "UPDATE books SET OfficialImage = @ImageName where ISBN=@ISBN"
+
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+
+        Dim setCmd As New SqlCommand(saveCommand, oConnection)
+
+        setCmd = New SqlCommand(saveCommand, oConnection)
+
+
+
+        setCmd.Parameters.Add("@ISBN", Data.SqlDbType.VarChar).Value = sISBN
+        setCmd.Parameters.Add("@ImageName", Data.SqlDbType.VarChar).Value = sAWSCoverImageURL
+
+
+
+        iAffected = setCmd.ExecuteNonQuery()
+    End Function
+
+    Public Function GetOfficalImage(sISBN As String) As String
+
+
+        Dim ScalarCommand As String
+        Dim sOfficalImage As String
+
+
+
+        ScalarCommand = "SELECT OfficialImage FROM Books where ISBN=@ISBN"
+
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+
+        Dim setCmd As New SqlCommand(ScalarCommand, oConnection)
+
+        setCmd = New SqlCommand(ScalarCommand, oConnection)
+
+
+
+        setCmd.Parameters.Add("@ISBN", Data.SqlDbType.VarChar).Value = sISBN
+
+
+
+
+        sOfficalImage = setCmd.ExecuteScalar.ToString
+        oConnection.Close()
+        Return sOfficalImage
+    End Function
 
 End Module

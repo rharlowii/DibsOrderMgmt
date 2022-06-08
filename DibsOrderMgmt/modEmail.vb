@@ -29,8 +29,11 @@ Module modEmail
         CustInvoiceEmail = 30
         ' CustLabelsLabels = 40
         ' CustPackingSlip = 45
+
         PubPOEmail = 50
         PubInvoiceEmail = 60
+        PubMissingItemsEmail = 70
+        CustWelcomeEmail = 700
         CheckinDocumentEmail = 900
 
     End Enum
@@ -111,5 +114,16 @@ Module modEmail
         End If
 
         Return signature
+    End Function
+
+    Public Function GetTextFromFile(sFilePath) As String
+        Try
+            Dim fileReader As String
+            fileReader = My.Computer.FileSystem.ReadAllText(sFilePath)
+            Return fileReader
+        Catch ex As Exception
+
+        End Try
+
     End Function
 End Module

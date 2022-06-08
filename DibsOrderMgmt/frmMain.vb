@@ -2,11 +2,14 @@
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Net
+Imports DevExpress
 Imports DevExpress.Utils
 Imports DevExpress.XtraBars
 Imports DevExpress.XtraEditors
 Imports DevExpress.XtraGrid.Views.Grid
 Imports DevExpress.XtraGrid.Views.Grid.ViewInfo
+Imports DevExpress.XtraPrinting
+Imports DevExpress.XtraReports.UI
 
 Public Class frmMain
 
@@ -234,7 +237,7 @@ Public Class frmMain
 
     Private Sub GridView1_MouseUp(sender As Object, e As MouseEventArgs) Handles GridView1.MouseUp
         If e.Button = MouseButtons.Right Then
-            PopupMenu_Orders.ShowPopup(Control.MousePosition)
+            PopupMenu_Orders.ShowPopup(Me.MousePosition)
         End If
     End Sub
     Private Sub BarButtonItem1_Documents_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_Documents.ItemClick
@@ -307,7 +310,39 @@ Public Class frmMain
         '' PasteFilesFromClipboard(sTempFolder)
         'GetFileFromClipBoard()
 
+        Dim sWelcomeEmailTempFilePath As String
+        Dim sBodyTemp As String
+        Dim sSchoolDirectURL As String
+        Dim sSchoolName As String
+        Dim sTempFile As String
+        Dim oAttachment As New MailItemAttachement
+        Dim oAttachments As New List(Of MailItemAttachement)
 
+        Dim sSubjectTemp As String
+
+        sSchoolDirectURL = "https://brainhive-viewer.digitalbookroom.com/#/login/?SchoolID=0C3FBF94-EE0D-4CD6-89CA-E8AACF08F058"
+        sSchoolName = "BOLIVIA ELEMENTARY"
+        sWelcomeEmailTempFilePath = HiveTemplatePath & "WelcomeEmail.html"
+        sTempFile = HiveTemplatePath & "BH_logo_new_lockup_vertical_small.jpg"
+        sBodyTemp = GetTextFromFile(sWelcomeEmailTempFilePath)
+        sBodyTemp = sBodyTemp.Replace("{SchoolDirectURL}", sSchoolDirectURL)
+        sBodyTemp = sBodyTemp.Replace("{SchoolName}", sSchoolName)
+
+        sSubjectTemp = "Welcome to Brain Hive, all your included e-Books have been loaded into your account ({SchoolName})"
+        sSubjectTemp = sSubjectTemp.Replace("{SchoolName}", sSchoolName)
+
+        oAttachment.FilePath = sTempFile
+        oAttachment.FileName = "BH_logo_new_lockup_vertical_small.jpg"
+        oAttachments.Add(oAttachment)
+        Dim oBHMailItem As New BHMailItem
+
+        With oBHMailItem
+            .EmailType = BHEmailTypes.CustWelcomeEmail
+            .Subject = sSubjectTemp
+            .Body = sBodyTemp
+            .Attachments = oAttachments
+        End With
+        CreateBHMailItem(oBHMailItem)
     End Sub
 
     Private Sub SimpleButton2_Click(sender As Object, e As EventArgs) Handles SimpleButton2.Click
@@ -998,7 +1033,7 @@ Public Class frmMain
 
     Private Sub GridView2_MouseUp(sender As Object, e As MouseEventArgs) Handles GridView2.MouseUp
         If e.Button = MouseButtons.Right Then
-            PopupMenu1.ShowPopup(Control.MousePosition)
+            PopupMenu1.ShowPopup(Me.MousePosition)
         End If
     End Sub
 
@@ -1451,7 +1486,7 @@ Public Class frmMain
 
     Private Sub gridPubInvoices_MouseUp(sender As Object, e As MouseEventArgs) Handles gridPubInvoices.MouseUp
         If e.Button = MouseButtons.Right Then
-            PopupMenu2.ShowPopup(Control.MousePosition)
+            PopupMenu2.ShowPopup(Me.MousePosition)
         End If
     End Sub
 
@@ -1514,6 +1549,8 @@ Public Class frmMain
         Dim InvoiceAmount As Decimal
         Dim DueDate As Date
         Dim PlanToPay As Date
+        Dim DatePaid As Date
+        Dim sMSG As String
 
         Dim selectedRowHandles As Int32() = GridView3.GetSelectedRows()
         If selectedRowHandles.Count <> 1 Then
@@ -1521,8 +1558,14 @@ Public Class frmMain
             Exit Sub
         End If
         selectedRowHandle = selectedRowHandles(0)
-
         oRow = GridView3.GetDataRow(selectedRowHandle)
+
+        If oRow.Item("DatePaid").ToString <> "" Then
+            DatePaid = oRow.Item("DatePaid")
+            sMSG = "This Invoice has already been marked as paid on '" & DatePaid & "' . You can not edit it."
+            MessageBox.Show(sMSG)
+            Exit Sub
+        End If
 
         'oRow.Item("OrderID").ToString()
         oEditOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
@@ -1624,7 +1667,7 @@ Public Class frmMain
 
     Private Sub DuplicateOrderSetsOrderItems(sOrderIDToDuplicate As String, sNewDuplicatedOrderID As String)
 
-           
+
         Dim sDuplicateOrderSets_SQL As String
         Dim sDuplicateOrderItems_SQLTemp As String
         Dim sDuplicateOrderItems_SQL As String
@@ -1784,6 +1827,9 @@ Public Class frmMain
 
 
                     With ofrmPOPublisher
+                        .BarButtonItem1.Caption = "Save 'Missing Items' to Order Docs"
+                        .BarButtonItem2.Caption = "Send 'Missing Items' to Publisher"
+
                         .Text = oRow.Item("PublisherShortName").ToString & " - Missing Items: "
                         .oOrderInfoDataTable = GetOrderInfo(oOrderID)
                         .iPartnerID = iPartnerID
@@ -1823,14 +1869,17 @@ Public Class frmMain
                     ofrmPOPublisher = New frmPublisherPO
 
                     With ofrmPOPublisher
-                        .Text = oDataRowView.Row.Item("PublisherShortName").ToString & " - PO: "
+                        .BarButtonItem1.Caption = "Save 'Missing Items' to Order Docs"
+                        .BarButtonItem2.Caption = "Send 'Missing Items' to Publisher"
+
+                        .Text = oDataRowView.Row.Item("PublisherShortName").ToString & " - Missing Items: "
                         .oOrderInfoDataTable = GetOrderInfo(oOrderID)
                         .iPartnerID = iPartnerID
                         .oOrderID = oOrderID
-                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubPO
+                        .oOrderDocType = clsDibsOrderMgmt.OrderDocTypes.PubMissingItems
                         .SpreadsheetControl1.LoadDocument(sFile)
                         .SetPublisherPO_FixedCells()
-                        .AddOrderItems()
+                        .AddOrderItems(False, True)
                         .StartPosition = FormStartPosition.CenterParent
                         .Show()
 
@@ -1849,4 +1898,189 @@ Public Class frmMain
 
 
     End Sub
+
+    Private Sub frmMain_CursorChanged(sender As Object, e As EventArgs) Handles Me.CursorChanged
+
+    End Sub
+
+    Private Sub BarButtonItem1_OrderItemsMatchingEBooks_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_OrderItemsMatchingEBooks.ItemClick
+        'Dead...do not use...not sure why it is here
+    End Sub
+
+    Private Sub BarButtonItem1_OrderItemMatchingEBooks_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_OrderItemMatchingEBooks.ItemClick
+
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim sBHPONumber As String
+
+
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        sBHPONumber = oRow.Item("BHPONumber").ToString()
+
+        Dim oForm As New frmOrderItemsMatchingEBooks
+
+        With oForm
+            .BHPONumber = sBHPONumber
+            .oOrderID = oOrderID
+            .LabelControl1.Text = .LabelControl1.Text & " - " & sBHPONumber
+            .Show()
+        End With
+
+    End Sub
+
+    Private Sub BarButtonItem1_LabelsOrderItems_10_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_LabelsOrderItems_10.ItemClick
+
+        Dim oOrderID As Guid
+        Dim selectedRowHandles As Int32() = GridView1.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim sFile As String
+        Dim oOrderPartners As DataTable
+        Dim oSelectedPartners As List(Of DataRowView)
+        Dim iPartnerCnt As Integer
+        Dim iPartnerID As Integer
+        Dim sPartnerName As String
+        Dim sBHPONumber As String
+
+
+        If selectedRowHandles.Count <> 1 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+        selectedRowHandle = selectedRowHandles(0)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+
+
+        'oRow.Item("OrderID").ToString()
+        oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+        sBHPONumber = oRow.Item("BHPONumber").ToString()
+
+        oOrderPartners = GetPartnersInOrder(oOrderID.ToString)
+
+        iPartnerCnt = oOrderPartners.Rows.Count
+
+        Dim oSelectPartners As New frmOrderPublishersSelect
+
+        If iPartnerCnt > 1 Then
+            With oSelectPartners
+                .oOrderID = oOrderID
+                .oOrderPartners = oOrderPartners
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+
+                If .bCanceled = True Then Exit Sub
+                oSelectedPartners = .oPartnersSelected
+            End With
+
+            iPartnerCnt = oSelectedPartners.Count
+
+        Else
+
+
+        End If
+
+
+        Dim sTempSQL As String = "SELECT DISTINCT * FROM omqryMatchingOrderItemEBooks WHERE orderid='{OrderID}' and PartnerID={PartnerID} Order BY ItemDesc ASC"
+        Dim sSQL As String
+
+        Select Case iPartnerCnt
+
+            Case 0
+
+
+            Case 1
+                iPartnerID = oOrderPartners.Rows(0).Item("PartnerID")
+                sPartnerName = oOrderPartners.Rows(0).Item("PublisherShortName").ToString
+                sSQL = sTempSQL.Replace("{OrderID}", oOrderID.ToString)
+                sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
+                ShowPartnerLabels10(sSQL, sBHPONumber, sPartnerName)
+
+            Case Else
+                For Each oDataRowView In oSelectedPartners
+                    iPartnerID = oDataRowView.Row.Item("PartnerID")
+                    sPartnerName = oDataRowView.Row.Item("PublisherShortName")
+
+                    sSQL = sTempSQL.Replace("{OrderID}", oOrderID.ToString)
+                    sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
+                    ShowPartnerLabels10(sSQL, sBHPONumber, sPartnerName)
+
+
+                Next
+        End Select
+
+
+
+
+    End Sub
+
+    Private Sub ShowPartnerLabels10(sSQL As String, sBHPONumber As String, sPublisherShortName As String)
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        Dim iCount As Integer
+        Dim sName As String
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+        da.Fill(ds)
+        oConnection.Close()
+
+        sName = sPublisherShortName & "_" & sBHPONumber & "_Labels10"
+
+
+        'Dim report As New XtraReport1_10Labels()
+        Dim report As New XtraReport1_Label10_2
+
+
+
+        report.DataSource = ds.Tables(0)
+        report.DataMember = "selectQuery" ' This line is critical or you only get 1 page
+        report.CreateDocument(False)
+
+        report.DisplayName = sName
+
+
+        Dim pdfOptions As PdfExportOptions = report.ExportOptions.Pdf
+        With pdfOptions
+            .DocumentOptions.Title = "Test 2"
+
+
+        End With
+
+        Dim rpt As New ReportPrintTool(report)
+        Dim oReportViewer As New frmReportViewer
+
+        With oReportViewer
+            .Text = sName
+            .DocumentViewer1.DocumentSource = report
+
+            .Show(Me)
+        End With
+        '  Using rpt As New ReportPrintTool(report)
+
+        'report.CreateDocumentAsync()
+        ''  AddHandler rpt.PreviewForm.Shown, AddressOf PreviewForm_Shown
+
+        'rpt.ShowPreview(Me, LookAndFeel.UserLookAndFeel.Default)
+        '  End Using
+    End Sub
+
 End Class

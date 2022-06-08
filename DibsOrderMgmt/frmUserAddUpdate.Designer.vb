@@ -41,6 +41,11 @@ Partial Class frmUserAddUpdate
         Me.txtLast = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtFirst = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtUserID = New System.Windows.Forms.TextBox()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'cmdToggleGeneric
@@ -85,11 +90,11 @@ Partial Class frmUserAddUpdate
         '
         'txtDistrictID
         '
-        Me.txtDistrictID.Enabled = False
         Me.txtDistrictID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtDistrictID.Location = New System.Drawing.Point(392, 163)
         Me.txtDistrictID.Name = "txtDistrictID"
-        Me.txtDistrictID.Size = New System.Drawing.Size(191, 26)
+        Me.txtDistrictID.ReadOnly = True
+        Me.txtDistrictID.Size = New System.Drawing.Size(234, 26)
         Me.txtDistrictID.TabIndex = 33
         '
         'Label8
@@ -104,11 +109,11 @@ Partial Class frmUserAddUpdate
         '
         'txtSchoolID
         '
-        Me.txtSchoolID.Enabled = False
         Me.txtSchoolID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSchoolID.Location = New System.Drawing.Point(90, 163)
         Me.txtSchoolID.Name = "txtSchoolID"
-        Me.txtSchoolID.Size = New System.Drawing.Size(191, 26)
+        Me.txtSchoolID.ReadOnly = True
+        Me.txtSchoolID.Size = New System.Drawing.Size(212, 26)
         Me.txtSchoolID.TabIndex = 31
         '
         'Label6
@@ -224,11 +229,47 @@ Partial Class frmUserAddUpdate
         Me.txtFirst.TabIndex = 19
         Me.txtFirst.Text = "Brain Hive"
         '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(11, 207)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(64, 20)
+        Me.Label9.TabIndex = 39
+        Me.Label9.Text = "UserID:"
+        '
+        'txtUserID
+        '
+        Me.txtUserID.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUserID.Location = New System.Drawing.Point(91, 207)
+        Me.txtUserID.Name = "txtUserID"
+        Me.txtUserID.ReadOnly = True
+        Me.txtUserID.Size = New System.Drawing.Size(263, 26)
+        Me.txtUserID.TabIndex = 38
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 428)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(800, 22)
+        Me.StatusStrip1.TabIndex = 40
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(0, 17)
+        '
         'frmUserAddUpdate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.txtUserID)
         Me.Controls.Add(Me.cmdToggleGeneric)
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmdAddUpdate)
@@ -250,6 +291,8 @@ Partial Class frmUserAddUpdate
         Me.Controls.Add(Me.txtFirst)
         Me.Name = "frmUserAddUpdate"
         Me.Text = "frmUserAddUpdate"
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -274,4 +317,8 @@ Partial Class frmUserAddUpdate
     Friend WithEvents txtLast As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents txtFirst As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtUserID As TextBox
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 End Class

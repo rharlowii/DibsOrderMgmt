@@ -11,6 +11,7 @@ Public Class frmEBookSalesAdd
 
     Private Sub frmEBookSalesAdd_Load(sender As Object, e As EventArgs) Handles Me.Load
         InitAddEBookByISBNFreeForm()
+
     End Sub
 
     Public Sub InitAddEBookByISBNFreeForm()
@@ -28,6 +29,7 @@ Public Class frmEBookSalesAdd
 
         End With
         'oWorkSheet.Range.FromLTRB(1, 0, 1, 0)
+        oWorkSheet.Columns("A").NumberFormat = "#####"
 
         With oWorkSheet.Range("B1")
             .Value = "Pub ID (Not Required)"

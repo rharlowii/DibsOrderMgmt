@@ -1,11 +1,16 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.IO.Compression
+Imports DevExpress
+Imports DevExpress.Export.Xl
+Imports DevExpress.Spreadsheet
 Imports DevExpress.Utils
 Imports DevExpress.XtraBars
+Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class frmEBookMGMT
+    Public DiBSBooksTabClickedOnce As Boolean = False
 
     Private Sub frmEBookMGMT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SetConnection()
@@ -14,6 +19,7 @@ Public Class frmEBookMGMT
         LoadStates2()
         LoadDisctricts2()
         LoadLines()
+        InitAddByISBNFreeForm()
 
 
         'If bExistingOrder = True Then
@@ -208,6 +214,9 @@ Public Class frmEBookMGMT
     End Sub
 
     Private Sub cmdGetSchoolUsers_Click(sender As Object, e As EventArgs) Handles cmdGetSchoolUsers.Click
+        LoadSchoolUsers()
+    End Sub
+    Private Sub LoadSchoolUsers()
         Dim sSQL As String
 
         If cmbSchools2.EditValue.ToString.Length > 0 Then
@@ -747,37 +756,15 @@ NotSchoolID:
     End Sub
 
     Private Sub cmdViewerForSchool_Click(sender As Object, e As EventArgs) Handles cmdViewerForSchool.Click
-        ' cmbViewerBrand
-        Dim sSQL As String
-        Dim sViewerBrand As String
         Dim sViewerURLTEMP As String
+        Dim sSQL As String
         Dim sSchoolID As String
         Dim sSchoolDistrictID
-        sViewerBrand = cmbViewerBrand.Text
         sSchoolID = txtSchoolID.Text
         sSchoolDistrictID = txtDistrictID.Text
 
 
-        Select Case sViewerBrand
-            Case "Brain Hive"
-                sViewerURLTEMP = "https://brainhive-viewer.digitalbookroom.com/#/login/?SchoolID="
-
-            Case "Pacific"
-                sViewerURLTEMP = "https://pacificlearning.digitalbookroom.com/#/login/?SchoolID="
-
-            Case "Rourke"
-                sViewerURLTEMP = "https://rourke.digitalbookroom.com/#/login/?SchoolID="
-
-            Case "Crabtree"
-                sViewerURLTEMP = "https://crabtree.digitalbookroom.com/#/login/?SchoolID="
-
-            Case "DiBS"
-                sViewerURLTEMP = "https://viewer.digitalbookroom.com/#/login/?SchoolID="
-
-        End Select
-
-
-
+        sViewerURLTEMP = GetViewerTempURL()
 
         If cmbSchools2.EditValue.ToString.Length > 0 Then
 
@@ -817,12 +804,43 @@ NotSchoolID:
         End With
 
     End Sub
+    Private Function GetViewerTempURL() As String
 
+        ' cmbViewerBrand
+
+        Dim sViewerBrand As String
+        Dim sViewerURLTEMP As String
+
+        sViewerBrand = cmbViewerBrand.Text
+
+
+
+        Select Case sViewerBrand
+            Case "Brain Hive"
+                sViewerURLTEMP = "https://brainhive-viewer.digitalbookroom.com/#/login/?SchoolID="
+
+            Case "Pacific"
+                sViewerURLTEMP = "https://pacificlearning.digitalbookroom.com/#/login/?SchoolID="
+
+            Case "Rourke"
+                sViewerURLTEMP = "https://rourke.digitalbookroom.com/#/login/?SchoolID="
+
+            Case "Crabtree"
+                sViewerURLTEMP = "https://crabtree.digitalbookroom.com/#/login/?SchoolID="
+
+            Case "DiBS"
+                sViewerURLTEMP = "https://viewer.digitalbookroom.com/#/login/?SchoolID="
+
+        End Select
+
+        Return sViewerURLTEMP
+
+    End Function
     Private Sub BarButtonItem1_ViewBook_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ViewBook.ItemClick
         ShowEBook()
     End Sub
 
-    Private Sub ShowEBook()
+    Private Sub ShowEBook(Optional bAllEBooksTab As Boolean = False)
         Dim sContainerPath As String
         Dim sISBN As String
         Dim sFileName As String
@@ -830,15 +848,22 @@ NotSchoolID:
         Dim sZipFileName As String
         Dim seBookPath As String
 
-
+        Dim oCurrenteBookGridView As GridView
         'sISBN = "9781427199461"
         ' sFileName = sISBN & ".zip"
         ' sOutPath = "Z:\test\temp"
         ' sContainerPath = "books/BrainHive_Partners/Crabtree/Batch4/" & sISBN & "/"
 
+        If bAllEBooksTab = False Then
+            'School Books
+            oCurrenteBookGridView = GridView3
+        Else
+            'All eBooks
+            oCurrenteBookGridView = GridView2
+        End If
 
         Dim oEditOrderID As Guid
-        Dim selectedRowHandles As Int32() = GridView3.GetSelectedRows()
+        Dim selectedRowHandles As Int32() = oCurrenteBookGridView.GetSelectedRows()
         Dim selectedRowHandle As Int32
         Dim oRow As DataRow
 
@@ -853,7 +878,7 @@ NotSchoolID:
             End If
             selectedRowHandle = selectedRowHandles(0)
 
-            oRow = GridView3.GetDataRow(selectedRowHandle)
+            oRow = oCurrenteBookGridView.GetDataRow(selectedRowHandle)
 
 
             sISBN = oRow.Item("ISBN").ToString()
@@ -890,7 +915,7 @@ NotSchoolID:
         End Try
     End Sub
 
-    Private Sub ShowBookCover(oPoint As Point)
+    Private Sub ShowBookCover(oPoint As Point, Optional bAllEBooksTab As Boolean = False)
         Dim oEditOrderID As Guid
         Dim selectedRowHandle As Int32
         Dim selectedRowHandles As Int32()
@@ -900,13 +925,22 @@ NotSchoolID:
         Dim info As ToolTipControlInfo = Nothing
         Dim sTooltip1 As New SuperToolTip()
 
+        Dim oCurrenteBookGridView As GridView
 
 
-        selectedRowHandles = GridView3.GetSelectedRows()
+        If bAllEBooksTab = False Then
+            'School Books
+            oCurrenteBookGridView = GridView3
+        Else
+            'All eBooks
+            oCurrenteBookGridView = GridView2
+        End If
+
+        selectedRowHandles = oCurrenteBookGridView.GetSelectedRows()
         selectedRowHandle = selectedRowHandles(0)
         'oRow = GridView1.GetDataRow(selectedRowHandle)
 
-        oRow = GridView3.GetDataRow(selectedRowHandle)
+        oRow = oCurrenteBookGridView.GetDataRow(selectedRowHandle)
         sOfficalImage = oRow.Item("OfficialImage").ToString()
 
 
@@ -928,7 +962,63 @@ NotSchoolID:
         ToolTipController1.ShowHint(args, oPoint)
 
     End Sub
+    Private Sub ReplaceBookCover(Optional bAllEBooksTab As Boolean = False)
+        Dim oEditOrderID As Guid
+        Dim selectedRowHandle As Int32
+        Dim selectedRowHandles As Int32()
 
+        Dim oRow As DataRow
+        Dim sOfficalImage As String
+        Dim info As ToolTipControlInfo = Nothing
+        Dim sTooltip1 As New SuperToolTip()
+        Dim sISBN As String
+        Dim sBookID As String
+        Dim sTitle As String
+
+
+        ' sd = New System.Drawing.Bitmap(New IO.MemoryStream(New System.Net.WebClient().DownloadData(sFileName)))
+        Dim oCurrenteBookGridView As GridView
+
+
+        If bAllEBooksTab = False Then
+            'School Books
+            oCurrenteBookGridView = GridView3
+        Else
+            'All eBooks
+            oCurrenteBookGridView = GridView2
+        End If
+        selectedRowHandles = oCurrenteBookGridView.GetSelectedRows()
+        If selectedRowHandles.Count > 1 Then
+
+            MsgBox("You must select 1 row")
+            Exit Sub
+
+        End If
+
+        selectedRowHandle = selectedRowHandles(0)
+        'oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        oRow = oCurrenteBookGridView.GetDataRow(selectedRowHandle)
+        sOfficalImage = oRow.Item("OfficialImage").ToString()
+
+        sBookID = oRow.Item("ID").ToString()
+        sTitle = oRow.Item("Title").ToString()
+        sISBN = oRow.Item("ISBN").ToString()
+
+        Dim oForm As New frmAddCoverToBook
+
+        With oForm
+            .txtBookID.Text = sBookID
+            .txtTitle.Text = sTitle
+            .txtISBN.Text = sISBN
+            .txtOfficalImageURL.Text = sOfficalImage
+            If sOfficalImage.Length > 0 Then
+                .PictureBox2.ImageLocation = sOfficalImage
+            End If
+
+            .Show()
+        End With
+    End Sub
     Private Sub BarButtonItem1_ViewCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ViewCover.ItemClick
         ShowBookCover(Me.Location)
     End Sub
@@ -959,6 +1049,21 @@ NotSchoolID:
 
         ' Dim myCommand As New SqlCommand(sSQL, oConnection)
 
+    End Sub
+    Private Sub LoadDiBSBooks()
+        Dim sSQL As String
+
+        sSQL = "SELECT Publishers.Name,Books.* from dbo.Books INNER JOIN dbo.Publishers ON Books.PublisherID = Publishers.ID"
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+        da.Fill(ds, "Books")
+        oConnection.Close()
+
+        gridDiBSBooks.DataSource = ds.Tables(0)
     End Sub
     Private Sub LoadCollections()
         lstvw_Collections.Items.Clear()
@@ -1212,5 +1317,857 @@ SKIPCollection:
 
         Next
 
+    End Sub
+
+    Private Sub XtraTabPage1_eBooks_VisibleChanged(sender As Object, e As EventArgs) Handles XtraTabPage1_eBooks.VisibleChanged
+        If DiBSBooksTabClickedOnce = False Then
+
+            LoadDiBSBooks()
+            DiBSBooksTabClickedOnce = True
+
+        End If
+    End Sub
+
+    Public Sub InitAddByISBNFreeForm()
+        Dim oWorkSheet As Spreadsheet.Worksheet
+
+
+        oWorkSheet = spreadAddFreeForm.ActiveWorksheet
+
+
+        With oWorkSheet.Range("A1")
+            .Value = "ISBN - eBook (Required)"
+            .Font.Bold = True
+            .Font.Size = 16
+            .ColumnWidth = 1000
+
+        End With
+
+        oWorkSheet.Columns("A").NumberFormat = "#####"
+        'oWorkSheet.Range.FromLTRB(1, 0, 1, 0)
+
+        With oWorkSheet.Range("B1")
+            .Value = "Title (Required)"
+            .Font.Bold = True
+            .Font.Size = 16
+            .ColumnWidth = 1000
+
+        End With
+
+        With oWorkSheet.Range("C1")
+            .Value = "Add Status #"
+            .Font.Bold = True
+            .Font.Size = 16
+            .ColumnWidth = 1000
+
+        End With
+
+        With oWorkSheet.Range("D1")
+            .Value = "Add Status MSG"
+            .Font.Bold = True
+            .Font.Size = 16
+            .ColumnWidth = 1000
+
+        End With
+
+        Dim range As CellRange = oWorkSheet("A1:F10000")
+        oWorkSheet.AutoFilter.Apply(range)
+
+
+
+    End Sub
+
+    Private Sub cmdAddOrderItemsFreeForm_Click(sender As Object, e As EventArgs) Handles cmdAddOrderItemsFreeForm.Click
+        Dim oWorkSheet As Spreadsheet.Worksheet
+        Dim iMaxRows As Integer = 10000
+        Dim oEBooksToAdd As New List(Of AddEbookToSchool)
+        Dim iBlankCount As Integer
+        Dim oEBookToAdd As AddEbookToSchool
+        Dim bBookAlreadyInSchool As Boolean
+        Dim sReturn As String
+
+        Dim iRow As Integer
+
+        Dim iMsgRtrn As DialogResult
+        Dim sMsg As String
+
+        Dim sItemNumberISBN As String
+        Dim sItemDesc As String
+        Dim sQTY As String
+        Dim sListPrice As String
+        Dim iEBookItemCount As Integer
+        Dim sSchoolName As String
+        Dim sSchoolID As String
+        Dim sBookID As String
+
+
+        Dim iPreviousRunStatus As OrderItemStatus
+        Dim sPreviousRunStatusText As String
+        Dim bRecordAlreadyAddPrevious As Boolean
+
+        oWorkSheet = spreadAddFreeForm.ActiveWorksheet
+
+        If Not cmbSchools2.EditValue Is Nothing Then
+            sSchoolID = cmbSchools2.EditValue.ToString
+            sSchoolName = cmbSchools2.Text.ToString
+
+        Else
+            MsgBox("You need To Select a school")
+            Exit Sub
+
+        End If
+
+
+        sMsg = "You are about to add 'eBooks' to the School: '" & sSchoolName & "' Are you sure you want to continue?"
+        iMsgRtrn = MessageBox.Show(sMsg, "Add eBooks to School?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+
+        If iMsgRtrn = DialogResult.No Then
+            Exit Sub
+
+        End If
+
+        For iRow = 2 To iMaxRows
+            oEBookToAdd = New AddEbookToSchool
+
+            sPreviousRunStatusText = oWorkSheet.Range("C" & iRow).Value.ToString()
+            bRecordAlreadyAddPrevious = False
+
+            If sPreviousRunStatusText = "" Then
+                'It is ok...we can 
+            Else
+
+
+            End If
+            With oEBookToAdd
+
+                sItemNumberISBN = RemoveHyphens(oWorkSheet.Range("A" & iRow).Value.ToString())
+                'Free...we need to set he Partner ID
+                .ISBN = sItemNumberISBN
+
+
+                If iBlankCount > 3 Then
+                    GoTo BlankCountMaxHit
+                End If
+
+                If sItemNumberISBN.Length = 0 Then
+                    iBlankCount = iBlankCount + 1
+
+                    'Since Free Form...no need to bail 
+                    'GoTo BlankRowHit
+                Else
+                    iBlankCount = 0
+                End If
+
+                sItemDesc = oWorkSheet.Range("B" & iRow).Value.ToString
+                .Title = sItemDesc
+
+                If sItemNumberISBN.Length = 10 Or sItemNumberISBN.Length = 13 Or chkIgnoreISBNCheckFree.Checked = True Then
+
+                    sBookID = GetBookIDByISBN(sItemNumberISBN)
+                    .BookID = sBookID
+
+                    If sBookID = "" Then
+                        .AddEbookStatus = AddBookToSchoolStatus.NotFoundInDB
+                        .AddEbookStatusText = "ISBN Not found in DiBS"
+                    Else
+
+                        'Need to see if the isbn has a ebook path
+                        If GetEBookPathByISBN(sItemNumberISBN) = "" Then
+                            .MissingEBookPath = True
+                            .AddEbookStatus = AddBookToSchoolStatus.MissingEBookPath
+                            .AddEbookStatusText = "Missing EBook Path"
+                        Else
+                            .AddEbookStatus = AddBookToSchoolStatus.FoundInDB
+                            .AddEbookStatusText = "Found in DB"
+                        End If
+
+
+                    End If
+
+
+                Else
+                    .AddEbookStatus = AddBookToSchoolStatus.InValidISBN
+                    .AddEbookStatusText = "InValid ISBN"
+
+                End If
+
+
+
+
+            End With
+
+
+
+            oEBooksToAdd.Add(oEBookToAdd)
+BlankRowHit:
+        Next
+BlankCountMaxHit:
+
+
+        'Lets add the items that we can
+
+        For Each moEBookToAdd In oEBooksToAdd
+            iEBookItemCount = iEBookItemCount + 1
+
+            sBookID = ""
+            If moEBookToAdd.AddEbookStatus = AddBookToSchoolStatus.InValidISBN Or moEBookToAdd.AddEbookStatus = AddBookToSchoolStatus.NotFoundInDB Then GoTo SkipInvalidISBNEmptyRow
+            sBookID = moEBookToAdd.BookID
+            'Check to see if book is already in school...is so then do NOT add
+
+            bBookAlreadyInSchool = IsBookAlreadyInSchool(sBookID, sSchoolID)
+            If bBookAlreadyInSchool = False Then
+                sReturn = Insert_SchoolBooks(sSchoolID, sBookID, False, "Bookroom", "e-Book")
+                If sReturn = "1" Then
+
+                    Select Case moEBookToAdd.AddEbookStatus
+                        Case AddBookToSchoolStatus.MissingEBookPath
+                            moEBookToAdd.AddEbookStatus = AddBookToSchoolStatus.AddedToSchoolMissingBookPath
+                            moEBookToAdd.AddEbookStatusText = "ISBN Added to School - But missing EBOOK Path"
+                        Case Else
+                            moEBookToAdd.AddEbookStatus = AddBookToSchoolStatus.AddedToSchoolNoIssues
+                            moEBookToAdd.AddEbookStatusText = "ISBN Added to School"
+                    End Select
+
+                Else
+
+                End If
+
+            Else
+                sReturn = "InSchoolAlready"
+                moEBookToAdd.AddEbookStatus = AddBookToSchoolStatus.BookAlreadyInSchool
+                moEBookToAdd.AddEbookStatusText = "ISBN already in School....NOT Inserted."
+
+            End If
+SkipInvalidISBNEmptyRow:
+
+
+            oWorkSheet.Range("C" & iEBookItemCount + 1).Value = moEBookToAdd.AddEbookStatus
+            oWorkSheet.Range("D" & iEBookItemCount + 1).Value = moEBookToAdd.AddEbookStatusText
+
+            'If moEBookToAdd.OrderItemStatus = OrderItemStatus.NoStaus Then
+
+            '    'ok...try and add to the Database
+            '    omOrderItems_IU_ALT(moOrderItem, oOrderID)
+
+
+            'End If
+
+            'If moOrderItem.OrderItemStatus <> 0 Then
+            '    oWorkSheet.Range("E" & iOrderItemCount + 1).Value = moOrderItem.OrderItemStatus
+            '    oWorkSheet.Range("F" & iOrderItemCount + 1).Value = moOrderItem.OrderItemStatusText
+
+            '    oWorkSheet.Range("E" & iOrderItemCount + 1).Fill.BackgroundColor = Color.MistyRose
+            '    oWorkSheet.Range("F" & iOrderItemCount + 1).Fill.BackgroundColor = Color.MistyRose
+            'Else
+            '    'Clear the text because it could be a rerun
+            '    oWorkSheet.Range("E" & iOrderItemCount + 1).Value = ""
+            '    oWorkSheet.Range("F" & iOrderItemCount + 1).Value = ""
+
+            '    oWorkSheet.Range("E" & iOrderItemCount + 1).Fill.BackgroundColor = Color.Empty
+            '    oWorkSheet.Range("F" & iOrderItemCount + 1).Fill.BackgroundColor = Color.Empty
+
+            'End If
+
+
+        Next
+
+
+
+
+
+    End Sub
+
+    Private Sub BarButtonItem1_ReplaceBookCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_ReplaceBookCover.ItemClick
+        ReplaceBookCover()
+
+
+    End Sub
+
+    Private Sub cmdUpLoadCoverImages_Click(sender As Object, e As EventArgs) Handles cmdUpLoadCoverImages.Click
+        Dim FileCnt As Integer = 0
+        Dim FolderCnt As Integer = 1
+        Dim sReturnAWSPath As String
+        Dim sISBN As String
+        Dim sFilepath As String
+
+        Dim sFilename As String
+        Dim x As Integer
+        Dim y As Integer
+        Dim pathFrom As String = ""
+        Dim pathTo As String = ""
+        Dim pathToDir As String = ""
+        Dim sCoverGuid As String
+        Dim sCoverFileName As String
+        Dim sCurrentOfficalImage As String
+        Dim sBookID As String
+        Dim sMessage As String
+        Dim bDoNotCopyIfImageAlreadyExists As Boolean
+
+
+        x = 0
+        y = 0
+
+
+        FileCnt = 0
+        FolderCnt = 1
+
+        Dim di As New IO.DirectoryInfo(txtUploadCoverImagesDir.Text)
+        Dim diar1 As IO.FileInfo() = di.GetFiles()
+        Dim dra As IO.FileInfo
+        Dim sFileText As String
+
+        sMessage = "Copy to Cover Images: " & Now() & vbCrLf
+
+        If chkIfBookImageExists.CheckState = CheckState.Checked Then
+            bDoNotCopyIfImageAlreadyExists = True
+
+        End If
+
+
+
+        'list the names of all files in the specified directory
+        For Each dra In diar1
+            sFilename = dra.ToString
+            If Path.GetExtension(sFilename) = ".jpg" Then
+
+                sFileText = ""
+                sFilepath = ""
+                sCoverGuid = ""
+                sCoverFileName = ""
+                sCurrentOfficalImage = ""
+
+
+
+
+                sISBN = sFilename.Replace(".jpg", "")
+
+                If sISBN.Length > 13 And chkUploadCoversIngonreISBN.Checked = False Then
+                    sISBN = sISBN.Remove(14, sISBN.Length)
+                End If
+
+                sBookID = GetBookIDByISBNOnly(sISBN)
+
+                If bDoNotCopyIfImageAlreadyExists = True And sBookID.Length > 0 Then
+                    sCurrentOfficalImage = GetOfficalImage(sISBN)
+                End If
+
+                If sCurrentOfficalImage.Length = 0 And sBookID.Length > 0 Then
+
+
+                    pathFrom = txtUploadCoverImagesDir.Text & "\" & sFilename
+                    sCoverGuid = Guid.NewGuid.ToString
+                    sCoverFileName = sCoverGuid & ".jpg"
+
+
+                    sReturnAWSPath = UploadFile_AWS_S3(pathFrom, sCoverFileName, "")
+
+                    If sReturnAWSPath.Length > 0 Then
+                        '  File.Move(pathFrom, pathTo)
+                        SetCoverImage(sISBN, sReturnAWSPath)
+                    End If
+
+                Else
+                    If sCurrentOfficalImage.Length > 0 And sBookID.Length > 0 Then
+                        sMessage = sMessage & sISBN & "," & sFilename & ", Image already set in DiBS." & vbCrLf
+                    Else
+                        sMessage = sMessage & sISBN & "," & sFilename & ", Could not set the cover image." & vbCrLf
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+
+
+        Dim oForm As New frmMessage
+
+        With oForm
+            .txtLog.Text = sMessage
+            .Show()
+        End With
+
+
+    End Sub
+
+    Private Sub GridView2_RowUpdated(sender As Object, e As RowObjectEventArgs) Handles GridView2.RowUpdated
+        'This is where you update the Database after updating the 
+        Dim rowView As DataRowView = TryCast(e.Row, DataRowView)
+        Dim row As DataRow = rowView.Row
+
+        Dim sGuidedReadingLevel As String
+        Dim sID As String
+
+
+        Dim iISFiction As Boolean
+
+        Dim sLEX As String
+
+        'Need to validate
+        With row
+            sID = .Item("ID").ToString
+            sGuidedReadingLevel = .Item("GuidedReadingLevel")
+            iISFiction = .Item("ISFiction")
+            sLEX = .Item("LEX").ToString
+        End With
+        'Update DB
+
+        UpdateBookMetaSimple(sID, sGuidedReadingLevel, iISFiction, sLEX)
+    End Sub
+
+
+    Private Function UpdateBookMetaSimple(ID As String, sGuidedReadingLevel As String, iISFiction As Integer, sLEX As String)
+
+        Dim sEXEC As String = "UPDATE dbo.Books SET GuidedReadingLevel = @GuidedReadingLevel,IsFiction = @IsFiction,LEX = @LEX WHERE ID = @ID"
+
+        Dim sReturn As String
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        With myCommand
+            .Parameters.Add("@ID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(ID.ToString)
+            .Parameters.Add("@GuidedReadingLevel", SqlDbType.NVarChar).Value = sGuidedReadingLevel
+            .Parameters.Add("@IsFiction", SqlDbType.Int).Value = iISFiction
+
+            .Parameters.Add("@LEX", SqlDbType.NVarChar).Value = sLEX
+
+
+
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+        oConnection.Close()
+
+        Return sReturn
+    End Function
+
+    Private Sub cmdClearOrderItemsFreeForm_Click(sender As Object, e As EventArgs) Handles cmdClearOrderItemsFreeForm.Click
+        spreadAddFreeForm.ActiveWorksheet.Cells.Clear
+        InitAddByISBNFreeForm()
+    End Sub
+
+    Private Sub GridView1_MouseUp(sender As Object, e As MouseEventArgs) Handles GridView1.MouseUp
+        If e.Button = MouseButtons.Right Then
+            PopupMenu2.ShowPopup(Control.MousePosition)
+        End If
+    End Sub
+
+    Private Sub BarButtonItem1_AddNewUser_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_AddNewUser.ItemClick
+        Dim oForm As New frmUserAddUpdate
+
+        With oForm
+            .txtDistrictID.Text = txtDistrictID.Text
+            .txtSchoolID.Text = txtSchoolID.Text
+
+            .ShowDialog()
+
+        End With
+
+        LoadSchoolUsers()
+    End Sub
+
+    Private Sub BarButtonItem1_EditUser_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1_EditUser.ItemClick
+
+
+        Dim oForm As New frmUserAddUpdate
+        Dim oEditOrderID As Guid
+        Dim selectedRowHandle As Int32
+        Dim selectedRowHandles As Int32()
+
+        Dim oRow As DataRow
+        Dim oUser As New UserAccount
+
+
+
+        ' sd = New System.Drawing.Bitmap(New IO.MemoryStream(New System.Net.WebClient().DownloadData(sFileName)))
+
+        selectedRowHandles = GridView1.GetSelectedRows()
+        If selectedRowHandles.Count <> 1 Then
+
+            MsgBox("You must select only 1 row")
+            Exit Sub
+
+        End If
+
+        selectedRowHandle = selectedRowHandles(0)
+        'oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        oRow = GridView1.GetDataRow(selectedRowHandle)
+
+        With oRow
+            oUser.ID = oRow.Item("ID").ToString()
+            oUser.First = oRow.Item("First").ToString()
+            oUser.Last = oRow.Item("Last").ToString()
+            oUser.LoginID = oRow.Item("LoginID").ToString()
+            oUser.RoleID = oRow.Item("RoleID").ToString()
+
+
+        End With
+
+        With oForm
+            .oUserAccount = oUser
+            .txtLoginID.Text = oUser.LoginID
+            .txtFirst.Text = oUser.First
+            .txtLast.Text = oUser.Last
+            .txtDistrictID.Text = txtDistrictID.Text
+            .txtSchoolID.Text = txtSchoolID.Text
+            .txtUserID.Text = oUser.ID.ToString
+            .cmbRole.SelectedValue = oUser.RoleID
+            .txtPassword.Text = "" 'Clear One Way encryption
+
+            .ShowDialog()
+
+        End With
+
+        LoadSchoolUsers()
+
+
+
+    End Sub
+
+    Private Sub GridView2_MouseUp(sender As Object, e As MouseEventArgs) Handles GridView2.MouseUp
+        If e.Button = MouseButtons.Right Then
+            PopupMenu3.ShowPopup(Control.MousePosition)
+        End If
+    End Sub
+
+
+
+    Private Sub BarButtonItem4_ViewBook_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem4_ViewBook.ItemClick
+        ShowEBook(True)
+    End Sub
+
+    Private Sub BarButtonItem4_ViewCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem4_ViewCover.ItemClick
+        ShowBookCover(Me.Location, True)
+    End Sub
+
+    Private Sub BarButtonItem4_ReplaceBookCover_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem4_ReplaceBookCover.ItemClick
+        ReplaceBookCover(True)
+    End Sub
+
+    Private Sub cmdloadAddBookFile_Click(sender As Object, e As EventArgs) Handles cmdloadAddBookFile.Click
+        With XtraOpenFileDialog1
+            .ShowDialog()
+            txtAddBookFileNae.Text = .FileName
+
+        End With
+
+        Dim filePath As String = txtAddBookFileNae.Text
+        Dim directory As String = Path.GetDirectoryName(filePath)
+        Dim sFileName As String = Path.GetFileName(filePath)
+        Dim dt As New DataTable
+
+        txtAddBookFileNae.Text = filePath
+        'LoadExcelFileISBN2(txtFilename.Text)
+        dt = GetCsvData(directory, sFileName)
+        dgv_ImportAddBookMeta.DataSource = Nothing
+
+        With dgv_ImportAddBookMeta
+            .DataSource = dt
+
+        End With
+    End Sub
+
+    Private Sub cmdAddBookMeta_Click(sender As Object, e As EventArgs) Handles cmdAddBookMeta.Click
+        Dim sTAGName As String
+        Dim iPublisherColIndex As Integer = 0
+        Dim sPublisherText As String
+        Dim iISBNColIndex As Integer = 1
+        Dim sISBNColText As String
+        Dim iTitleCol As Integer = 2
+        Dim sTitleText As String
+        Dim iDescCol As Integer = 3
+        Dim sDescText As String
+        Dim iFNFCol As Integer = 4
+        Dim sFNFText As String
+        Dim iGRLCol As Integer = 5
+        Dim sGRLText As String
+        Dim iATOSCol As Integer = 6
+        Dim sATOSText As String
+        Dim iLEXCol As Integer = 7
+        Dim sLEXText As String
+        Dim iTAGColIndex As Integer = 8
+        Dim sTagText As String
+        Dim sPubliserherID As String
+        Dim sPublisherName As String
+        Dim oPublisherGuid As System.Guid
+
+        Dim sRtrnMsg As String
+
+        Dim bAddTAGS As Boolean
+        Dim bAddTAGSIfDoesNotExist As Boolean
+
+        Dim iSelected As Integer
+        Dim bTagAlreadyonBook As Boolean
+        Dim sTagType As String
+
+
+        Dim sISBN As String
+
+
+        Dim iRtrn As Integer
+        Dim iRowCnt As Integer
+        Dim sMessage As String
+        Dim bAddBookMetaData As Boolean
+        Dim bUpdateBookMetaData As Boolean
+        Dim bUpdateNotInsert As Boolean
+
+        Dim sReturnTag As String
+
+        Dim sQuantityType As String
+
+
+
+        iRowCnt = dgv_ImportAddBookMeta.RowCount
+
+        If chkAddBookSimulation.CheckState = CheckState.Checked Then
+            bAddBookMetaData = False
+        Else
+            bAddBookMetaData = True
+
+        End If
+
+        If chkUpdateMetaData.CheckState = CheckState.Checked Then
+            bUpdateBookMetaData = True
+        Else
+            bUpdateBookMetaData = False
+
+        End If
+
+        If iRowCnt > 0 Then
+            iRtrn = MsgBox("You are about to import '" & iRowCnt & "' ISBNs in the Books Table. Are you sure you want to continue?", MsgBoxStyle.YesNo)
+        Else
+            MsgBox("You need to load a ISBN CSV file to import.")
+            Exit Sub
+        End If
+
+
+
+        If bAddBookMetaData = True Then
+            sMessage = sMessage & "ISBNs Import to Books Table " & iRowCnt & " " & Now() & vbCrLf & vbCrLf
+        Else
+            sMessage = sMessage & "ISBNs Import Simulation for " & cmbSchools2.Text & ". NO RECORDS will be imported!: " & Now() & vbCrLf & vbCrLf
+        End If
+
+
+        Dim oRow As DataRow
+
+        Dim sReturn As String
+        Dim iErrorCnt As Integer
+        Dim iSuccessCnt As Integer
+        Dim sBookID As String
+
+        Dim bBookAlreadyInSchool As Boolean
+
+
+
+
+
+
+
+
+
+        For Each oRow In dgv_ImportAddBookMeta.DataSource.rows
+            bBookAlreadyInSchool = False
+
+            sPublisherName = oRow.Item(iPublisherColIndex).ToString
+
+            If Guid.TryParse(sPublisherName, oPublisherGuid) Then
+                sPubliserherID = sPublisherName
+            Else
+                sPubliserherID = GetPublisherIDByName(sPublisherName)
+            End If
+
+            If sPubliserherID = "" Then
+                ' MsgBox("No Publisher")
+
+                sMessage = sMessage & sISBN & "," & sPublisherName & " for this ISBN Not found in DiBS" & vbCrLf
+                iErrorCnt = iErrorCnt + 1
+                GoTo NextRow
+
+            End If
+
+
+            If chkAddBookMeta_SkipISBNCheck.Checked = False Then
+                sISBN = RemoveHyphens(oRow.Item(iISBNColIndex).ToString)
+            Else
+                sISBN = oRow.Item(iISBNColIndex).ToString
+            End If
+
+
+            If sISBN.Length = 10 Or sISBN.Length = 13 Or chkAddBookMeta_SkipISBNCheck.Checked = True Then
+
+                bUpdateNotInsert = False
+
+                sBookID = GetBookIDByISBN(sISBN)
+
+                If sBookID = "" Or bUpdateBookMetaData = True Then
+
+                    If sBookID <> "" And bUpdateBookMetaData = True Then
+                        'Book exist, we are going to do a update...and not a add
+                        bUpdateNotInsert = True
+                    Else
+                        'new Book to insert need new book id
+                        sBookID = Guid.NewGuid.ToString
+                    End If
+                    'Book Meta Data no
+
+                    sTitleText = oRow.Item(iTitleCol).ToString
+                    sDescText = oRow.Item(iDescCol).ToString
+                    sFNFText = oRow.Item(iFNFCol).ToString
+                    sGRLText = oRow.Item(iGRLCol).ToString
+                    sATOSText = oRow.Item(iATOSCol).ToString
+                    sLEXText = oRow.Item(iLEXCol).ToString
+                    sTagText = oRow.Item(iTAGColIndex).ToString
+                    'Make sure there is no Characters
+                    sLEXText = CleanLex(sLEXText)
+
+                    If bAddBookMetaData = True Then
+
+                        'added last...Do you update or insert
+
+                        If bUpdateNotInsert = True Then
+                            sReturn = UpdateBookMetaByISBN(sPubliserherID, sISBN, sTitleText, sDescText, sFNFText, sGRLText, sATOSText, sLEXText, sBookID)
+                            sMessage = sMessage & sISBN & "," & "ISBN UPDATED IN Books" & vbCrLf
+                        Else
+                            sReturn = AddBookMetaByISBN(sPubliserherID, sISBN, sTitleText, sDescText, sFNFText, sGRLText, sATOSText, sLEXText, sBookID)
+                        End If
+
+                    Else
+                        sMessage = sMessage & "Would have tried to add: " & sPubliserherID & ", " & sISBN & ", " & sTitleText & ", " & sDescText & ", " & sFNFText & ", " & sGRLText & ", " & sATOSText & ", " & sLEXText & ", " & sBookID & vbCrLf
+
+                    End If
+
+                    If sReturn = "1" Then
+                        sMessage = sMessage & sISBN & "," & "ISBN added to Books" & vbCrLf
+                        iSuccessCnt = iSuccessCnt + 1
+
+
+
+                    Else
+                        sMessage = sMessage & sISBN & "," & "ISBN NOT Added to Books" & vbCrLf
+                        iErrorCnt = iErrorCnt + 1
+                    End If
+
+                    sReturnTag = AddTagByBookID(sBookID, sISBN, sTagText, "National", sRtrnMsg)
+                    sMessage = sMessage & sRtrnMsg & vbCrLf
+
+                Else
+                    ' MsgBox("Found a match")
+                    sMessage = sMessage & sISBN & "," & "ISBN Already in DiBS" & vbCrLf
+                    iSuccessCnt = iSuccessCnt + 1
+                    GoTo NextRow
+
+                End If
+
+
+            End If
+
+
+NextRow:
+
+        Next
+        '  sReturn = Insert_Collection(sSchoolID, sLineID, sItemNumber, iISSixPack)
+        sMessage = sMessage & iSuccessCnt & ": Books Added" & vbCrLf
+        sMessage = sMessage & iErrorCnt & ": Books Add Failed" & vbCrLf
+
+
+        Dim oForm As New frmMessage
+
+        With oForm
+            .txtLog.Text = sMessage
+            .Show()
+        End With
+
+
+
+    End Sub
+
+    Private Sub cmdGenerateWelcomeEmail_Click(sender As Object, e As EventArgs) Handles cmdGenerateWelcomeEmail.Click
+        Dim sWelcomeEmailTempFilePath As String
+        Dim sBodyTemp As String
+        Dim sSchoolDirectURL As String
+        Dim sSchoolName As String
+        Dim sTempFile As String
+        Dim oAttachment As New MailItemAttachement
+        Dim oAttachments As New List(Of MailItemAttachement)
+        Dim sViewerBrand As String
+        Dim sViewerURLTemp As String
+        Dim sSchoolID As String
+        Dim sSchoolDistrictID
+
+        Dim sSubjectTemp As String
+
+        If cmbSchools2.EditValue.ToString.Length > 0 Then
+            'Do nothing...you have a school
+
+        Else
+            MsgBox("You need To Select a school")
+            Exit Sub
+
+        End If
+
+
+        sSchoolID = txtSchoolID.Text
+        sSchoolDistrictID = txtDistrictID.Text
+
+
+        sViewerBrand = cmbViewerBrand.Text
+        sViewerURLTemp = GetViewerTempURL()
+
+        sSchoolDirectURL = sViewerURLTemp & sSchoolID
+
+        sSchoolName = cmbSchools2.Text
+
+
+
+        Select Case sViewerBrand
+            Case "Pacific"
+                sWelcomeEmailTempFilePath = HiveTemplatePath & "WelcomeEmail.html"
+                sTempFile = HiveTemplatePath & "BH_logo_new_lockup_vertical_small.jpg"
+                sBodyTemp = GetTextFromFile(sWelcomeEmailTempFilePath)
+                sBodyTemp = sBodyTemp.Replace("{SchoolDirectURL}", sSchoolDirectURL)
+                sBodyTemp = sBodyTemp.Replace("{SchoolName}", sSchoolName)
+
+
+                sSubjectTemp = "Welcome to Brain Hive, all your included e-Books have been loaded into your account ({SchoolName})"
+                sSubjectTemp = sSubjectTemp.Replace("{SchoolName}", sSchoolName)
+
+                oAttachment.FilePath = sTempFile
+                oAttachment.FileName = "BH_logo_new_lockup_vertical_small.jpg"
+                oAttachments.Add(oAttachment)
+            Case Else
+                sWelcomeEmailTempFilePath = HiveTemplatePath & "WelcomeEmail.html"
+                sTempFile = HiveTemplatePath & "BH_logo_new_lockup_vertical_small.jpg"
+                sBodyTemp = GetTextFromFile(sWelcomeEmailTempFilePath)
+                sBodyTemp = sBodyTemp.Replace("{SchoolDirectURL}", sSchoolDirectURL)
+                sBodyTemp = sBodyTemp.Replace("{SchoolName}", sSchoolName)
+
+
+                sSubjectTemp = "Welcome to Brain Hive, all your included e-Books have been loaded into your account ({SchoolName})"
+                sSubjectTemp = sSubjectTemp.Replace("{SchoolName}", sSchoolName)
+
+                oAttachment.FilePath = sTempFile
+                oAttachment.FileName = "BH_logo_new_lockup_vertical_small.jpg"
+                oAttachments.Add(oAttachment)
+        End Select
+
+
+
+
+        Dim oBHMailItem As New BHMailItem
+
+        With oBHMailItem
+            .EmailType = BHEmailTypes.CustWelcomeEmail
+            .Subject = sSubjectTemp
+            .Body = sBodyTemp
+            .Attachments = oAttachments
+        End With
+        CreateBHMailItem(oBHMailItem)
     End Sub
 End Class

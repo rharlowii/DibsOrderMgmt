@@ -114,7 +114,7 @@ Public Class frmOrderItems
             .LabelControl1.Text = .LabelControl1.Text & " - " & BHPONumber
             .oOrderID = oOrderID
 
-            .ShowDialog()
+            .Show(Me)
 
         End With
 
@@ -203,6 +203,8 @@ Public Class frmOrderItems
 
         Return sReturn
     End Function
+
+
 
 
 
@@ -475,4 +477,194 @@ Public Class frmOrderItems
     Private Sub gridOrderItems_Click(sender As Object, e As EventArgs) Handles gridOrderItems.Click
 
     End Sub
+
+    Private Sub cmdSendMissingItems_Click(sender As Object, e As EventArgs) Handles cmdSendMissingItems.Click
+        Dim oOrderID As Guid
+        'Gridview3 is Pub Invoices
+        Dim oOrderItemsView As GridView
+
+        oOrderItemsView = Gridview1
+        Dim selectedRowHandles As Int32() = oOrderItemsView.GetSelectedRows()
+        Dim selectedRowHandle As Int32
+        Dim oRow As DataRow
+        Dim oDataRowView As DataRowView
+        Dim iSelectedRowsCount As Integer
+        Dim oMissingItems As New List(Of MissingItem)
+        Dim oMissingItemsDataTable As New DataTable
+
+        Dim oMissingItem As MissingItem
+
+        Dim sLastPublisher As String
+        Dim sDifferentPubs As String
+
+
+        If selectedRowHandles.Count = 0 Then
+            MsgBox("Must select 1 Row")
+            Exit Sub
+        End If
+
+        sLastPublisher = ""
+        For Each selectedRowHandle In selectedRowHandles
+            'selectedRowHandle = selectedRowHandles(0)
+            'Gridview3 is Pub Invoices
+            oRow = oOrderItemsView.GetDataRow(selectedRowHandle)
+
+            oOrderID = Guid.Parse(oRow.Item("OrderID").ToString())
+            oMissingItem = New MissingItem
+
+            With oRow
+                oMissingItem.OrderID = .Item("OrderID").ToString
+                oMissingItem.PartnerID = .Item("PartnerID").ToString
+                oMissingItem.BHPONumber = BHPONumber
+                oMissingItem.ItemNumber = .Item("ItemNumber").ToString
+                oMissingItem.ItemDesc = .Item("ItemDesc").ToString
+                oMissingItem.QTYMissing = .Item("QTYMissing").ToString
+                oMissingItem.PublisherName = .Item("PublisherShortName").ToString
+                'If .Item("DatePaid") Is DBNull.Value Then
+                '    'Want Date to be null
+                'Else
+                '    oPubInvoiceItem.DatePaid = .Item("DatePaid")
+                '    'Need to show msg and exit
+                '    MsgBox("You can not include existing paid Invoices. (" & oPubInvoiceItem.PublisherInvoiceNumber & ")",, "Error: Invoice already paid.")
+                '    Exit Sub
+                'End If
+
+
+
+
+                If sLastPublisher <> "" Then
+                    'Should mix different publishers when ACH Payment notice and marking as paid
+
+                    If oMissingItem.PublisherName <> sLastPublisher Then
+                        sDifferentPubs = oMissingItem.PublisherName & " / " & sLastPublisher
+                        MsgBox("You can NOT mark two differnt Publishers/Partners Invoices paid at the sametime. (" & sDifferentPubs & ")",, "Error: Differnt Pub Partners")
+                        Exit Sub
+
+                    End If
+                Else
+                    sLastPublisher = oMissingItem.PublisherName
+                End If
+
+            End With
+            oMissingItems.Add(oMissingItem)
+
+        Next
+
+
+        Dim sMSG As String
+        Dim iMissingItemsCount As Integer
+        Dim PaidDate As Date
+        Dim iMsgBoxResult As MsgBoxResult
+        Dim sRtrn As String
+
+
+
+        SendPubMissingItemsEmail(oMissingItems)
+
+
+
+
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub SendPubMissingItemsEmail(oMissingItems As List(Of MissingItem))
+
+        Dim moBHMailItem As New BHMailItem
+        Dim sTempFile As String
+        Dim oAttachments As New List(Of MailItemAttachement)
+        Dim oAttachment As New MailItemAttachement
+        Dim sBHPO As String
+        Dim oPartnerInfo As DataTable
+
+
+        Dim moDocTypes As New clsDibsOrderMgmt.OrderDocTypes
+        Dim sReturn As String
+
+
+        Dim sSubject As String
+        Dim sBody As String
+        Dim sOrderID As String
+        Dim mbNeedToUpdateMainGrid As Boolean
+        Dim sTOEmail As String
+        Dim sCCEmail As String
+        Dim iEmailType As BHEmailTypes
+        Dim iPartnerID As Integer
+        Dim PublisherName As String
+
+        Dim ToOrderContactEmail As String
+        Dim CCOrderContactEmail As String
+
+        iPartnerID = oMissingItems.Item(0).PartnerID
+
+        iEmailType = BHEmailTypes.PubMissingItemsEmail
+        oPartnerInfo = GetPartnerInfo(iPartnerID)
+        PublisherName = oPartnerInfo.Rows(0).Item("PublisherName").ToString
+
+        ToOrderContactEmail = oPartnerInfo.Rows(0).Item("ToOrderContactEmail").ToString
+        CCOrderContactEmail = oPartnerInfo.Rows(0).Item("CCOrderContactEmail").ToString
+
+        sSubject = PublisherName & ": Missing Items from: " & BHPONumber
+
+        sTOEmail = ToOrderContactEmail
+        sCCEmail = CCOrderContactEmail
+
+        sBody = "We are missing the following from : " & BHPONumber & "<br>"
+
+        sBody = sBody & BuildMissingItemTable(oMissingItems) & vbCrLf
+        sBody = sBody & "<br><br>Please let me know if you have any questions." & "<br>"
+
+        With moBHMailItem
+            .ToEmail = sTOEmail
+            '.ToEmail = sTOEmail
+            .CCEmail = sCCEmail & ";" & "rharlow@myedupartners.com"
+
+            .Subject = sSubject
+            .Body = sBody
+            .EmailType = iEmailType
+
+            ' SpreadsheetControl1.SaveDocument(sTempFile, DevExpress.Spreadsheet.DocumentFormat.Xlsx)
+            .Attachments = oAttachments
+            'SpreadsheetControl1.SaveDocument(DevExpress.Spreadsheet.DocumentFormat.Xlsx).ToString
+
+            '.OrderID = Guid.Parse(sOrderID)
+        End With
+        'Passing the bNeedToUpdateMainGrid by Ref
+        CreateBHMailItem(moBHMailItem)
+    End Sub
+
+    Private Function BuildMissingItemTable(oMissingItems As List(Of MissingItem)) As String
+
+        Dim sHTMLTable As String
+        Dim sRowText As String
+        Dim sRowTemp As String
+        Dim sCurrentRow As String
+        '&ldquo is Double Quote
+        sHTMLTable = "<table border='1'  width='50%' cellspacing=0 cellpadding=0><tr style='border:solid darkgray 1.0pt;background:lightgrey'>"
+        sHTMLTable = sHTMLTable.Replace("'", """")
+        sHTMLTable = sHTMLTable & "<td >Item Number</td><td>Item Desc</td><td>QTY Missing</td></tr>"
+        sRowTemp = "<tr> <td >{ItemNumber}</td><td>{ItemDesc}</td><td>{QTYMissing}</td></tr>"
+
+        For Each oMissingItem In oMissingItems
+            sCurrentRow = sRowTemp
+
+            With oMissingItem
+                sCurrentRow = sCurrentRow.Replace("{ItemNumber}", .ItemNumber)
+                sCurrentRow = sCurrentRow.Replace("{ItemDesc}", .ItemDesc)
+                sCurrentRow = sCurrentRow.Replace("{QTYMissing}", .QTYMissing)
+
+            End With
+
+            sHTMLTable = sHTMLTable & sCurrentRow & vbCrLf
+
+
+        Next
+
+        sHTMLTable = sHTMLTable & "</table>"
+
+        Return sHTMLTable
+
+    End Function
 End Class

@@ -45,12 +45,12 @@ Partial Class frmEBookMGMT
         Me.ID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PublisherID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.SchoolID = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colName = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.ISBN = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Title = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GuidedReadingLevel = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.LEX = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.IsFiction = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colName = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.OfficialImage = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.EBookPath = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.IsExternal = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -59,6 +59,7 @@ Partial Class frmEBookMGMT
         Me.CreateTime = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.BookSchoolsID = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.RepositoryItemDateEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemDateEdit()
+        Me.RepositoryItemTextEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.cmdDeleteSelectedBooks = New System.Windows.Forms.Button()
         Me.cmdGetSchoolBooks = New DevExpress.XtraEditors.SimpleButton()
@@ -94,7 +95,13 @@ Partial Class frmEBookMGMT
         Me.cmd_FileSelect2 = New System.Windows.Forms.Button()
         Me.txtFile_SchoolByISBN = New System.Windows.Forms.TextBox()
         Me.cmdAddBooksToSchool = New DevExpress.XtraEditors.SimpleButton()
-        Me.XtraOpenFileDialog1 = New DevExpress.XtraEditors.XtraOpenFileDialog(Me.components)
+        Me.XtraTabPage1_AddBookFreeForm = New DevExpress.XtraTab.XtraTabPage()
+        Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.chkIgnoreISBNCheckFree = New System.Windows.Forms.CheckBox()
+        Me.chk_AddBookToSchoolFree = New System.Windows.Forms.CheckBox()
+        Me.cmdClearOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
+        Me.cmdAddOrderItemsFreeForm = New DevExpress.XtraEditors.SimpleButton()
+        Me.spreadAddFreeForm = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
@@ -102,11 +109,37 @@ Partial Class frmEBookMGMT
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
         Me.BarButtonItem1_ViewBook = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem1_ViewCover = New DevExpress.XtraBars.BarButtonItem()
-        Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
-        Me.ToolTipController1 = New DevExpress.Utils.ToolTipController(Me.components)
-        Me.XtraTabPage1_AddBookFreeForm = New DevExpress.XtraTab.XtraTabPage()
+        Me.BarButtonItem3_ViewBook = New DevExpress.XtraBars.BarStaticItem()
+        Me.BarButtonItem1_ReplaceBookCover = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_EditUser = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1_AddNewUser = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem3_ViewCover = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem4_ViewBook = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem4_ViewCover = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem4_ReplaceBookCover = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.XtraTabPage1_CollectionsAdd = New DevExpress.XtraTab.XtraTabPage()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.XtraTabControl2 = New DevExpress.XtraTab.XtraTabControl()
+        Me.XtraTabPage1_AddCollectionsToSchool = New DevExpress.XtraTab.XtraTabPage()
+        Me.lstvw_Collections = New System.Windows.Forms.ListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtQuantityTypeCollection = New System.Windows.Forms.TextBox()
+        Me.cmd_AddCollections = New DevExpress.XtraEditors.SimpleButton()
+        Me.XtraTabPage1_AddItemsToCollection = New DevExpress.XtraTab.XtraTabPage()
+        Me.dgv_CollectionBooksImport = New System.Windows.Forms.DataGridView()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.cmdAddBooksToCollection = New System.Windows.Forms.Button()
+        Me.chkIgnoreISBNCollection = New System.Windows.Forms.CheckBox()
+        Me.chkAddToCollection = New System.Windows.Forms.CheckBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.cmbISBNCol2 = New System.Windows.Forms.ComboBox()
+        Me.cmdLoadCollectionBooks = New System.Windows.Forms.Button()
+        Me.txtCollectionsBooksFile = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.cmbIsSixPackCollection = New System.Windows.Forms.ComboBox()
@@ -115,30 +148,58 @@ Partial Class frmEBookMGMT
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtItemDescription = New System.Windows.Forms.TextBox()
         Me.txtItemNumber = New System.Windows.Forms.TextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.cmbCompanyCollections = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmbPublisherLine = New System.Windows.Forms.ComboBox()
-        Me.XtraTabControl2 = New DevExpress.XtraTab.XtraTabControl()
-        Me.XtraTabPage1_AddCollectionsToSchool = New DevExpress.XtraTab.XtraTabPage()
-        Me.Panel5 = New System.Windows.Forms.Panel()
-        Me.cmd_AddCollections = New DevExpress.XtraEditors.SimpleButton()
-        Me.XtraTabPage1_AddItemsToCollection = New DevExpress.XtraTab.XtraTabPage()
-        Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtQuantityTypeCollection = New System.Windows.Forms.TextBox()
-        Me.lstvw_Collections = New System.Windows.Forms.ListView()
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.chkIgnoreISBNCollection = New System.Windows.Forms.CheckBox()
-        Me.chkAddToCollection = New System.Windows.Forms.CheckBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.cmbISBNCol2 = New System.Windows.Forms.ComboBox()
-        Me.cmdLoadCollectionBooks = New System.Windows.Forms.Button()
-        Me.txtCollectionsBooksFile = New System.Windows.Forms.TextBox()
-        Me.cmdAddBooksToCollection = New System.Windows.Forms.Button()
-        Me.dgv_CollectionBooksImport = New System.Windows.Forms.DataGridView()
+        Me.XtraTabPage1_eBooks = New DevExpress.XtraTab.XtraTabPage()
+        Me.gridDiBSBooks = New DevExpress.XtraGrid.GridControl()
+        Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumn2 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn4 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn11 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn6 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn7 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn8 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemTextEdit2 = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
+        Me.GridColumn9 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn10 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
+        Me.GridColumn12 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn13 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn14 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn16 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.IsAudioAvailable = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.IsEPub = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn18 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemDateEdit3 = New DevExpress.XtraEditors.Repository.RepositoryItemDateEdit()
+        Me.RepositoryItemToggleSwitch1 = New DevExpress.XtraEditors.Repository.RepositoryItemToggleSwitch()
+        Me.XtraTabPage1_UploadeBookCovers = New DevExpress.XtraTab.XtraTabPage()
+        Me.chkIfBookImageExists = New System.Windows.Forms.CheckBox()
+        Me.chkUploadCoversIngonreISBN = New System.Windows.Forms.CheckBox()
+        Me.cmdUpLoadCoverImages = New System.Windows.Forms.Button()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.txtUploadCoverImagesDir = New System.Windows.Forms.TextBox()
+        Me.XtraTabPage1_AddEBookMeta = New DevExpress.XtraTab.XtraTabPage()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.cmdAddBookMeta = New System.Windows.Forms.Button()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.txtInstructions = New System.Windows.Forms.TextBox()
+        Me.cmdloadAddBookFile = New System.Windows.Forms.Button()
+        Me.chkUpdateMetaData = New System.Windows.Forms.CheckBox()
+        Me.chkAddBookMeta_SkipISBNCheck = New System.Windows.Forms.CheckBox()
+        Me.chkAddBookAddTag = New System.Windows.Forms.CheckBox()
+        Me.cmbAddBookTagType = New System.Windows.Forms.ComboBox()
+        Me.chkAddBookSimulation = New System.Windows.Forms.CheckBox()
+        Me.txtAddBookFileNae = New System.Windows.Forms.TextBox()
+        Me.dgv_ImportAddBookMeta = New System.Windows.Forms.DataGridView()
+        Me.XtraOpenFileDialog1 = New DevExpress.XtraEditors.XtraOpenFileDialog(Me.components)
+        Me.PopupMenu1 = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.ToolTipController1 = New DevExpress.Utils.ToolTipController(Me.components)
+        Me.PopupMenu2 = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.PopupMenu3 = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.cmdGenerateWelcomeEmail = New DevExpress.XtraEditors.SimpleButton()
         Me.Panel1.SuspendLayout()
         CType(Me.cmbSchools2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cmbDistricts2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -150,6 +211,7 @@ Partial Class frmEBookMGMT
         CType(Me.GridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RepositoryItemDateEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RepositoryItemDateEdit1.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
         Me.XtraTabPage2.SuspendLayout()
         CType(Me.gridSchoolUsers, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,18 +222,35 @@ Partial Class frmEBookMGMT
         Me.XtraTabPage1_AddByISBNFile.SuspendLayout()
         CType(Me.dgv_ImportBooksInSchool, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel4.SuspendLayout()
+        Me.XtraTabPage1_AddBookFreeForm.SuspendLayout()
+        Me.Panel7.SuspendLayout()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabPage1_CollectionsAdd.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
         CType(Me.XtraTabControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl2.SuspendLayout()
         Me.XtraTabPage1_AddCollectionsToSchool.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.XtraTabPage1_AddItemsToCollection.SuspendLayout()
-        Me.Panel6.SuspendLayout()
         CType(Me.dgv_CollectionBooksImport, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel6.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.XtraTabPage1_eBooks.SuspendLayout()
+        CType(Me.gridDiBSBooks, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemTextEdit2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateEdit3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateEdit3.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemToggleSwitch1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XtraTabPage1_UploadeBookCovers.SuspendLayout()
+        Me.XtraTabPage1_AddEBookMeta.SuspendLayout()
+        Me.Panel9.SuspendLayout()
+        Me.Panel8.SuspendLayout()
+        CType(Me.dgv_ImportAddBookMeta, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PopupMenu2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PopupMenu3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -179,6 +258,7 @@ Partial Class frmEBookMGMT
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.cmdGenerateWelcomeEmail)
         Me.Panel1.Controls.Add(Me.chkCreateViewerForAllDisitrictSchools)
         Me.Panel1.Controls.Add(Me.cmbViewerBrand)
         Me.Panel1.Controls.Add(Me.cmdViewerForSchool)
@@ -376,7 +456,7 @@ Partial Class frmEBookMGMT
         Me.XtraTabControl1.SelectedTabPage = Me.mainTab
         Me.XtraTabControl1.Size = New System.Drawing.Size(1242, 727)
         Me.XtraTabControl1.TabIndex = 6
-        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.mainTab, Me.XtraTabPage2, Me.XtraTabPage1_AddByISBNFile, Me.XtraTabPage1_AddBookFreeForm, Me.XtraTabPage1_CollectionsAdd})
+        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.mainTab, Me.XtraTabPage2, Me.XtraTabPage1_AddByISBNFile, Me.XtraTabPage1_AddBookFreeForm, Me.XtraTabPage1_CollectionsAdd, Me.XtraTabPage1_eBooks, Me.XtraTabPage1_UploadeBookCovers, Me.XtraTabPage1_AddEBookMeta})
         '
         'mainTab
         '
@@ -399,7 +479,7 @@ Partial Class frmEBookMGMT
         Me.gridSchoolBooks.Location = New System.Drawing.Point(-2, 69)
         Me.gridSchoolBooks.MainView = Me.GridView3
         Me.gridSchoolBooks.Name = "gridSchoolBooks"
-        Me.gridSchoolBooks.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateEdit1})
+        Me.gridSchoolBooks.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateEdit1, Me.RepositoryItemTextEdit1})
         Me.gridSchoolBooks.Size = New System.Drawing.Size(1244, 554)
         Me.gridSchoolBooks.TabIndex = 9
         Me.gridSchoolBooks.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView3})
@@ -408,10 +488,11 @@ Partial Class frmEBookMGMT
         '
         Me.GridView3.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GridView3.Appearance.Row.Options.UseFont = True
-        Me.GridView3.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.ID, Me.PublisherID, Me.SchoolID, Me.ISBN, Me.Title, Me.GuidedReadingLevel, Me.LEX, Me.IsFiction, Me.colName, Me.OfficialImage, Me.EBookPath, Me.IsExternal, Me.QuantityType, Me.Description, Me.CreateTime, Me.BookSchoolsID})
+        Me.GridView3.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.ID, Me.PublisherID, Me.SchoolID, Me.colName, Me.ISBN, Me.Title, Me.GuidedReadingLevel, Me.LEX, Me.IsFiction, Me.OfficialImage, Me.EBookPath, Me.IsExternal, Me.QuantityType, Me.Description, Me.CreateTime, Me.BookSchoolsID})
         Me.GridView3.GridControl = Me.gridSchoolBooks
         Me.GridView3.Name = "GridView3"
         Me.GridView3.OptionsBehavior.Editable = False
+        Me.GridView3.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
         Me.GridView3.OptionsEditForm.ShowOnDoubleClick = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView3.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView3.OptionsSelection.MultiSelect = True
@@ -436,6 +517,17 @@ Partial Class frmEBookMGMT
         Me.SchoolID.Caption = "SchoolID"
         Me.SchoolID.FieldName = "SchoolID"
         Me.SchoolID.Name = "SchoolID"
+        '
+        'colName
+        '
+        Me.colName.Caption = "Publisher Name"
+        Me.colName.FieldName = "Name"
+        Me.colName.Name = "colName"
+        Me.colName.OptionsColumn.AllowEdit = False
+        Me.colName.Tag = "frmEBookMGMT3"
+        Me.colName.Visible = True
+        Me.colName.VisibleIndex = 1
+        Me.colName.Width = 101
         '
         'ISBN
         '
@@ -479,17 +571,6 @@ Partial Class frmEBookMGMT
         Me.IsFiction.Name = "IsFiction"
         Me.IsFiction.Visible = True
         Me.IsFiction.VisibleIndex = 5
-        '
-        'colName
-        '
-        Me.colName.Caption = "Publisher Name"
-        Me.colName.FieldName = "Name"
-        Me.colName.Name = "colName"
-        Me.colName.OptionsColumn.AllowEdit = False
-        Me.colName.Tag = "frmEBookMGMT3"
-        Me.colName.Visible = True
-        Me.colName.VisibleIndex = 1
-        Me.colName.Width = 101
         '
         'OfficialImage
         '
@@ -556,6 +637,11 @@ Partial Class frmEBookMGMT
         Me.RepositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.RepositoryItemDateEdit1.Name = "RepositoryItemDateEdit1"
         '
+        'RepositoryItemTextEdit1
+        '
+        Me.RepositoryItemTextEdit1.AutoHeight = False
+        Me.RepositoryItemTextEdit1.Name = "RepositoryItemTextEdit1"
+        '
         'Panel3
         '
         Me.Panel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -598,7 +684,7 @@ Partial Class frmEBookMGMT
         Me.XtraTabPage2.Controls.Add(Me.gridSchoolUsers)
         Me.XtraTabPage2.Controls.Add(Me.Panel2)
         Me.XtraTabPage2.Name = "XtraTabPage2"
-        Me.XtraTabPage2.Size = New System.Drawing.Size(1240, 682)
+        Me.XtraTabPage2.Size = New System.Drawing.Size(1240, 692)
         Me.XtraTabPage2.Text = "School Users"
         '
         'gridSchoolUsers
@@ -624,6 +710,7 @@ Partial Class frmEBookMGMT
         Me.GridView1.GridControl = Me.gridSchoolUsers
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
+        Me.GridView1.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
         Me.GridView1.OptionsEditForm.ShowOnDoubleClick = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView1.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.[True]
         Me.GridView1.OptionsSelection.MultiSelect = True
@@ -636,6 +723,8 @@ Partial Class frmEBookMGMT
         Me.GridColumn1.Caption = "ID"
         Me.GridColumn1.FieldName = "ID"
         Me.GridColumn1.Name = "GridColumn1"
+        Me.GridColumn1.Visible = True
+        Me.GridColumn1.VisibleIndex = 8
         '
         'DistrictID
         '
@@ -780,7 +869,7 @@ Partial Class frmEBookMGMT
         Me.XtraTabPage1_AddByISBNFile.Controls.Add(Me.dgv_ImportBooksInSchool)
         Me.XtraTabPage1_AddByISBNFile.Controls.Add(Me.Panel4)
         Me.XtraTabPage1_AddByISBNFile.Name = "XtraTabPage1_AddByISBNFile"
-        Me.XtraTabPage1_AddByISBNFile.Size = New System.Drawing.Size(1240, 682)
+        Me.XtraTabPage1_AddByISBNFile.Size = New System.Drawing.Size(1240, 692)
         Me.XtraTabPage1_AddByISBNFile.Text = "Add Books (File)"
         '
         'txtSchoolIDs
@@ -920,9 +1009,81 @@ Partial Class frmEBookMGMT
         Me.cmdAddBooksToSchool.TabIndex = 5
         Me.cmdAddBooksToSchool.Text = "Add Books To School"
         '
-        'XtraOpenFileDialog1
+        'XtraTabPage1_AddBookFreeForm
         '
-        Me.XtraOpenFileDialog1.FileName = "XtraOpenFileDialog1"
+        Me.XtraTabPage1_AddBookFreeForm.Controls.Add(Me.Panel7)
+        Me.XtraTabPage1_AddBookFreeForm.Controls.Add(Me.spreadAddFreeForm)
+        Me.XtraTabPage1_AddBookFreeForm.Name = "XtraTabPage1_AddBookFreeForm"
+        Me.XtraTabPage1_AddBookFreeForm.Size = New System.Drawing.Size(1240, 692)
+        Me.XtraTabPage1_AddBookFreeForm.Text = "Add Books (Free Form)"
+        '
+        'Panel7
+        '
+        Me.Panel7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel7.BackColor = System.Drawing.Color.White
+        Me.Panel7.Controls.Add(Me.chkIgnoreISBNCheckFree)
+        Me.Panel7.Controls.Add(Me.chk_AddBookToSchoolFree)
+        Me.Panel7.Controls.Add(Me.cmdClearOrderItemsFreeForm)
+        Me.Panel7.Controls.Add(Me.cmdAddOrderItemsFreeForm)
+        Me.Panel7.Location = New System.Drawing.Point(0, 3)
+        Me.Panel7.Name = "Panel7"
+        Me.Panel7.Size = New System.Drawing.Size(1237, 55)
+        Me.Panel7.TabIndex = 7
+        '
+        'chkIgnoreISBNCheckFree
+        '
+        Me.chkIgnoreISBNCheckFree.AutoSize = True
+        Me.chkIgnoreISBNCheckFree.Location = New System.Drawing.Point(129, 25)
+        Me.chkIgnoreISBNCheckFree.Name = "chkIgnoreISBNCheckFree"
+        Me.chkIgnoreISBNCheckFree.Size = New System.Drawing.Size(121, 17)
+        Me.chkIgnoreISBNCheckFree.TabIndex = 84
+        Me.chkIgnoreISBNCheckFree.Text = "Ignore ISBN Check?"
+        Me.chkIgnoreISBNCheckFree.UseVisualStyleBackColor = True
+        '
+        'chk_AddBookToSchoolFree
+        '
+        Me.chk_AddBookToSchoolFree.AutoSize = True
+        Me.chk_AddBookToSchoolFree.Checked = True
+        Me.chk_AddBookToSchoolFree.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_AddBookToSchoolFree.Location = New System.Drawing.Point(8, 25)
+        Me.chk_AddBookToSchoolFree.Name = "chk_AddBookToSchoolFree"
+        Me.chk_AddBookToSchoolFree.Size = New System.Drawing.Size(97, 17)
+        Me.chk_AddBookToSchoolFree.TabIndex = 83
+        Me.chk_AddBookToSchoolFree.Text = "Add to School?"
+        Me.chk_AddBookToSchoolFree.UseVisualStyleBackColor = True
+        '
+        'cmdClearOrderItemsFreeForm
+        '
+        Me.cmdClearOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdClearOrderItemsFreeForm.Appearance.Options.UseFont = True
+        Me.cmdClearOrderItemsFreeForm.Location = New System.Drawing.Point(854, 15)
+        Me.cmdClearOrderItemsFreeForm.Name = "cmdClearOrderItemsFreeForm"
+        Me.cmdClearOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
+        Me.cmdClearOrderItemsFreeForm.TabIndex = 82
+        Me.cmdClearOrderItemsFreeForm.Text = "Clear Order Items"
+        '
+        'cmdAddOrderItemsFreeForm
+        '
+        Me.cmdAddOrderItemsFreeForm.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdAddOrderItemsFreeForm.Appearance.Options.UseFont = True
+        Me.cmdAddOrderItemsFreeForm.Location = New System.Drawing.Point(661, 15)
+        Me.cmdAddOrderItemsFreeForm.Name = "cmdAddOrderItemsFreeForm"
+        Me.cmdAddOrderItemsFreeForm.Size = New System.Drawing.Size(175, 28)
+        Me.cmdAddOrderItemsFreeForm.TabIndex = 5
+        Me.cmdAddOrderItemsFreeForm.Text = "Add Order Items"
+        '
+        'spreadAddFreeForm
+        '
+        Me.spreadAddFreeForm.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.spreadAddFreeForm.Location = New System.Drawing.Point(3, 64)
+        Me.spreadAddFreeForm.MenuManager = Me.BarManager1
+        Me.spreadAddFreeForm.Name = "spreadAddFreeForm"
+        Me.spreadAddFreeForm.Size = New System.Drawing.Size(1234, 618)
+        Me.spreadAddFreeForm.TabIndex = 6
+        Me.spreadAddFreeForm.Text = "SpreadsheetControl1"
         '
         'BarManager1
         '
@@ -931,8 +1092,8 @@ Partial Class frmEBookMGMT
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover})
-        Me.BarManager1.MaxItemId = 2
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1_ViewBook, Me.BarButtonItem1_ViewCover, Me.BarButtonItem3_ViewBook, Me.BarButtonItem1_ReplaceBookCover, Me.BarButtonItem1_EditUser, Me.BarButtonItem1_AddNewUser, Me.BarButtonItem3_ViewCover, Me.BarButtonItem4_ViewBook, Me.BarButtonItem4_ViewCover, Me.BarButtonItem4_ReplaceBookCover, Me.BarButtonItem3, Me.BarButtonItem1})
+        Me.BarManager1.MaxItemId = 12
         '
         'barDockControlTop
         '
@@ -978,17 +1139,63 @@ Partial Class frmEBookMGMT
         Me.BarButtonItem1_ViewCover.Id = 1
         Me.BarButtonItem1_ViewCover.Name = "BarButtonItem1_ViewCover"
         '
-        'PopupMenu1
+        'BarButtonItem3_ViewBook
         '
-        Me.PopupMenu1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewBook), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewCover)})
-        Me.PopupMenu1.Manager = Me.BarManager1
-        Me.PopupMenu1.Name = "PopupMenu1"
+        Me.BarButtonItem3_ViewBook.Caption = "View eBook"
+        Me.BarButtonItem3_ViewBook.Id = 2
+        Me.BarButtonItem3_ViewBook.Name = "BarButtonItem3_ViewBook"
         '
-        'XtraTabPage1_AddBookFreeForm
+        'BarButtonItem1_ReplaceBookCover
         '
-        Me.XtraTabPage1_AddBookFreeForm.Name = "XtraTabPage1_AddBookFreeForm"
-        Me.XtraTabPage1_AddBookFreeForm.Size = New System.Drawing.Size(0, 0)
-        Me.XtraTabPage1_AddBookFreeForm.Text = "Add Books (Free Form)"
+        Me.BarButtonItem1_ReplaceBookCover.Caption = "Replace Book Cover"
+        Me.BarButtonItem1_ReplaceBookCover.Id = 3
+        Me.BarButtonItem1_ReplaceBookCover.Name = "BarButtonItem1_ReplaceBookCover"
+        '
+        'BarButtonItem1_EditUser
+        '
+        Me.BarButtonItem1_EditUser.Caption = "Edit User"
+        Me.BarButtonItem1_EditUser.Id = 4
+        Me.BarButtonItem1_EditUser.Name = "BarButtonItem1_EditUser"
+        '
+        'BarButtonItem1_AddNewUser
+        '
+        Me.BarButtonItem1_AddNewUser.Caption = "Add New User"
+        Me.BarButtonItem1_AddNewUser.Id = 5
+        Me.BarButtonItem1_AddNewUser.Name = "BarButtonItem1_AddNewUser"
+        '
+        'BarButtonItem3_ViewCover
+        '
+        Me.BarButtonItem3_ViewCover.Caption = "BarButtonItem1"
+        Me.BarButtonItem3_ViewCover.Id = 6
+        Me.BarButtonItem3_ViewCover.Name = "BarButtonItem3_ViewCover"
+        '
+        'BarButtonItem4_ViewBook
+        '
+        Me.BarButtonItem4_ViewBook.Caption = "View eBook"
+        Me.BarButtonItem4_ViewBook.Id = 7
+        Me.BarButtonItem4_ViewBook.Name = "BarButtonItem4_ViewBook"
+        '
+        'BarButtonItem4_ViewCover
+        '
+        Me.BarButtonItem4_ViewCover.Caption = "View Book Cover"
+        Me.BarButtonItem4_ViewCover.Id = 8
+        Me.BarButtonItem4_ViewCover.Name = "BarButtonItem4_ViewCover"
+        '
+        'BarButtonItem4_ReplaceBookCover
+        '
+        Me.BarButtonItem4_ReplaceBookCover.Caption = "Replace Book Cover"
+        Me.BarButtonItem4_ReplaceBookCover.Id = 9
+        Me.BarButtonItem4_ReplaceBookCover.Name = "BarButtonItem4_ReplaceBookCover"
+        '
+        'BarButtonItem3
+        '
+        Me.BarButtonItem3.Id = 10
+        Me.BarButtonItem3.Name = "BarButtonItem3"
+        '
+        'BarButtonItem1
+        '
+        Me.BarButtonItem1.Id = 11
+        Me.BarButtonItem1.Name = "BarButtonItem1"
         '
         'XtraTabPage1_CollectionsAdd
         '
@@ -999,22 +1206,221 @@ Partial Class frmEBookMGMT
         Me.XtraTabPage1_CollectionsAdd.Size = New System.Drawing.Size(1240, 692)
         Me.XtraTabPage1_CollectionsAdd.Text = "Add Collections to School"
         '
-        'GroupBox1
+        'XtraTabControl2
         '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XtraTabControl2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.BackColor = System.Drawing.Color.White
-        Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Controls.Add(Me.cmbCompanyCollections)
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.cmbPublisherLine)
-        Me.GroupBox1.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1237, 76)
-        Me.GroupBox1.TabIndex = 4
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Select Partner and Collection:"
+        Me.XtraTabControl2.Appearance.BackColor = System.Drawing.Color.White
+        Me.XtraTabControl2.Appearance.Options.UseBackColor = True
+        Me.XtraTabControl2.AppearancePage.Header.Font = New System.Drawing.Font("Tahoma", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XtraTabControl2.AppearancePage.Header.Options.UseFont = True
+        Me.XtraTabControl2.Location = New System.Drawing.Point(3, 190)
+        Me.XtraTabControl2.Name = "XtraTabControl2"
+        Me.XtraTabControl2.SelectedTabPage = Me.XtraTabPage1_AddCollectionsToSchool
+        Me.XtraTabControl2.Size = New System.Drawing.Size(1234, 433)
+        Me.XtraTabControl2.TabIndex = 6
+        Me.XtraTabControl2.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1_AddCollectionsToSchool, Me.XtraTabPage1_AddItemsToCollection})
+        '
+        'XtraTabPage1_AddCollectionsToSchool
+        '
+        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.BackColor = System.Drawing.Color.White
+        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.BackColor2 = System.Drawing.Color.White
+        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.Options.UseBackColor = True
+        Me.XtraTabPage1_AddCollectionsToSchool.Controls.Add(Me.lstvw_Collections)
+        Me.XtraTabPage1_AddCollectionsToSchool.Controls.Add(Me.Panel5)
+        Me.XtraTabPage1_AddCollectionsToSchool.Name = "XtraTabPage1_AddCollectionsToSchool"
+        Me.XtraTabPage1_AddCollectionsToSchool.Size = New System.Drawing.Size(1232, 388)
+        Me.XtraTabPage1_AddCollectionsToSchool.Text = "Add Collection to School"
+        '
+        'lstvw_Collections
+        '
+        Me.lstvw_Collections.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lstvw_Collections.CheckBoxes = True
+        Me.lstvw_Collections.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.lstvw_Collections.HideSelection = False
+        Me.lstvw_Collections.Location = New System.Drawing.Point(4, 54)
+        Me.lstvw_Collections.Name = "lstvw_Collections"
+        Me.lstvw_Collections.Size = New System.Drawing.Size(1229, 331)
+        Me.lstvw_Collections.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.lstvw_Collections.TabIndex = 5
+        Me.lstvw_Collections.UseCompatibleStateImageBehavior = False
+        Me.lstvw_Collections.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Item #"
+        Me.ColumnHeader1.Width = 86
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Item Description"
+        Me.ColumnHeader2.Width = 405
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Is Six Pack?"
+        Me.ColumnHeader3.Width = 94
+        '
+        'Panel5
+        '
+        Me.Panel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel5.BackColor = System.Drawing.Color.White
+        Me.Panel5.Controls.Add(Me.Label7)
+        Me.Panel5.Controls.Add(Me.txtQuantityTypeCollection)
+        Me.Panel5.Controls.Add(Me.cmd_AddCollections)
+        Me.Panel5.Location = New System.Drawing.Point(3, 3)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(1230, 50)
+        Me.Panel5.TabIndex = 3
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(9, 13)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(76, 13)
+        Me.Label7.TabIndex = 17
+        Me.Label7.Text = "Quantity Type"
+        Me.Label7.Visible = False
+        '
+        'txtQuantityTypeCollection
+        '
+        Me.txtQuantityTypeCollection.Location = New System.Drawing.Point(101, 10)
+        Me.txtQuantityTypeCollection.Name = "txtQuantityTypeCollection"
+        Me.txtQuantityTypeCollection.Size = New System.Drawing.Size(150, 21)
+        Me.txtQuantityTypeCollection.TabIndex = 16
+        Me.txtQuantityTypeCollection.Text = "e-Book"
+        Me.txtQuantityTypeCollection.Visible = False
+        '
+        'cmd_AddCollections
+        '
+        Me.cmd_AddCollections.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_AddCollections.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_AddCollections.Appearance.Options.UseFont = True
+        Me.cmd_AddCollections.Location = New System.Drawing.Point(910, 13)
+        Me.cmd_AddCollections.Name = "cmd_AddCollections"
+        Me.cmd_AddCollections.Size = New System.Drawing.Size(310, 28)
+        Me.cmd_AddCollections.TabIndex = 5
+        Me.cmd_AddCollections.Text = "Add Selected Collections to School"
+        '
+        'XtraTabPage1_AddItemsToCollection
+        '
+        Me.XtraTabPage1_AddItemsToCollection.Appearance.PageClient.BackColor = System.Drawing.Color.White
+        Me.XtraTabPage1_AddItemsToCollection.Appearance.PageClient.Options.UseBackColor = True
+        Me.XtraTabPage1_AddItemsToCollection.Controls.Add(Me.dgv_CollectionBooksImport)
+        Me.XtraTabPage1_AddItemsToCollection.Controls.Add(Me.Panel6)
+        Me.XtraTabPage1_AddItemsToCollection.Name = "XtraTabPage1_AddItemsToCollection"
+        Me.XtraTabPage1_AddItemsToCollection.Size = New System.Drawing.Size(1232, 388)
+        Me.XtraTabPage1_AddItemsToCollection.Text = "Add Items to Collection"
+        '
+        'dgv_CollectionBooksImport
+        '
+        Me.dgv_CollectionBooksImport.AllowUserToAddRows = False
+        Me.dgv_CollectionBooksImport.AllowUserToDeleteRows = False
+        Me.dgv_CollectionBooksImport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgv_CollectionBooksImport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_CollectionBooksImport.Location = New System.Drawing.Point(6, 96)
+        Me.dgv_CollectionBooksImport.Name = "dgv_CollectionBooksImport"
+        Me.dgv_CollectionBooksImport.ReadOnly = True
+        Me.dgv_CollectionBooksImport.Size = New System.Drawing.Size(1227, 289)
+        Me.dgv_CollectionBooksImport.TabIndex = 15
+        '
+        'Panel6
+        '
+        Me.Panel6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel6.BackColor = System.Drawing.Color.White
+        Me.Panel6.Controls.Add(Me.cmdAddBooksToCollection)
+        Me.Panel6.Controls.Add(Me.chkIgnoreISBNCollection)
+        Me.Panel6.Controls.Add(Me.chkAddToCollection)
+        Me.Panel6.Controls.Add(Me.Label8)
+        Me.Panel6.Controls.Add(Me.cmbISBNCol2)
+        Me.Panel6.Controls.Add(Me.cmdLoadCollectionBooks)
+        Me.Panel6.Controls.Add(Me.txtCollectionsBooksFile)
+        Me.Panel6.Location = New System.Drawing.Point(6, 3)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(1226, 87)
+        Me.Panel6.TabIndex = 5
+        '
+        'cmdAddBooksToCollection
+        '
+        Me.cmdAddBooksToCollection.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdAddBooksToCollection.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdAddBooksToCollection.Location = New System.Drawing.Point(953, 49)
+        Me.cmdAddBooksToCollection.Name = "cmdAddBooksToCollection"
+        Me.cmdAddBooksToCollection.Size = New System.Drawing.Size(218, 29)
+        Me.cmdAddBooksToCollection.TabIndex = 26
+        Me.cmdAddBooksToCollection.Text = "Add Books to Collection"
+        Me.cmdAddBooksToCollection.UseVisualStyleBackColor = True
+        '
+        'chkIgnoreISBNCollection
+        '
+        Me.chkIgnoreISBNCollection.AutoSize = True
+        Me.chkIgnoreISBNCollection.Checked = True
+        Me.chkIgnoreISBNCollection.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkIgnoreISBNCollection.Location = New System.Drawing.Point(347, 10)
+        Me.chkIgnoreISBNCollection.Name = "chkIgnoreISBNCollection"
+        Me.chkIgnoreISBNCollection.Size = New System.Drawing.Size(121, 17)
+        Me.chkIgnoreISBNCollection.TabIndex = 25
+        Me.chkIgnoreISBNCollection.Text = "Ignore ISBN Check?"
+        Me.chkIgnoreISBNCollection.UseVisualStyleBackColor = True
+        '
+        'chkAddToCollection
+        '
+        Me.chkAddToCollection.AutoSize = True
+        Me.chkAddToCollection.Checked = True
+        Me.chkAddToCollection.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkAddToCollection.Location = New System.Drawing.Point(229, 10)
+        Me.chkAddToCollection.Name = "chkAddToCollection"
+        Me.chkAddToCollection.Size = New System.Drawing.Size(112, 17)
+        Me.chkAddToCollection.TabIndex = 24
+        Me.chkAddToCollection.Text = "Add to Collection?"
+        Me.chkAddToCollection.UseVisualStyleBackColor = True
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 11)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(68, 13)
+        Me.Label8.TabIndex = 23
+        Me.Label8.Text = "ISBN Column"
+        '
+        'cmbISBNCol2
+        '
+        Me.cmbISBNCol2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbISBNCol2.FormattingEnabled = True
+        Me.cmbISBNCol2.Location = New System.Drawing.Point(77, 8)
+        Me.cmbISBNCol2.Name = "cmbISBNCol2"
+        Me.cmbISBNCol2.Size = New System.Drawing.Size(134, 21)
+        Me.cmbISBNCol2.TabIndex = 22
+        '
+        'cmdLoadCollectionBooks
+        '
+        Me.cmdLoadCollectionBooks.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdLoadCollectionBooks.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdLoadCollectionBooks.Location = New System.Drawing.Point(1184, 2)
+        Me.cmdLoadCollectionBooks.Name = "cmdLoadCollectionBooks"
+        Me.cmdLoadCollectionBooks.Size = New System.Drawing.Size(35, 37)
+        Me.cmdLoadCollectionBooks.TabIndex = 21
+        Me.cmdLoadCollectionBooks.Text = "..."
+        Me.cmdLoadCollectionBooks.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdLoadCollectionBooks.UseVisualStyleBackColor = True
+        '
+        'txtCollectionsBooksFile
+        '
+        Me.txtCollectionsBooksFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtCollectionsBooksFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCollectionsBooksFile.Location = New System.Drawing.Point(491, 11)
+        Me.txtCollectionsBooksFile.Name = "txtCollectionsBooksFile"
+        Me.txtCollectionsBooksFile.Size = New System.Drawing.Size(680, 26)
+        Me.txtCollectionsBooksFile.TabIndex = 20
         '
         'GroupBox2
         '
@@ -1096,6 +1502,23 @@ Partial Class frmEBookMGMT
         Me.txtItemNumber.Size = New System.Drawing.Size(148, 27)
         Me.txtItemNumber.TabIndex = 17
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.cmbCompanyCollections)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.cmbPublisherLine)
+        Me.GroupBox1.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(1237, 76)
+        Me.GroupBox1.TabIndex = 4
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Select Partner and Collection:"
+        '
         'Label5
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1136,222 +1559,432 @@ Partial Class frmEBookMGMT
         Me.cmbPublisherLine.Size = New System.Drawing.Size(298, 27)
         Me.cmbPublisherLine.TabIndex = 14
         '
-        'XtraTabControl2
+        'XtraTabPage1_eBooks
         '
-        Me.XtraTabControl2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.XtraTabPage1_eBooks.Controls.Add(Me.gridDiBSBooks)
+        Me.XtraTabPage1_eBooks.Name = "XtraTabPage1_eBooks"
+        Me.XtraTabPage1_eBooks.Size = New System.Drawing.Size(1240, 692)
+        Me.XtraTabPage1_eBooks.Text = "All eBooks"
+        '
+        'gridDiBSBooks
+        '
+        Me.gridDiBSBooks.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XtraTabControl2.Appearance.BackColor = System.Drawing.Color.White
-        Me.XtraTabControl2.Appearance.Options.UseBackColor = True
-        Me.XtraTabControl2.AppearancePage.Header.Font = New System.Drawing.Font("Tahoma", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XtraTabControl2.AppearancePage.Header.Options.UseFont = True
-        Me.XtraTabControl2.Location = New System.Drawing.Point(3, 190)
-        Me.XtraTabControl2.Name = "XtraTabControl2"
-        Me.XtraTabControl2.SelectedTabPage = Me.XtraTabPage1_AddCollectionsToSchool
-        Me.XtraTabControl2.Size = New System.Drawing.Size(1234, 433)
-        Me.XtraTabControl2.TabIndex = 6
-        Me.XtraTabControl2.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1_AddCollectionsToSchool, Me.XtraTabPage1_AddItemsToCollection})
+        Me.gridDiBSBooks.DataMember = "omqryOrdersMain"
+        Me.gridDiBSBooks.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gridDiBSBooks.Location = New System.Drawing.Point(-2, 3)
+        Me.gridDiBSBooks.MainView = Me.GridView2
+        Me.gridDiBSBooks.Name = "gridDiBSBooks"
+        Me.gridDiBSBooks.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateEdit3, Me.RepositoryItemTextEdit2, Me.RepositoryItemToggleSwitch1, Me.RepositoryItemCheckEdit1})
+        Me.gridDiBSBooks.Size = New System.Drawing.Size(1244, 620)
+        Me.gridDiBSBooks.TabIndex = 10
+        Me.gridDiBSBooks.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView2})
         '
-        'XtraTabPage1_AddCollectionsToSchool
+        'GridView2
         '
-        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.BackColor = System.Drawing.Color.White
-        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.BackColor2 = System.Drawing.Color.White
-        Me.XtraTabPage1_AddCollectionsToSchool.Appearance.PageClient.Options.UseBackColor = True
-        Me.XtraTabPage1_AddCollectionsToSchool.Controls.Add(Me.lstvw_Collections)
-        Me.XtraTabPage1_AddCollectionsToSchool.Controls.Add(Me.Panel5)
-        Me.XtraTabPage1_AddCollectionsToSchool.Name = "XtraTabPage1_AddCollectionsToSchool"
-        Me.XtraTabPage1_AddCollectionsToSchool.Size = New System.Drawing.Size(1232, 388)
-        Me.XtraTabPage1_AddCollectionsToSchool.Text = "Add Collection to School"
+        Me.GridView2.Appearance.Row.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GridView2.Appearance.Row.Options.UseFont = True
+        Me.GridView2.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn2, Me.GridColumn4, Me.GridColumn11, Me.GridColumn6, Me.GridColumn7, Me.GridColumn8, Me.GridColumn9, Me.GridColumn10, Me.GridColumn12, Me.GridColumn13, Me.GridColumn14, Me.GridColumn16, Me.IsAudioAvailable, Me.IsEPub, Me.GridColumn18})
+        Me.GridView2.GridControl = Me.gridDiBSBooks
+        Me.GridView2.Name = "GridView2"
+        Me.GridView2.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.[False]
+        Me.GridView2.OptionsEditForm.ShowOnDoubleClick = DevExpress.Utils.DefaultBoolean.[True]
+        Me.GridView2.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.[True]
+        Me.GridView2.OptionsSelection.MultiSelect = True
+        Me.GridView2.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect
+        Me.GridView2.OptionsView.ShowAutoFilterRow = True
+        Me.GridView2.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways
         '
-        'Panel5
+        'GridColumn2
         '
-        Me.Panel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GridColumn2.Caption = "ID"
+        Me.GridColumn2.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumn2.FieldName = "ID"
+        Me.GridColumn2.Name = "GridColumn2"
+        '
+        'GridColumn4
+        '
+        Me.GridColumn4.Caption = "PublisherID"
+        Me.GridColumn4.FieldName = "PublisherID"
+        Me.GridColumn4.Name = "GridColumn4"
+        '
+        'GridColumn11
+        '
+        Me.GridColumn11.Caption = "Publisher Name"
+        Me.GridColumn11.FieldName = "Name"
+        Me.GridColumn11.Name = "GridColumn11"
+        Me.GridColumn11.OptionsColumn.AllowEdit = False
+        Me.GridColumn11.Tag = "frmEBookMGMT3"
+        Me.GridColumn11.Visible = True
+        Me.GridColumn11.VisibleIndex = 0
+        Me.GridColumn11.Width = 101
+        '
+        'GridColumn6
+        '
+        Me.GridColumn6.Caption = "ISBN"
+        Me.GridColumn6.FieldName = "ISBN"
+        Me.GridColumn6.Name = "GridColumn6"
+        Me.GridColumn6.OptionsColumn.AllowEdit = False
+        Me.GridColumn6.Visible = True
+        Me.GridColumn6.VisibleIndex = 1
+        Me.GridColumn6.Width = 101
+        '
+        'GridColumn7
+        '
+        Me.GridColumn7.Caption = "Title"
+        Me.GridColumn7.FieldName = "Title"
+        Me.GridColumn7.Name = "GridColumn7"
+        Me.GridColumn7.Visible = True
+        Me.GridColumn7.VisibleIndex = 2
+        Me.GridColumn7.Width = 101
+        '
+        'GridColumn8
+        '
+        Me.GridColumn8.Caption = "GRL"
+        Me.GridColumn8.ColumnEdit = Me.RepositoryItemTextEdit2
+        Me.GridColumn8.FieldName = "GuidedReadingLevel"
+        Me.GridColumn8.Name = "GridColumn8"
+        Me.GridColumn8.Visible = True
+        Me.GridColumn8.VisibleIndex = 3
+        '
+        'RepositoryItemTextEdit2
+        '
+        Me.RepositoryItemTextEdit2.AutoHeight = False
+        Me.RepositoryItemTextEdit2.Name = "RepositoryItemTextEdit2"
+        '
+        'GridColumn9
+        '
+        Me.GridColumn9.Caption = "LEX"
+        Me.GridColumn9.ColumnEdit = Me.RepositoryItemTextEdit2
+        Me.GridColumn9.FieldName = "LEX"
+        Me.GridColumn9.Name = "GridColumn9"
+        Me.GridColumn9.Visible = True
+        Me.GridColumn9.VisibleIndex = 5
+        '
+        'GridColumn10
+        '
+        Me.GridColumn10.Caption = "IsFiction"
+        Me.GridColumn10.ColumnEdit = Me.RepositoryItemCheckEdit1
+        Me.GridColumn10.FieldName = "IsFiction"
+        Me.GridColumn10.Name = "GridColumn10"
+        Me.GridColumn10.Visible = True
+        Me.GridColumn10.VisibleIndex = 4
+        '
+        'RepositoryItemCheckEdit1
+        '
+        Me.RepositoryItemCheckEdit1.AutoHeight = False
+        Me.RepositoryItemCheckEdit1.Name = "RepositoryItemCheckEdit1"
+        '
+        'GridColumn12
+        '
+        Me.GridColumn12.Caption = "OfficialImage"
+        Me.GridColumn12.FieldName = "OfficialImage"
+        Me.GridColumn12.Name = "GridColumn12"
+        Me.GridColumn12.Visible = True
+        Me.GridColumn12.VisibleIndex = 9
+        '
+        'GridColumn13
+        '
+        Me.GridColumn13.Caption = "EBookPath"
+        Me.GridColumn13.FieldName = "EBookPath"
+        Me.GridColumn13.Name = "GridColumn13"
+        Me.GridColumn13.Visible = True
+        Me.GridColumn13.VisibleIndex = 6
+        '
+        'GridColumn14
+        '
+        Me.GridColumn14.Caption = "IsExternal"
+        Me.GridColumn14.FieldName = "IsExternal"
+        Me.GridColumn14.Name = "GridColumn14"
+        Me.GridColumn14.Visible = True
+        Me.GridColumn14.VisibleIndex = 7
+        '
+        'GridColumn16
+        '
+        Me.GridColumn16.Caption = "QuantityType"
+        Me.GridColumn16.FieldName = "QuantityType"
+        Me.GridColumn16.Name = "GridColumn16"
+        Me.GridColumn16.Visible = True
+        Me.GridColumn16.VisibleIndex = 8
+        '
+        'IsAudioAvailable
+        '
+        Me.IsAudioAvailable.Caption = "IsAudioAvailable"
+        Me.IsAudioAvailable.FieldName = "IsAudioAvailable"
+        Me.IsAudioAvailable.Name = "IsAudioAvailable"
+        Me.IsAudioAvailable.Visible = True
+        Me.IsAudioAvailable.VisibleIndex = 11
+        '
+        'IsEPub
+        '
+        Me.IsEPub.Caption = "IsEPub"
+        Me.IsEPub.FieldName = "IsEPub"
+        Me.IsEPub.Name = "IsEPub"
+        Me.IsEPub.Visible = True
+        Me.IsEPub.VisibleIndex = 12
+        '
+        'GridColumn18
+        '
+        Me.GridColumn18.Caption = "CreateTime"
+        Me.GridColumn18.DisplayFormat.FormatString = "d"
+        Me.GridColumn18.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.GridColumn18.FieldName = "CreateTime"
+        Me.GridColumn18.Name = "GridColumn18"
+        Me.GridColumn18.Visible = True
+        Me.GridColumn18.VisibleIndex = 10
+        '
+        'RepositoryItemDateEdit3
+        '
+        Me.RepositoryItemDateEdit3.AutoHeight = False
+        Me.RepositoryItemDateEdit3.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateEdit3.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateEdit3.Name = "RepositoryItemDateEdit3"
+        '
+        'RepositoryItemToggleSwitch1
+        '
+        Me.RepositoryItemToggleSwitch1.AutoHeight = False
+        Me.RepositoryItemToggleSwitch1.Name = "RepositoryItemToggleSwitch1"
+        Me.RepositoryItemToggleSwitch1.OffText = "Off"
+        Me.RepositoryItemToggleSwitch1.OnText = "On"
+        '
+        'XtraTabPage1_UploadeBookCovers
+        '
+        Me.XtraTabPage1_UploadeBookCovers.Controls.Add(Me.chkIfBookImageExists)
+        Me.XtraTabPage1_UploadeBookCovers.Controls.Add(Me.chkUploadCoversIngonreISBN)
+        Me.XtraTabPage1_UploadeBookCovers.Controls.Add(Me.cmdUpLoadCoverImages)
+        Me.XtraTabPage1_UploadeBookCovers.Controls.Add(Me.Label14)
+        Me.XtraTabPage1_UploadeBookCovers.Controls.Add(Me.txtUploadCoverImagesDir)
+        Me.XtraTabPage1_UploadeBookCovers.Name = "XtraTabPage1_UploadeBookCovers"
+        Me.XtraTabPage1_UploadeBookCovers.Size = New System.Drawing.Size(1240, 692)
+        Me.XtraTabPage1_UploadeBookCovers.Text = "Upload eBook Covers"
+        '
+        'chkIfBookImageExists
+        '
+        Me.chkIfBookImageExists.AutoSize = True
+        Me.chkIfBookImageExists.Location = New System.Drawing.Point(466, 92)
+        Me.chkIfBookImageExists.Name = "chkIfBookImageExists"
+        Me.chkIfBookImageExists.Size = New System.Drawing.Size(245, 17)
+        Me.chkIfBookImageExists.TabIndex = 70
+        Me.chkIfBookImageExists.Text = "DO NOT Copy....If Image path already exists"
+        Me.chkIfBookImageExists.UseVisualStyleBackColor = True
+        '
+        'chkUploadCoversIngonreISBN
+        '
+        Me.chkUploadCoversIngonreISBN.AutoSize = True
+        Me.chkUploadCoversIngonreISBN.Location = New System.Drawing.Point(285, 92)
+        Me.chkUploadCoversIngonreISBN.Name = "chkUploadCoversIngonreISBN"
+        Me.chkUploadCoversIngonreISBN.Size = New System.Drawing.Size(121, 17)
+        Me.chkUploadCoversIngonreISBN.TabIndex = 69
+        Me.chkUploadCoversIngonreISBN.Text = "Ignore ISBN Check?"
+        Me.chkUploadCoversIngonreISBN.UseVisualStyleBackColor = True
+        '
+        'cmdUpLoadCoverImages
+        '
+        Me.cmdUpLoadCoverImages.Location = New System.Drawing.Point(32, 92)
+        Me.cmdUpLoadCoverImages.Name = "cmdUpLoadCoverImages"
+        Me.cmdUpLoadCoverImages.Size = New System.Drawing.Size(228, 29)
+        Me.cmdUpLoadCoverImages.TabIndex = 68
+        Me.cmdUpLoadCoverImages.Text = "Upload Cover Images"
+        Me.cmdUpLoadCoverImages.UseVisualStyleBackColor = True
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(25, 19)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(225, 25)
+        Me.Label14.TabIndex = 67
+        Me.Label14.Text = "Upload Cover Image"
+        '
+        'txtUploadCoverImagesDir
+        '
+        Me.txtUploadCoverImagesDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUploadCoverImagesDir.Location = New System.Drawing.Point(32, 48)
+        Me.txtUploadCoverImagesDir.Name = "txtUploadCoverImagesDir"
+        Me.txtUploadCoverImagesDir.Size = New System.Drawing.Size(803, 26)
+        Me.txtUploadCoverImagesDir.TabIndex = 66
+        Me.txtUploadCoverImagesDir.Text = "F:\eBooks\BrainHive_Partners\Cover Images Brain Hive Partners\Rosen"
+        '
+        'XtraTabPage1_AddEBookMeta
+        '
+        Me.XtraTabPage1_AddEBookMeta.Controls.Add(Me.Panel9)
+        Me.XtraTabPage1_AddEBookMeta.Controls.Add(Me.Panel8)
+        Me.XtraTabPage1_AddEBookMeta.Controls.Add(Me.dgv_ImportAddBookMeta)
+        Me.XtraTabPage1_AddEBookMeta.Name = "XtraTabPage1_AddEBookMeta"
+        Me.XtraTabPage1_AddEBookMeta.Size = New System.Drawing.Size(1240, 692)
+        Me.XtraTabPage1_AddEBookMeta.Text = "Add eBook Meta Data"
+        '
+        'Panel9
+        '
+        Me.Panel9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel5.BackColor = System.Drawing.Color.White
-        Me.Panel5.Controls.Add(Me.Label7)
-        Me.Panel5.Controls.Add(Me.txtQuantityTypeCollection)
-        Me.Panel5.Controls.Add(Me.cmd_AddCollections)
-        Me.Panel5.Location = New System.Drawing.Point(3, 3)
-        Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(1230, 50)
-        Me.Panel5.TabIndex = 3
+        Me.Panel9.Controls.Add(Me.cmdAddBookMeta)
+        Me.Panel9.Location = New System.Drawing.Point(9, 611)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Size = New System.Drawing.Size(1228, 78)
+        Me.Panel9.TabIndex = 44
         '
-        'cmd_AddCollections
+        'cmdAddBookMeta
         '
-        Me.cmd_AddCollections.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.cmdAddBookMeta.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.cmdAddBookMeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdAddBookMeta.Location = New System.Drawing.Point(5, 19)
+        Me.cmdAddBookMeta.Name = "cmdAddBookMeta"
+        Me.cmdAddBookMeta.Size = New System.Drawing.Size(218, 43)
+        Me.cmdAddBookMeta.TabIndex = 40
+        Me.cmdAddBookMeta.Text = "Add Book Meta Data"
+        Me.cmdAddBookMeta.UseVisualStyleBackColor = True
+        '
+        'Panel8
+        '
+        Me.Panel8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmd_AddCollections.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmd_AddCollections.Appearance.Options.UseFont = True
-        Me.cmd_AddCollections.Location = New System.Drawing.Point(910, 13)
-        Me.cmd_AddCollections.Name = "cmd_AddCollections"
-        Me.cmd_AddCollections.Size = New System.Drawing.Size(310, 28)
-        Me.cmd_AddCollections.TabIndex = 5
-        Me.cmd_AddCollections.Text = "Add Selected Collections to School"
+        Me.Panel8.Controls.Add(Me.txtInstructions)
+        Me.Panel8.Controls.Add(Me.cmdloadAddBookFile)
+        Me.Panel8.Controls.Add(Me.chkUpdateMetaData)
+        Me.Panel8.Controls.Add(Me.chkAddBookMeta_SkipISBNCheck)
+        Me.Panel8.Controls.Add(Me.chkAddBookAddTag)
+        Me.Panel8.Controls.Add(Me.cmbAddBookTagType)
+        Me.Panel8.Controls.Add(Me.chkAddBookSimulation)
+        Me.Panel8.Controls.Add(Me.txtAddBookFileNae)
+        Me.Panel8.Location = New System.Drawing.Point(3, 3)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Size = New System.Drawing.Size(1234, 88)
+        Me.Panel8.TabIndex = 43
         '
-        'XtraTabPage1_AddItemsToCollection
+        'txtInstructions
         '
-        Me.XtraTabPage1_AddItemsToCollection.Appearance.PageClient.BackColor = System.Drawing.Color.White
-        Me.XtraTabPage1_AddItemsToCollection.Appearance.PageClient.Options.UseBackColor = True
-        Me.XtraTabPage1_AddItemsToCollection.Controls.Add(Me.dgv_CollectionBooksImport)
-        Me.XtraTabPage1_AddItemsToCollection.Controls.Add(Me.Panel6)
-        Me.XtraTabPage1_AddItemsToCollection.Name = "XtraTabPage1_AddItemsToCollection"
-        Me.XtraTabPage1_AddItemsToCollection.Size = New System.Drawing.Size(1232, 388)
-        Me.XtraTabPage1_AddItemsToCollection.Text = "Add Items to Collection"
+        Me.txtInstructions.Enabled = False
+        Me.txtInstructions.Location = New System.Drawing.Point(290, 41)
+        Me.txtInstructions.Multiline = True
+        Me.txtInstructions.Name = "txtInstructions"
+        Me.txtInstructions.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtInstructions.Size = New System.Drawing.Size(923, 38)
+        Me.txtInstructions.TabIndex = 50
+        Me.txtInstructions.Text = "Fields:Publisher (Must Match in DB),eBook_ISBN_13,Title,WebSite_Description,Class" &
+    "ification,Guided_Reading_Level,ATOS,Lexile_Level,TagsText,KeyWords,Topic,Subject" &
+    ""
         '
-        'Panel6
+        'cmdloadAddBookFile
         '
-        Me.Panel6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel6.BackColor = System.Drawing.Color.White
-        Me.Panel6.Controls.Add(Me.cmdAddBooksToCollection)
-        Me.Panel6.Controls.Add(Me.chkIgnoreISBNCollection)
-        Me.Panel6.Controls.Add(Me.chkAddToCollection)
-        Me.Panel6.Controls.Add(Me.Label8)
-        Me.Panel6.Controls.Add(Me.cmbISBNCol2)
-        Me.Panel6.Controls.Add(Me.cmdLoadCollectionBooks)
-        Me.Panel6.Controls.Add(Me.txtCollectionsBooksFile)
-        Me.Panel6.Location = New System.Drawing.Point(6, 3)
-        Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(1226, 87)
-        Me.Panel6.TabIndex = 5
+        Me.cmdloadAddBookFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdloadAddBookFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdloadAddBookFile.Location = New System.Drawing.Point(1178, 8)
+        Me.cmdloadAddBookFile.Name = "cmdloadAddBookFile"
+        Me.cmdloadAddBookFile.Size = New System.Drawing.Size(35, 32)
+        Me.cmdloadAddBookFile.TabIndex = 49
+        Me.cmdloadAddBookFile.Text = "..."
+        Me.cmdloadAddBookFile.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdloadAddBookFile.UseVisualStyleBackColor = True
         '
-        'Label7
+        'chkUpdateMetaData
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(9, 13)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(76, 13)
-        Me.Label7.TabIndex = 17
-        Me.Label7.Text = "Quantity Type"
-        Me.Label7.Visible = False
+        Me.chkUpdateMetaData.AutoSize = True
+        Me.chkUpdateMetaData.Location = New System.Drawing.Point(114, 50)
+        Me.chkUpdateMetaData.Name = "chkUpdateMetaData"
+        Me.chkUpdateMetaData.Size = New System.Drawing.Size(154, 17)
+        Me.chkUpdateMetaData.TabIndex = 48
+        Me.chkUpdateMetaData.Text = "Update Existing Meta Data"
+        Me.chkUpdateMetaData.UseVisualStyleBackColor = True
         '
-        'txtQuantityTypeCollection
+        'chkAddBookMeta_SkipISBNCheck
         '
-        Me.txtQuantityTypeCollection.Location = New System.Drawing.Point(101, 10)
-        Me.txtQuantityTypeCollection.Name = "txtQuantityTypeCollection"
-        Me.txtQuantityTypeCollection.Size = New System.Drawing.Size(150, 21)
-        Me.txtQuantityTypeCollection.TabIndex = 16
-        Me.txtQuantityTypeCollection.Text = "e-Book"
-        Me.txtQuantityTypeCollection.Visible = False
+        Me.chkAddBookMeta_SkipISBNCheck.AutoSize = True
+        Me.chkAddBookMeta_SkipISBNCheck.Location = New System.Drawing.Point(5, 50)
+        Me.chkAddBookMeta_SkipISBNCheck.Name = "chkAddBookMeta_SkipISBNCheck"
+        Me.chkAddBookMeta_SkipISBNCheck.Size = New System.Drawing.Size(103, 17)
+        Me.chkAddBookMeta_SkipISBNCheck.TabIndex = 47
+        Me.chkAddBookMeta_SkipISBNCheck.Text = "Skip ISBN Check"
+        Me.chkAddBookMeta_SkipISBNCheck.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.chkAddBookMeta_SkipISBNCheck.UseVisualStyleBackColor = True
         '
-        'lstvw_Collections
+        'chkAddBookAddTag
         '
-        Me.lstvw_Collections.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.chkAddBookAddTag.AutoSize = True
+        Me.chkAddBookAddTag.Location = New System.Drawing.Point(85, 13)
+        Me.chkAddBookAddTag.Name = "chkAddBookAddTag"
+        Me.chkAddBookAddTag.Size = New System.Drawing.Size(199, 17)
+        Me.chkAddBookAddTag.TabIndex = 46
+        Me.chkAddBookAddTag.Text = "Add Tag if it does not already exist?"
+        Me.chkAddBookAddTag.UseVisualStyleBackColor = True
+        '
+        'cmbAddBookTagType
+        '
+        Me.cmbAddBookTagType.FormattingEnabled = True
+        Me.cmbAddBookTagType.Items.AddRange(New Object() {"National", "District", "School"})
+        Me.cmbAddBookTagType.Location = New System.Drawing.Point(290, 11)
+        Me.cmbAddBookTagType.Name = "cmbAddBookTagType"
+        Me.cmbAddBookTagType.Size = New System.Drawing.Size(142, 21)
+        Me.cmbAddBookTagType.TabIndex = 45
+        Me.cmbAddBookTagType.Text = "National"
+        '
+        'chkAddBookSimulation
+        '
+        Me.chkAddBookSimulation.AutoSize = True
+        Me.chkAddBookSimulation.Location = New System.Drawing.Point(5, 11)
+        Me.chkAddBookSimulation.Name = "chkAddBookSimulation"
+        Me.chkAddBookSimulation.Size = New System.Drawing.Size(74, 17)
+        Me.chkAddBookSimulation.TabIndex = 44
+        Me.chkAddBookSimulation.Text = "Simulation"
+        Me.chkAddBookSimulation.UseVisualStyleBackColor = True
+        '
+        'txtAddBookFileNae
+        '
+        Me.txtAddBookFileNae.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtAddBookFileNae.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAddBookFileNae.Location = New System.Drawing.Point(458, 9)
+        Me.txtAddBookFileNae.Name = "txtAddBookFileNae"
+        Me.txtAddBookFileNae.Size = New System.Drawing.Size(704, 26)
+        Me.txtAddBookFileNae.TabIndex = 43
+        '
+        'dgv_ImportAddBookMeta
+        '
+        Me.dgv_ImportAddBookMeta.AllowUserToAddRows = False
+        Me.dgv_ImportAddBookMeta.AllowUserToDeleteRows = False
+        Me.dgv_ImportAddBookMeta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lstvw_Collections.CheckBoxes = True
-        Me.lstvw_Collections.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
-        Me.lstvw_Collections.HideSelection = False
-        Me.lstvw_Collections.Location = New System.Drawing.Point(4, 54)
-        Me.lstvw_Collections.Name = "lstvw_Collections"
-        Me.lstvw_Collections.Size = New System.Drawing.Size(1229, 331)
-        Me.lstvw_Collections.Sorting = System.Windows.Forms.SortOrder.Ascending
-        Me.lstvw_Collections.TabIndex = 5
-        Me.lstvw_Collections.UseCompatibleStateImageBehavior = False
-        Me.lstvw_Collections.View = System.Windows.Forms.View.Details
+        Me.dgv_ImportAddBookMeta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_ImportAddBookMeta.Location = New System.Drawing.Point(9, 97)
+        Me.dgv_ImportAddBookMeta.Name = "dgv_ImportAddBookMeta"
+        Me.dgv_ImportAddBookMeta.ReadOnly = True
+        Me.dgv_ImportAddBookMeta.Size = New System.Drawing.Size(1228, 508)
+        Me.dgv_ImportAddBookMeta.TabIndex = 35
         '
-        'ColumnHeader1
+        'XtraOpenFileDialog1
         '
-        Me.ColumnHeader1.Text = "Item #"
-        Me.ColumnHeader1.Width = 86
+        Me.XtraOpenFileDialog1.FileName = "XtraOpenFileDialog1"
         '
-        'ColumnHeader2
+        'PopupMenu1
         '
-        Me.ColumnHeader2.Text = "Item Description"
-        Me.ColumnHeader2.Width = 405
+        Me.PopupMenu1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewBook), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ViewCover), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_ReplaceBookCover)})
+        Me.PopupMenu1.Manager = Me.BarManager1
+        Me.PopupMenu1.Name = "PopupMenu1"
         '
-        'ColumnHeader3
+        'PopupMenu2
         '
-        Me.ColumnHeader3.Text = "Is Six Pack?"
-        Me.ColumnHeader3.Width = 94
+        Me.PopupMenu2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_EditUser), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1_AddNewUser)})
+        Me.PopupMenu2.Manager = Me.BarManager1
+        Me.PopupMenu2.Name = "PopupMenu2"
         '
-        'chkIgnoreISBNCollection
+        'PopupMenu3
         '
-        Me.chkIgnoreISBNCollection.AutoSize = True
-        Me.chkIgnoreISBNCollection.Checked = True
-        Me.chkIgnoreISBNCollection.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkIgnoreISBNCollection.Location = New System.Drawing.Point(347, 10)
-        Me.chkIgnoreISBNCollection.Name = "chkIgnoreISBNCollection"
-        Me.chkIgnoreISBNCollection.Size = New System.Drawing.Size(121, 17)
-        Me.chkIgnoreISBNCollection.TabIndex = 25
-        Me.chkIgnoreISBNCollection.Text = "Ignore ISBN Check?"
-        Me.chkIgnoreISBNCollection.UseVisualStyleBackColor = True
+        Me.PopupMenu3.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem4_ViewBook), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem4_ViewCover), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem3), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem4_ReplaceBookCover)})
+        Me.PopupMenu3.Manager = Me.BarManager1
+        Me.PopupMenu3.Name = "PopupMenu3"
         '
-        'chkAddToCollection
+        'cmdGenerateWelcomeEmail
         '
-        Me.chkAddToCollection.AutoSize = True
-        Me.chkAddToCollection.Checked = True
-        Me.chkAddToCollection.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkAddToCollection.Location = New System.Drawing.Point(229, 10)
-        Me.chkAddToCollection.Name = "chkAddToCollection"
-        Me.chkAddToCollection.Size = New System.Drawing.Size(112, 17)
-        Me.chkAddToCollection.TabIndex = 24
-        Me.chkAddToCollection.Text = "Add to Collection?"
-        Me.chkAddToCollection.UseVisualStyleBackColor = True
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(3, 11)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(68, 13)
-        Me.Label8.TabIndex = 23
-        Me.Label8.Text = "ISBN Column"
-        '
-        'cmbISBNCol2
-        '
-        Me.cmbISBNCol2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbISBNCol2.FormattingEnabled = True
-        Me.cmbISBNCol2.Location = New System.Drawing.Point(77, 8)
-        Me.cmbISBNCol2.Name = "cmbISBNCol2"
-        Me.cmbISBNCol2.Size = New System.Drawing.Size(134, 21)
-        Me.cmbISBNCol2.TabIndex = 22
-        '
-        'cmdLoadCollectionBooks
-        '
-        Me.cmdLoadCollectionBooks.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmdLoadCollectionBooks.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdLoadCollectionBooks.Location = New System.Drawing.Point(1184, 2)
-        Me.cmdLoadCollectionBooks.Name = "cmdLoadCollectionBooks"
-        Me.cmdLoadCollectionBooks.Size = New System.Drawing.Size(35, 37)
-        Me.cmdLoadCollectionBooks.TabIndex = 21
-        Me.cmdLoadCollectionBooks.Text = "..."
-        Me.cmdLoadCollectionBooks.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdLoadCollectionBooks.UseVisualStyleBackColor = True
-        '
-        'txtCollectionsBooksFile
-        '
-        Me.txtCollectionsBooksFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCollectionsBooksFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCollectionsBooksFile.Location = New System.Drawing.Point(491, 11)
-        Me.txtCollectionsBooksFile.Name = "txtCollectionsBooksFile"
-        Me.txtCollectionsBooksFile.Size = New System.Drawing.Size(680, 26)
-        Me.txtCollectionsBooksFile.TabIndex = 20
-        '
-        'cmdAddBooksToCollection
-        '
-        Me.cmdAddBooksToCollection.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmdAddBooksToCollection.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdAddBooksToCollection.Location = New System.Drawing.Point(953, 49)
-        Me.cmdAddBooksToCollection.Name = "cmdAddBooksToCollection"
-        Me.cmdAddBooksToCollection.Size = New System.Drawing.Size(218, 29)
-        Me.cmdAddBooksToCollection.TabIndex = 26
-        Me.cmdAddBooksToCollection.Text = "Add Books to Collection"
-        Me.cmdAddBooksToCollection.UseVisualStyleBackColor = True
-        '
-        'dgv_CollectionBooksImport
-        '
-        Me.dgv_CollectionBooksImport.AllowUserToAddRows = False
-        Me.dgv_CollectionBooksImport.AllowUserToDeleteRows = False
-        Me.dgv_CollectionBooksImport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgv_CollectionBooksImport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_CollectionBooksImport.Location = New System.Drawing.Point(6, 96)
-        Me.dgv_CollectionBooksImport.Name = "dgv_CollectionBooksImport"
-        Me.dgv_CollectionBooksImport.ReadOnly = True
-        Me.dgv_CollectionBooksImport.Size = New System.Drawing.Size(1227, 289)
-        Me.dgv_CollectionBooksImport.TabIndex = 15
+        Me.cmdGenerateWelcomeEmail.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdGenerateWelcomeEmail.Appearance.Options.UseFont = True
+        Me.cmdGenerateWelcomeEmail.Location = New System.Drawing.Point(784, 62)
+        Me.cmdGenerateWelcomeEmail.Name = "cmdGenerateWelcomeEmail"
+        Me.cmdGenerateWelcomeEmail.Size = New System.Drawing.Size(224, 28)
+        Me.cmdGenerateWelcomeEmail.TabIndex = 55
+        Me.cmdGenerateWelcomeEmail.Text = "Generate Welcome Email"
+        Me.cmdGenerateWelcomeEmail.ToolTip = "a"
         '
         'frmEBookMGMT
         '
@@ -1377,6 +2010,7 @@ Partial Class frmEBookMGMT
         CType(Me.GridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RepositoryItemDateEdit1.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RepositoryItemDateEdit1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
         Me.XtraTabPage2.ResumeLayout(False)
         CType(Me.gridSchoolUsers, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1389,22 +2023,42 @@ Partial Class frmEBookMGMT
         CType(Me.dgv_ImportBooksInSchool, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        Me.XtraTabPage1_AddBookFreeForm.ResumeLayout(False)
+        Me.Panel7.ResumeLayout(False)
+        Me.Panel7.PerformLayout()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XtraTabPage1_CollectionsAdd.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
         CType(Me.XtraTabControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XtraTabControl2.ResumeLayout(False)
         Me.XtraTabPage1_AddCollectionsToSchool.ResumeLayout(False)
         Me.Panel5.ResumeLayout(False)
         Me.Panel5.PerformLayout()
         Me.XtraTabPage1_AddItemsToCollection.ResumeLayout(False)
+        CType(Me.dgv_CollectionBooksImport, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel6.ResumeLayout(False)
         Me.Panel6.PerformLayout()
-        CType(Me.dgv_CollectionBooksImport, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.XtraTabPage1_eBooks.ResumeLayout(False)
+        CType(Me.gridDiBSBooks, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemTextEdit2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateEdit3.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateEdit3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemToggleSwitch1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XtraTabPage1_UploadeBookCovers.ResumeLayout(False)
+        Me.XtraTabPage1_UploadeBookCovers.PerformLayout()
+        Me.XtraTabPage1_AddEBookMeta.ResumeLayout(False)
+        Me.Panel9.ResumeLayout(False)
+        Me.Panel8.ResumeLayout(False)
+        Me.Panel8.PerformLayout()
+        CType(Me.dgv_ImportAddBookMeta, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PopupMenu2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PopupMenu3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1526,4 +2180,65 @@ Partial Class frmEBookMGMT
     Friend WithEvents cmbISBNCol2 As ComboBox
     Friend WithEvents cmdLoadCollectionBooks As Button
     Friend WithEvents txtCollectionsBooksFile As TextBox
+    Friend WithEvents XtraTabPage1_eBooks As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents gridDiBSBooks As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GridView2 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents GridColumn2 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn4 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn6 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn7 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn8 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn9 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn10 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn11 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn12 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn13 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn14 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn16 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents IsAudioAvailable As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents IsEPub As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn18 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents RepositoryItemDateEdit3 As DevExpress.XtraEditors.Repository.RepositoryItemDateEdit
+    Friend WithEvents Panel7 As Panel
+    Friend WithEvents chkIgnoreISBNCheckFree As CheckBox
+    Friend WithEvents chk_AddBookToSchoolFree As CheckBox
+    Friend WithEvents cmdClearOrderItemsFreeForm As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents cmdAddOrderItemsFreeForm As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents spreadAddFreeForm As DevExpress.XtraSpreadsheet.SpreadsheetControl
+    Friend WithEvents BarButtonItem3_ViewBook As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents BarButtonItem1_ReplaceBookCover As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents XtraTabPage1_UploadeBookCovers As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents chkIfBookImageExists As CheckBox
+    Friend WithEvents chkUploadCoversIngonreISBN As CheckBox
+    Friend WithEvents cmdUpLoadCoverImages As Button
+    Friend WithEvents Label14 As Label
+    Friend WithEvents txtUploadCoverImagesDir As TextBox
+    Friend WithEvents RepositoryItemTextEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    Friend WithEvents RepositoryItemTextEdit2 As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    Friend WithEvents RepositoryItemToggleSwitch1 As DevExpress.XtraEditors.Repository.RepositoryItemToggleSwitch
+    Friend WithEvents RepositoryItemCheckEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit
+    Friend WithEvents BarButtonItem1_EditUser As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents PopupMenu2 As DevExpress.XtraBars.PopupMenu
+    Friend WithEvents BarButtonItem1_AddNewUser As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem3_ViewCover As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem4_ViewBook As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents PopupMenu3 As DevExpress.XtraBars.PopupMenu
+    Friend WithEvents BarButtonItem4_ViewCover As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem4_ReplaceBookCover As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem3 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents XtraTabPage1_AddEBookMeta As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents dgv_ImportAddBookMeta As DataGridView
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents cmdAddBookMeta As Button
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents txtInstructions As TextBox
+    Friend WithEvents cmdloadAddBookFile As Button
+    Friend WithEvents chkUpdateMetaData As CheckBox
+    Friend WithEvents chkAddBookMeta_SkipISBNCheck As CheckBox
+    Friend WithEvents chkAddBookAddTag As CheckBox
+    Friend WithEvents cmbAddBookTagType As ComboBox
+    Friend WithEvents chkAddBookSimulation As CheckBox
+    Friend WithEvents txtAddBookFileNae As TextBox
+    Friend WithEvents cmdGenerateWelcomeEmail As DevExpress.XtraEditors.SimpleButton
 End Class

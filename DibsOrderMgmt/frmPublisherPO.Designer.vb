@@ -45,8 +45,9 @@ Partial Class frmPublisherPO
         Me.CommonRibbonPageGroup1 = New DevExpress.XtraSpreadsheet.UI.CommonRibbonPageGroup()
         Me.InfoRibbonPageGroup1 = New DevExpress.XtraSpreadsheet.UI.InfoRibbonPageGroup()
         Me.SpreadsheetControl1 = New DevExpress.XtraSpreadsheet.SpreadsheetControl()
-        Me.SpreadsheetFormulaBar1 = New DevExpress.XtraSpreadsheet.SpreadsheetFormulaBar()
         Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
+        Me.SplitterControl1 = New DevExpress.XtraEditors.SplitterControl()
+        Me.SpreadsheetFormulaBar1 = New DevExpress.XtraSpreadsheet.SpreadsheetFormulaBar()
         CType(Me.SpreadsheetBarController1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PopupMenu1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,10 +99,10 @@ Partial Class frmPublisherPO
         Me.RibbonControl1.ExpandCollapseItem.Id = 0
         Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.RibbonControl1.SearchEditItem, Me.SpreadsheetCommandBarButtonItem1, Me.SpreadsheetCommandBarButtonItem2, Me.SpreadsheetCommandBarButtonItem3, Me.SpreadsheetCommandBarButtonItem4, Me.SpreadsheetCommandBarButtonItem5, Me.SpreadsheetCommandBarButtonItem6, Me.SpreadsheetCommandBarButtonItem7, Me.SpreadsheetCommandBarButtonItem8, Me.SpreadsheetCommandBarButtonItem9, Me.SpreadsheetCommandBarButtonItem10, Me.SpreadsheetCommandBarButtonItem11, Me.BarButtonItem1, Me.BarButtonItem2, Me.BarButtonItem4_SendPDF})
         Me.RibbonControl1.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl1.MaxItemId = 23
+        Me.RibbonControl1.MaxItemId = 24
         Me.RibbonControl1.Name = "RibbonControl1"
         Me.RibbonControl1.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.FileRibbonPage1})
-        Me.RibbonControl1.Size = New System.Drawing.Size(849, 150)
+        Me.RibbonControl1.Size = New System.Drawing.Size(1116, 150)
         '
         'SpreadsheetCommandBarButtonItem4
         '
@@ -207,21 +208,12 @@ Partial Class frmPublisherPO
         Me.SpreadsheetControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SpreadsheetControl1.Location = New System.Drawing.Point(-12, 180)
+        Me.SpreadsheetControl1.Location = New System.Drawing.Point(0, 190)
         Me.SpreadsheetControl1.MenuManager = Me.RibbonControl1
         Me.SpreadsheetControl1.Name = "SpreadsheetControl1"
-        Me.SpreadsheetControl1.Size = New System.Drawing.Size(849, 375)
+        Me.SpreadsheetControl1.Size = New System.Drawing.Size(1116, 496)
         Me.SpreadsheetControl1.TabIndex = 20
         Me.SpreadsheetControl1.Text = "SpreadsheetControl1"
-        '
-        'SpreadsheetFormulaBar1
-        '
-        Me.SpreadsheetFormulaBar1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.SpreadsheetFormulaBar1.Location = New System.Drawing.Point(0, 150)
-        Me.SpreadsheetFormulaBar1.MinimumSize = New System.Drawing.Size(0, 24)
-        Me.SpreadsheetFormulaBar1.Name = "SpreadsheetFormulaBar1"
-        Me.SpreadsheetFormulaBar1.Size = New System.Drawing.Size(849, 24)
-        Me.SpreadsheetFormulaBar1.TabIndex = 19
         '
         'BarButtonItem3
         '
@@ -231,14 +223,35 @@ Partial Class frmPublisherPO
         Me.BarButtonItem3.ImageOptions.LargeImage = CType(resources.GetObject("BarButtonItem3.ImageOptions.LargeImage"), System.Drawing.Image)
         Me.BarButtonItem3.Name = "BarButtonItem3"
         '
+        'SplitterControl1
+        '
+        Me.SplitterControl1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.SplitterControl1.Location = New System.Drawing.Point(0, 174)
+        Me.SplitterControl1.MinSize = 20
+        Me.SplitterControl1.Name = "SplitterControl1"
+        Me.SplitterControl1.Size = New System.Drawing.Size(1116, 10)
+        Me.SplitterControl1.TabIndex = 24
+        Me.SplitterControl1.TabStop = False
+        '
+        'SpreadsheetFormulaBar1
+        '
+        Me.SpreadsheetFormulaBar1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.SpreadsheetFormulaBar1.Location = New System.Drawing.Point(0, 150)
+        Me.SpreadsheetFormulaBar1.MinimumSize = New System.Drawing.Size(0, 24)
+        Me.SpreadsheetFormulaBar1.Name = "SpreadsheetFormulaBar1"
+        Me.SpreadsheetFormulaBar1.Size = New System.Drawing.Size(1116, 24)
+        Me.SpreadsheetFormulaBar1.SpreadsheetControl = Me.SpreadsheetControl1
+        Me.SpreadsheetFormulaBar1.TabIndex = 25
+        '
         'frmPublisherPO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(849, 567)
-        Me.Controls.Add(Me.SpreadsheetControl1)
+        Me.ClientSize = New System.Drawing.Size(1116, 689)
+        Me.Controls.Add(Me.SplitterControl1)
         Me.Controls.Add(Me.SpreadsheetFormulaBar1)
+        Me.Controls.Add(Me.SpreadsheetControl1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Name = "frmPublisherPO"
         Me.Text = "frmPublisherPO"
@@ -266,10 +279,11 @@ Partial Class frmPublisherPO
     Friend WithEvents FileRibbonPage1 As DevExpress.XtraSpreadsheet.UI.FileRibbonPage
     Friend WithEvents CommonRibbonPageGroup1 As DevExpress.XtraSpreadsheet.UI.CommonRibbonPageGroup
     Friend WithEvents InfoRibbonPageGroup1 As DevExpress.XtraSpreadsheet.UI.InfoRibbonPageGroup
-    Friend WithEvents SpreadsheetFormulaBar1 As DevExpress.XtraSpreadsheet.SpreadsheetFormulaBar
     Friend WithEvents PopupMenu1 As DevExpress.XtraBars.PopupMenu
     Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem2 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem4_SendPDF As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem3 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents SplitterControl1 As DevExpress.XtraEditors.SplitterControl
+    Friend WithEvents SpreadsheetFormulaBar1 As DevExpress.XtraSpreadsheet.SpreadsheetFormulaBar
 End Class

@@ -32,7 +32,7 @@ Public Class frmOrderItemsAdd
 
         End With
         'oWorkSheet.Range.FromLTRB(1, 0, 1, 0)
-
+        oWorkSheet.Columns("A").NumberFormat = "#####"
         With oWorkSheet.Range("B1")
             .Value = "Title (Optional)"
             .Font.Bold = True
@@ -86,6 +86,7 @@ Public Class frmOrderItemsAdd
 
         End With
         'oWorkSheet.Range.FromLTRB(1, 0, 1, 0)
+        oWorkSheet.Columns("A").NumberFormat = "#####"
 
         With oWorkSheet.Range("B1")
             .Value = "Title (Required)"
@@ -666,4 +667,6 @@ BlankCountMaxHit:
     Private Sub cmbPartner_EditValueChanged(sender As Object, e As EventArgs) Handles cmbPartner.EditValueChanged
 
     End Sub
+
+
 End Class

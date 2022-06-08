@@ -25,16 +25,16 @@
     <PublishUrl>\\192.168.1.85\Public\MEP - Shared\BrainHive\BH_OrderMgmt\Hive_Install\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\192.168.1.85\Public\MEP - Shared\BrainHive\BH_OrderMgmt\Hive_Install\</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>60</ApplicationRevision>
+    <ApplicationRevision>70</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -91,6 +91,12 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.7.11.9\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.S3.3.7.9.9\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
     <Reference Include="Azure.Core, Version=1.19.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.19.0\lib\net461\Azure.Core.dll</HintPath>
     </Reference>
@@ -114,6 +120,7 @@
     </Reference>
     <Reference Include="DevExpress.BonusSkins.v20.1" />
     <Reference Include="DevExpress.Charts.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.CodeParser.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v20.1" />
     <Reference Include="DevExpress.Data.Desktop.v20.1" />
     <Reference Include="DevExpress.DataAccess.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -123,21 +130,27 @@
     <Reference Include="DevExpress.Office.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Pdf.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Pdf.v20.1.Drawing, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v20.1.Core" />
     <Reference Include="DevExpress.RichEdit.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v20.1.Export, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Spreadsheet.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v20.1" />
     <Reference Include="DevExpress.Utils.v20.1.UI, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v20.1" />
     <Reference Include="DevExpress.Sparkline.v20.1.Core" />
     <Reference Include="DevExpress.XtraCharts.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraDialogs.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v20.1" />
+    <Reference Include="DevExpress.XtraGauges.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraNavBar.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPdfViewer.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v20.1.Extensions, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraRichEdit.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraSpreadsheet.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -533,6 +546,7 @@
     <Compile Include="clsDibsOrderMgmt.vb" />
     <Compile Include="clsImportMetaData.vb" />
     <Compile Include="DiBS_Admin.vb" />
+    <Compile Include="DIBS_AWS_S3.vb" />
     <Compile Include="DiBS_DB_ProdDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -567,6 +581,12 @@
       <DependentUpon>frmACHDateScheduled.vb</DependentUpon>
     </Compile>
     <Compile Include="frmACHDateScheduled.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddCoverToBook.Designer.vb">
+      <DependentUpon>frmAddCoverToBook.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddCoverToBook.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmBrowser.Designer.vb">
@@ -659,6 +679,12 @@
     <Compile Include="frmOrderItemsAdd.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmOrderItemsMatchingEBooks.Designer.vb">
+      <DependentUpon>frmOrderItemsMatchingEBooks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrderItemsMatchingEBooks.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmOrderItemSub.Designer.vb">
       <DependentUpon>frmOrderItemSub.vb</DependentUpon>
     </Compile>
@@ -707,6 +733,12 @@
     <Compile Include="frmQTYPriceUpdate.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmReportViewer.Designer.vb">
+      <DependentUpon>frmReportViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmRTFViewer.Designer.vb">
       <DependentUpon>frmRTFViewer.vb</DependentUpon>
     </Compile>
@@ -747,15 +779,51 @@
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="XtraReport1_10Labels.Designer.vb">
+      <DependentUpon>XtraReport1_10Labels.vb</DependentUpon>
+    </Compile>
+    <Compile Include="XtraReport1_10Labels.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReport1_Label10_2.Designer.vb">
+      <DependentUpon>XtraReport1_Label10_2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="XtraReport1_Label10_2.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Content Include="HiveTemplates\HIVE_PublisherCheckin_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="HiveTemplates\HIVE_PublisherMissingItems_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="HiveTemplates\PacificLearning.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HiveTemplates\WelcomeEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HiveTemplates\BH_logo_new_lockup_vertical_small.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HiveTemplates\WelcomeEmailPacific.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="frmReportViewer.resx">
+      <DependentUpon>frmReportViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReport1_10Labels.resx">
+      <DependentUpon>XtraReport1_10Labels.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReport1_Label10_2.resx">
+      <DependentUpon>XtraReport1_Label10_2.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="Resources\BH_logo_NoWords.jpg" />
     <EmbeddedResource Include="frmACHDateScheduled.resx">
       <DependentUpon>frmACHDateScheduled.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddCoverToBook.resx">
+      <DependentUpon>frmAddCoverToBook.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEBookMGMT.resx">
       <DependentUpon>frmEBookMGMT.vb</DependentUpon>
@@ -765,6 +833,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMessage.resx">
       <DependentUpon>frmMessage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderItemsMatchingEBooks.resx">
+      <DependentUpon>frmOrderItemsMatchingEBooks.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPubInvoiceItemsAdd.resx">
       <DependentUpon>frmPubInvoiceItemsAdd.vb</DependentUpon>

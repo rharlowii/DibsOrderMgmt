@@ -221,7 +221,7 @@ Module modNewOrder
 
             .Parameters.Add("@OrderStatusID", SqlDbType.Decimal).Value = oOrder.OrderStatus
 
-            .Parameters.Add("@TrackingNumbers", SqlDbType.NVarChar).Value = oOrder.TrackingNumbers
+            .Parameters.Add("@TrackingNumbers", SqlDbType.NVarChar).Value = oOrder.TrackingNumbers.ToString
 
             .Parameters.Add("@OrderStatusDigitalID", SqlDbType.Int).Value = oOrder.OrderStatusDigital
             .Parameters.Add("@OrderStatusCommID", SqlDbType.Int).Value = oOrder.OrderStatusComm
@@ -367,6 +367,8 @@ Module modNewOrder
             oDuplicateOrder.PO_Shipping = 0.00
 
             oDuplicateOrder.OrderStatus = 0
+            oDuplicateOrder.TrackingNumbers = ""
+            oDuplicateOrder.OrderDescShort = ""
 
             'Need to keep these because we write back to DB
 

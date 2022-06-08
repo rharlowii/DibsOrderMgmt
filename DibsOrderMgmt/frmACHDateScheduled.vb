@@ -220,30 +220,7 @@ Public Class frmACHDateScheduled
         'Passing the bNeedToUpdateMainGrid by Ref
         CreateBHMailItem(moBHMailItem)
     End Sub
-    Private Function GetPartnerInfo(iPartnerID As Integer) As DataTable
 
-        Dim sSQL As String
-        Dim sState As String
-
-        ' sState = cmbStates.SelectedValue.ToString
-
-
-
-        sSQL = "SELECT * FROM omPartners WHERE PartnerID={PartnerID}"
-        sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
-
-        Dim ds As New DataSet
-        Dim da As SqlDataAdapter
-        oConnection = New SqlConnection(sConnectionString)
-        oConnection.Open()
-        da = New SqlDataAdapter(sSQL, oConnection)
-        da.Fill(ds)
-        oConnection.Close()
-
-        Return ds.Tables(0)
-
-
-    End Function
 
     Public Function ConvertGridToHTMLText() As String
         Dim oHTMLStream As New IO.MemoryStream

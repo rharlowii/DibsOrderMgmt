@@ -291,11 +291,20 @@ Module modOrderItems
         Return sReturn
     End Function
 
-    Public Function GetAddPubInvoiceOrders() As DataTable
+    Public Function GetAddPubInvoiceOrders(bUpdateExisitngPubInvoice As Boolean) As DataTable
 
         'Basically, we only want to get BH PO #s where we actively are going to 
+        '5/25/22 We narrow it down so much we could not edit ones that were a certain state
+        'So for new we narrow....for edit we take anything
         '    Dim sSQL As String = "SELECT OrderId,BHPONumber FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 AND OrderStatusID<=40 ORDER BY BHPONumber "
-        Dim sSQL As String = "SELECT BHPONumber as BHPONumberID,BHPONumber,OrderID FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 AND OrderStatusID<=40 ORDER BY BHPONumber "
+        Dim sSQL As String
+
+        If bUpdateExisitngPubInvoice = False Then
+            sSQL = "SELECT BHPONumber as BHPONumberID,BHPONumber,OrderID FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 AND OrderStatusID<=40 ORDER BY BHPONumber "
+        Else
+            sSQL = "SELECT BHPONumber as BHPONumberID,BHPONumber,OrderID FROM DiBS_DB_Prod.dbo.omOrders WHERE OrderStatusID>0 ORDER BY BHPONumber "
+
+        End If
 
         'BHPONumberID
         Dim ds As New DataSet

@@ -148,7 +148,7 @@ Public Class frmPubInvoiceItemsAdd
         Dim oRow As DataRowView
         Dim PartnerName As String
 
-        oDataTable = GetAddPubInvoiceOrders()
+        oDataTable = GetAddPubInvoiceOrders(UpdateExisitngPubInvoice)
 
 
         iCount = oDataTable.Rows.Count

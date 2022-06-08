@@ -17,6 +17,51 @@ Module modDibsOrderMgmt
         Public PublisherName As String ' Optional
 
     End Structure
+
+    Public Structure MissingItem
+
+        Public OrderID As String
+        Public PartnerID As Integer
+        Public ItemNumber As String
+        Public ItemDesc As String
+        Public BHPONumber As String '' ' Optional
+        Public PublisherName As String ' Optional
+        Public QTYMissing As Integer
+
+
+    End Structure
+
+    Public Structure AddEbookToSchool
+
+        Public BookID As String
+        Public ISBN As String
+        Public Title As String 'Optional
+        Public PublisherName As String ' Optional
+        Public AddEbookStatus As AddBookToSchoolStatus
+        Public AddEbookStatusText As String
+        Public MissingEBookPath As Boolean
+
+
+
+    End Structure
+
+    Public Enum AddBookToSchoolStatus
+        NotFoundInDB = -1
+        NoStatus = 0
+        AddedToSchoolNoIssues = 1
+        AddedToSchoolMissingBookPath = 2
+        BookAlreadyInSchool = 3
+        MissingCriticalInfo = 4
+        Morethan1FoundInDB = 5
+        InValidISBN = 6
+        FoundInDB = 7
+        MissingEBookPath = 8
+
+
+
+
+    End Enum
+
     Public Function omPubPaymentTracker_IU_ALT(oPubInvoiceItem As PubInvoiceItem) As String
 
 
@@ -72,5 +117,28 @@ Module modDibsOrderMgmt
         Return sReturn
 
     End Function
+    Public Function GetPartnerInfo(iPartnerID As Integer) As DataTable
 
+        Dim sSQL As String
+        Dim sState As String
+
+        ' sState = cmbStates.SelectedValue.ToString
+
+
+
+        sSQL = "SELECT * FROM omPartners WHERE PartnerID={PartnerID}"
+        sSQL = sSQL.Replace("{PartnerID}", iPartnerID)
+
+        Dim ds As New DataSet
+        Dim da As SqlDataAdapter
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        da = New SqlDataAdapter(sSQL, oConnection)
+        da.Fill(ds)
+        oConnection.Close()
+
+        Return ds.Tables(0)
+
+
+    End Function
 End Module

@@ -46,6 +46,7 @@ Partial Class frmOrderItems
         Me.BackOrderedDate = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.CardView1 = New DevExpress.XtraGrid.Views.Card.CardView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdSendMissingItems = New DevExpress.XtraEditors.SimpleButton()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl2_TotalRows = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -256,6 +257,7 @@ Partial Class frmOrderItems
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.cmdSendMissingItems)
         Me.Panel1.Controls.Add(Me.LabelControl2)
         Me.Panel1.Controls.Add(Me.LabelControl2_TotalRows)
         Me.Panel1.Controls.Add(Me.LabelControl1)
@@ -264,6 +266,17 @@ Partial Class frmOrderItems
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1135, 81)
         Me.Panel1.TabIndex = 6
+        '
+        'cmdSendMissingItems
+        '
+        Me.cmdSendMissingItems.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdSendMissingItems.Appearance.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSendMissingItems.Appearance.Options.UseFont = True
+        Me.cmdSendMissingItems.Location = New System.Drawing.Point(657, 15)
+        Me.cmdSendMissingItems.Name = "cmdSendMissingItems"
+        Me.cmdSendMissingItems.Size = New System.Drawing.Size(283, 28)
+        Me.cmdSendMissingItems.TabIndex = 10
+        Me.cmdSendMissingItems.Text = "Notify Partner of Missing Item(s)"
         '
         'LabelControl2
         '
@@ -471,4 +484,5 @@ Partial Class frmOrderItems
     Friend WithEvents BackOrdered As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents BackOrderedDate As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents RepositoryItemTextEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    Friend WithEvents cmdSendMissingItems As DevExpress.XtraEditors.SimpleButton
 End Class

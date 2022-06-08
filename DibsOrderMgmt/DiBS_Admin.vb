@@ -850,6 +850,65 @@ SkipToNext:
 
     End Function
 
+    Public Function Update_AxistingAccount(sID As String, sFirst As String, sLast As String, sLoginID As String, sPassword As String, sEmail As String, sRoleID As String) As String
+        'sp_Insert_CollectionBooks_Into_SchoolBooks 'c47cf20d-b1bc-4e9c-8c4e-28a8c9ae192d', 'e6a391c2-7b67-458a-982a-12884be44946','35761',1
+
+        Dim sEXEC As String
+
+        If sPassword <> "" Then
+            'Password is being changed
+            sEXEC = "UPDATE dbo.Accounts Set First=@First,Last=@Last,LoginID=@LoginID,Password=@Password,RoleID=@RoleID Where ID=@ID"
+            sPassword = OneWayEncrypt(sPassword)
+
+        Else
+            'Password NOT changed
+            sEXEC = "UPDATE dbo.Accounts Set First=@First,Last=@Last,LoginID=@LoginID,RoleID=@RoleID Where ID=@ID"
+
+        End If
+
+        Dim sReturn As String
+
+        'If IsNothing(sStates) Then
+        '    sStates = ""
+        'End If
+
+
+
+
+
+        oConnection = New SqlConnection(sConnectionString)
+        oConnection.Open()
+        Dim myCommand As New SqlCommand(sEXEC, oConnection)
+
+        With myCommand
+            .Parameters.Add("@ID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(sID)
+            .Parameters.Add("@First", SqlDbType.NVarChar).Value = sFirst
+            .Parameters.Add("@Last", SqlDbType.NVarChar).Value = sLast
+            .Parameters.Add("@LoginID", SqlDbType.NVarChar).Value = sLoginID
+
+            If sPassword <> "" Then
+                .Parameters.Add("@Password", SqlDbType.NVarChar).Value = sPassword
+            End If
+
+
+            If sRoleID.Length > 0 Then
+                .Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = New System.Data.SqlTypes.SqlGuid(sRoleID)
+            Else
+                .Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = DBNull.Value
+            End If
+
+
+
+            sReturn = .ExecuteNonQuery
+
+
+        End With
+        oConnection.Close()
+
+        Return sReturn
+
+    End Function
+
 
     Public Function Insert_NewSchool(sSchoolName As String, sOrigSchoolID As String) As String
         'SELECT NEWID() AS ID,Name,Address,City,State,zip,GETDATE(),GETDATE(),SchoolDistrictID,NULL,NULL FROM DiBS_DB_Prod.dbo.Schools WHERE  Schools.ID='d0a8a2a8-80c8-4164-ac79-611d8ce5976b' 
